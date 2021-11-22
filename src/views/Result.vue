@@ -30,9 +30,10 @@ export default {
       this.data = update.a;
       this.question = update.q;
     });
-    socket.on("newQuestion", update =>
-      this.question = update.q
-    )
+    socket.on("newQuestion", update => {
+      this.question = update.q;
+      this.data = {};
+    })
   }
 }
 </script>

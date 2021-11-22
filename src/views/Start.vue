@@ -24,10 +24,9 @@ export default {
     }
   },
   created: function () {
-    socket.on("init", (data) => {
-      this.uiLabels = data
-    }
-    )
+    socket.on("init", (labels) => {
+      this.uiLabels = labels
+    })
   },
   methods: {
     switchLanguage: function() {

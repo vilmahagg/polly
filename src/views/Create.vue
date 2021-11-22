@@ -1,12 +1,12 @@
 <template>
   <div>
-    Poll id: 
+    Poll link: 
     <input type="text" v-model="pollId">
     <button v-on:click="createPoll">
       Create poll
     </button>
     <div>
-      Question:
+      {{uiLabels.question}}:
       <input type="text" v-model="question">
       <div>
         Answers:
@@ -26,7 +26,7 @@
       Run question
     </button>
     {{data}}
-    <router-link to="/result/">Titta på resultat</router-link>
+    <router-link to="/result/">Check result</router-link>
   </div>
 </template>
 
@@ -43,11 +43,16 @@ export default {
       question: "",
       answers: ["", ""],
       questionNumber: 0,
-      data: {}
+      data: {},
+      uiLabels: {}
     }
   },
   created: function () {
     this.lang = this.$route.params.lang;
+    socket.emit("pageLoaded", this.lang);
+    socket.on("init", (labels) => {
+      this.uiLabels = labels
+    })
     socket.on("dataUpdate", (data) =>
       this.data = data
     )

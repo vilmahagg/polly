@@ -1,9 +1,14 @@
 function sockets(io, socket, data) {
   socket.emit('init', data.getUILabels());
   
+  socket.on('pageLoaded', function (lang) {
+    socket.emit('init', data.getUILabels(lang));
+  });
+
   socket.on('switchLanguage', function(lang) {
     socket.emit('init', data.getUILabels(lang));
-  })
+  });
+
   socket.on('createPoll', function(d) {
     socket.emit('pollCreated', data.createPoll(d.pollId, d.lang));
   });
@@ -16,10 +21,12 @@ function sockets(io, socket, data) {
   socket.on('joinPoll', function(pollId) {
     socket.join(pollId);
     socket.emit('newQuestion', data.getQuestion(pollId))
+    socket.emit('dataUpdate', data.getAnswers(pollId));
   });
 
   socket.on('runQuestion', function(d) {
-    io.to(d.pollId).emit('newQuestion', data.getQuestion(d.pollId, d.questionNumber))
+    io.to(d.pollId).emit('newQuestion', data.getQuestion(d.pollId, d.questionNumber));
+    io.to(d.pollId).emit('dataUpdate', data.getAnswers(pollId));
   });
 
   socket.on('submitAnswer', function(d) {
