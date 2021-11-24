@@ -10,7 +10,7 @@
       <h1>EasyPoll</h1>
     </header>
 
-    <div class="startMenu">
+    <div class="firstMenu">
       <div class="create" v-if="!ready">
         <router-link v-bind:to="'/create/' + lang" tag="button">
           <button class="createButton">
@@ -25,22 +25,23 @@
         </button>
       </div>
     </div>
+
     <div class="start" v-if="ready">
+      <button class="back" v-on:click="ready = false">Back</button>
       <div>
-        <button v-on:click="ready=false">back</button>
         <label>
           Write poll id:
           <input type="text" v-model="id" />
         </label>
-        </div>
-        <div>
+      </div>
+      <div>
         <router-link v-bind:to="'/poll/' + id" tag="button">
           <button class="participateButton">
             <h3>Start</h3>
           </button>
         </router-link>
-        </div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -85,14 +86,13 @@ export default {
 header {
   background: rgb(139, 139, 133);
 }
-.startMenu {
+.firstMenu {
   display: grid;
   grid-gap: 0.3em;
   grid-template-columns: 50% 50%;
 }
-.startMenu div {
+.firstMenu div {
   padding: 1em;
-  
 }
 .create {
   background-color: aqua;
@@ -133,16 +133,14 @@ button:hover {
 
 .start {
   height: 20em;
-  width:100%;
   background-color: lightsalmon;
-  padding:2em; 
+  padding: 2em;
 }
-.start div{
+.start div {
   padding: 1em;
 }
 
-#nav{
-  padding:0;
+#nav {
+  padding: 0;
 }
-
 </style>

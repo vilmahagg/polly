@@ -10,7 +10,7 @@
   </header>
   <div>
    
-    <div class="pollName" v-if="!isShown">
+    <div class="pollTitle" v-if="!isShown">
     <input type="text" v-model="pollId">
     <button v-on:click="createPoll"> 
       Create poll
