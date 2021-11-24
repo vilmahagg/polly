@@ -3,11 +3,11 @@
     <header>
       <div class="lang">
         <button class="languageButton" v-on:click="switchLanguage">
-          {{ uiLabels.changeLanguage }} <br />
           <img v-bind:src="this.flag" />
         </button>
       </div>
-      <h1>EasyPoll</h1>
+      <h1 id="header">EasyPoll</h1>
+      
     </header>
 
     <div class="startMenu">
@@ -21,26 +21,26 @@
 
       <div class="participate" v-if="!ready">
         <button class="readyButton" v-on:click="ready = true">
-          {{ uiLabels.participatePoll }}
+          <h3>{{ uiLabels.participatePoll }}</h3>
         </button>
       </div>
     </div>
     <div class="start" v-if="ready">
       <div>
-        <button v-on:click="ready=false">back</button>
+        <button v-on:click="ready = false">{{ uiLabels.backButton }}</button>
         <label>
-          Write poll id:
+          Write poll name:
           <input type="text" v-model="id" />
         </label>
-        </div>
-        <div>
+      </div>
+      <div>
         <router-link v-bind:to="'/poll/' + id" tag="button">
           <button class="participateButton">
             <h3>Start</h3>
           </button>
         </router-link>
-        </div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -83,8 +83,14 @@ export default {
 
 <style>
 header {
-  background: rgb(139, 139, 133);
+  background: rgb(199, 205, 212);
+  height: 10em;
 }
+
+header h1 {
+  font-size: 55px;
+}
+
 .startMenu {
   display: grid;
   grid-gap: 0.3em;
@@ -92,27 +98,30 @@ header {
 }
 .startMenu div {
   padding: 1em;
-  
 }
 .create {
-  background-color: aqua;
   height: 10em;
 }
 
 .createButton {
-  width: 100%;
+  width: 80%;
   height: 100%;
   background-color: lightgreen;
 }
 
 .participate {
-  background-color: blueviolet;
   height: 10em;
 }
 
 .participateButton {
-  width: 50%;
+  width: 80%;
   height: 50%;
+  background-color: lightgreen;
+}
+
+.readyButton {
+  width: 80%;
+  height: 100%;
   background-color: lightgreen;
 }
 
@@ -123,8 +132,8 @@ header {
   height: 4em;
 }
 .languageButton img {
-  width: 2em;
-  height: 1em;
+  width: 5em;
+  height: 3em;
 }
 
 button:hover {
@@ -133,16 +142,15 @@ button:hover {
 
 .start {
   height: 20em;
-  width:100%;
+  
   background-color: lightsalmon;
-  padding:2em; 
+  padding: 2em;
 }
-.start div{
+.start div {
   padding: 1em;
 }
 
-#nav{
-  padding:0;
+#nav {
+  padding: 0;
 }
-
 </style>
