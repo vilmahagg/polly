@@ -1,11 +1,32 @@
 <template>
+  <header>
+     <!-- <div class="lang">
+        <button class="languageButton" v-on:click="switchLanguage">
+          {{ uiLabels.changeLanguage }} <br />
+          <img v-bind:src="this.flag" style="width: 3rem; height: 2rem" />
+        </button>
+      </div>
+      <h1>EasyPoll</h1> -->
+  </header>
   <div>
-    Poll link: 
+   
+    <div class="pollName" v-if="!isShown"> <!--v-if="!isShown"-->
+    Poll name:
     <input type="text" v-model="pollId">
-    <button v-on:click="createPoll">
+    <button v-on:click="isShown=true">
+      Submit name
+    </button>
+    </div>
+    
+    <!--<input type="text" v-model="pollId">-->
+    <button v-if="isShown" v-on:click="createPoll"> <!--; -->
       Create poll
     </button>
-    <div>
+    
+
+    <div class="pollCreation" v-if="isShown"> <!--visar/döljer create -->
+
+    <div class="display">
       {{uiLabels.question}}:
       <input type="text" v-model="question">
       <div>
@@ -28,6 +49,7 @@
     {{data}}
     <router-link to="/result/">Check result</router-link>
   </div>
+  </div>
 </template>
 
 <script>
@@ -44,7 +66,8 @@ export default {
       answers: ["", ""],
       questionNumber: 0,
       data: {},
-      uiLabels: {}
+      uiLabels: {},
+      isShown: false
     }
   },
   created: function () {
@@ -62,7 +85,8 @@ export default {
   methods: {
     createPoll: function () {
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
-    },
+      
+   },
     addQuestion: function () {
       socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers } )
     },
@@ -75,3 +99,10 @@ export default {
   }
 }
 </script>
+
+<style>
+.display{
+  background-color: wheat;
+  height: 20em
+}
+</style>

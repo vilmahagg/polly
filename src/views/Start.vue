@@ -20,6 +20,10 @@
       </div>
 
       <div class="participate">
+        <button class="readyButton" v-if="!ready" v-on:click="ready=true">
+          redo
+        </button>
+        <div class="ready" v-if="ready">
         <label>
           Write poll id:
           <input type="text" v-model="id" />
@@ -29,6 +33,7 @@
             <h3>{{ uiLabels.participatePoll }}</h3>
           </button>
         </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -46,6 +51,7 @@ export default {
       id: "",
       lang: "en",
       flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Svensk_flagg_1815.svg/2560px-Svensk_flagg_1815.svg.png",
+      ready: false
     };
   },
   created: function () {
