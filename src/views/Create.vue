@@ -10,19 +10,12 @@
   </header>
   <div>
    
-    <div class="pollName" v-if="!isShown"> <!--v-if="!isShown"-->
-    Poll name:
+    <div class="pollName" v-if="!isShown">
     <input type="text" v-model="pollId">
-    <button v-on:click="isShown=true">
-      Submit name
-    </button>
-    </div>
-    
-    <!--<input type="text" v-model="pollId">-->
-    <button v-if="isShown" v-on:click="createPoll"> <!--; -->
+    <button v-on:click="createPoll"> 
       Create poll
     </button>
-    
+    </div>
 
     <div class="pollCreation" v-if="isShown"> <!--visar/döljer create -->
 
@@ -85,15 +78,17 @@ export default {
   methods: {
     createPoll: function () {
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
-      
+      this.isShown = true;
    },
     addQuestion: function () {
       socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers } )
-    },
+      
+   },
     addAnswer: function () {
       this.answers.push("");
     },
     runQuestion: function () {
+     
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
     }
   }

@@ -71,7 +71,7 @@ Data.prototype.submitAnswer = function(pollId, answer) {
 
 Data.prototype.getAnswers = function(pollId) {
   const poll = this.polls[pollId];
-  if (typeof poll !== 'undefined') {
+  if (typeof poll !== 'undefined' && poll.questions.q !== 'undefined'){
     const answers = poll.answers[poll.currentQuestion];
     return {q: poll.questions[poll.currentQuestion].q, a: answers};
   }
