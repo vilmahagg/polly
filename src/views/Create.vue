@@ -10,7 +10,7 @@
   </header>
   <div>
    
-    <div class="pollName" v-if="!isShown">
+    <div class="pollTitle" v-if="!isShown">
     <input type="text" v-model="pollId">
     <button v-on:click="createPoll"> 
       {{ uiLabels.createPoll }}
@@ -111,4 +111,10 @@ export default {
   background-color: wheat;
   height: 20em
 }
+
+.pollTitle button{
+ height: 3em; width:10em;
+}
+.pollTitle input{height: 2.6em; width: 12em;}
+.pollTitle{padding:3em}
 </style>
