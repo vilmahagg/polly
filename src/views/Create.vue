@@ -1,19 +1,19 @@
 <template>
   <header>
-     <!-- <div class="lang">
+     <div class="lang">
         <button class="languageButton" v-on:click="switchLanguage">
           {{ uiLabels.changeLanguage }} <br />
           <img v-bind:src="this.flag" style="width: 3rem; height: 2rem" />
         </button>
       </div>
-      <h1>EasyPoll</h1> -->
+      <h1>EasyPoll</h1> 
   </header>
   <div>
    
     <div class="pollTitle" v-if="!isShown">
     <input type="text" v-model="pollId">
     <button v-on:click="createPoll"> 
-      Create poll
+      {{ uiLabels.createPoll }}
     </button>
     </div>
 
@@ -79,7 +79,18 @@ export default {
     createPoll: function () {
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
       this.isShown = true;
-   },
+   },switchLanguage: function () {
+      if (this.lang === "en") {
+        this.lang = "sv";
+        this.flag =
+          "https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png";
+      } else {
+        this.lang = "en";
+        this.flag =
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Svensk_flagg_1815.svg/2560px-Svensk_flagg_1815.svg.png";
+      }
+      socket.emit("switchLanguage", this.lang);
+    },
     addQuestion: function () {
       socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers } )
       
@@ -91,7 +102,7 @@ export default {
      
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
     }
-  }
+  }, 
 }
 </script>
 
@@ -100,4 +111,10 @@ export default {
   background-color: wheat;
   height: 20em
 }
+
+.pollTitle button{
+ height: 3em; width:10em;
+}
+.pollTitle input{height: 2.6em; width: 12em;}
+.pollTitle{padding:3em}
 </style>

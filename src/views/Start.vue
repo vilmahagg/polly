@@ -1,14 +1,20 @@
 <template>
   <div id="nav">
-    <header>
-      <div class="lang">
-        <button class="languageButton" v-on:click="switchLanguage">
-          {{ uiLabels.changeLanguage }} <br />
-          <img v-bind:src="this.flag" />
-        </button>
-      </div>
-      <h1>EasyPoll</h1>
-    </header>
+    <div class="lang">
+          <button class="languageButton" v-on:click="switchLanguage">
+            <img v-bind:src="this.flag" />
+          </button>
+        </div>
+   
+      <header>
+        
+        <h1 id="header">EasyPoll</h1>
+        <p>
+          Welcome to our poll application EasyPoll! <br />
+          Choose if you want to create or participate in a poll
+        </p>
+      </header>
+    
 
     <div class="firstMenu">
       <div class="create" v-if="!ready">
@@ -21,7 +27,7 @@
 
       <div class="participate" v-if="!ready">
         <button class="readyButton" v-on:click="ready = true">
-          {{ uiLabels.participatePoll }}
+          <h3>{{ uiLabels.participatePoll }}</h3>
         </button>
       </div>
     </div>
@@ -29,8 +35,8 @@
     <div class="start" v-if="ready">
       <button class="back" v-on:click="ready = false">Back</button>
       <div>
-        <label>
-          Write poll id:
+        <label id ="pollName">
+          Enter poll name:
           <input type="text" v-model="id" />
         </label>
       </div>
@@ -84,7 +90,25 @@ export default {
 
 <style>
 header {
-  background: rgb(139, 139, 133);
+  background: rgb(199, 205, 212);
+  height: 10em;
+  margin:0;
+}
+header h1 {
+ margin: 0; 
+  padding-left:1.3em;
+  font-size: 3em;
+  font-family: "Lucida Console", "Monaco", monospace;
+  text-align: center;
+  color: rgb(224, 100, 187);
+  text-transform: uppercase;
+  overflow: hidden;
+  position: relative;
+}
+
+h3{
+  font-size: 2em;
+
 }
 .firstMenu {
   display: grid;
@@ -95,36 +119,41 @@ header {
   padding: 1em;
 }
 .create {
-  background-color: aqua;
   height: 10em;
 }
 
 .createButton {
-  width: 100%;
+  width: 80%;
   height: 100%;
-  background-color: lightgreen;
+  background-color: rgb(159, 208, 236);
 }
 
 .participate {
-  background-color: blueviolet;
   height: 10em;
 }
 
 .participateButton {
-  width: 50%;
+  width: 80%;
   height: 50%;
-  background-color: lightgreen;
+  background-color: rgb(164, 209, 164);
 }
 
+.readyButton {
+  width: 80%;
+  height: 100%;
+  background-color: rgb(161, 209, 161);
+}
+.lang{margin:0; padding:0;}
+
 .languageButton {
-  float: right;
+  float:right;
   font-weight: bold;
-  width: 6em;
-  height: 4em;
+  width: 5em;
+  height: 3em;
 }
 .languageButton img {
-  width: 2em;
-  height: 1em;
+  width: 4em;
+  height: 2em;
 }
 
 button:hover {
@@ -132,15 +161,19 @@ button:hover {
 }
 
 .start {
-  height: 20em;
-  background-color: lightsalmon;
+  height: 30em;
+  background-color: rgb(240, 181, 158);
   padding: 2em;
 }
 .start div {
   padding: 1em;
 }
 
-#nav {
-  padding: 0;
+#pollName{
+font-size: 1.5em;
+
 }
+
+#pollName input{height: 1.5em; width: 12em;}
+
 </style>
