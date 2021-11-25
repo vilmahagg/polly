@@ -33,10 +33,10 @@
     </div>
 
     <div class="start" v-if="ready">
-      <button class="back" v-on:click="ready = false">Back</button>
+      <button class="back" v-on:click="ready = false">{{uiLabels.backButton}}</button>
       <div>
         <label id ="pollName">
-          Enter poll name:
+          {{uiLabels.pollName}}
           <input type="text" v-model="id" />
         </label>
       </div>

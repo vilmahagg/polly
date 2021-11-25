@@ -5,5 +5,6 @@
 	"participatePoll": "Participate in poll",
 	"question": "Question",
 	"changeLanguage": "Byt till svenska", 
-	"backButton": "back"
+	"backButton": "Back",
+	"pollName": "Enter poll name:"
 }
