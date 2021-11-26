@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pollName">
     {{pollId}}
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
