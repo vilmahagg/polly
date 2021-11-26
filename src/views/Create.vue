@@ -6,13 +6,13 @@
           <img v-bind:src="this.flag" style="width: 3rem; height: 2rem" />
         </button>
       </div>
-      <h1>EasyPoll</h1> 
+      <h1>EasyPoll</h1>
   </header>
   <div>
-   
+
     <div class="pollTitle" v-if="!isShown">
     <input type="text" v-model="pollId">
-    <button v-on:click="createPoll"> 
+    <button v-on:click="createPoll">
       {{ uiLabels.createPoll }}
     </button>
     </div>
@@ -24,8 +24,8 @@
       <input type="text" v-model="question">
       <div>
         Answers:
-        <input v-for="(_, i) in answers" 
-               v-model="answers[i]" 
+        <input v-for="(_, i) in answers"
+               v-model="answers[i]"
                v-bind:key="'answer'+i">
         <button v-on:click="addAnswer">
           Add answer alternative
@@ -93,16 +93,16 @@ export default {
     },
     addQuestion: function () {
       socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers } )
-      
+
    },
     addAnswer: function () {
       this.answers.push("");
     },
     runQuestion: function () {
-     
+
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
     }
-  }, 
+  },
 }
 </script>
 

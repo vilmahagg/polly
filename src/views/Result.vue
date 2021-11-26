@@ -1,8 +1,22 @@
 <template>
-  <div>
+
+  <header>
+    <h4 id="rubrikRext"> Result</h4><br>
+    <div>
+    <!--  {{pollId}}-->
+    <h2 id="rubrikFråga">
+      <Question v-bind:question="question"
+                v-on:answer="submitAnswer"/>
     {{question}}
-  </div>
-  <Bars v-bind:data="data"/>
+  </h2></div>
+</header>
+
+<main class="page">
+  <section class="showResult">
+<div>
+  <Bars v-bind:data="data"/></div>
+</section>
+</main>
 </template>
 
 <script>
@@ -34,6 +48,66 @@ export default {
       this.question = update.q;
       this.data = {};
     })
-  }
+  },
+
+  methods: {
+    switchLanguage: function () {
+      if (this.lang === "en") {
+        this.lang = "sv";
+        this.flag =
+          "https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png";
+      } else {
+        this.lang = "en";
+        this.flag =
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Svensk_flagg_1815.svg/2560px-Svensk_flagg_1815.svg.png";
+      }
+      socket.emit("switchLanguage", this.lang);
+    },
+  },
 }
 </script>
+
+<style>
+
+header h4 {
+ margin: 0;
+  padding-left:1.3em;
+  font-family: "Lucida Console", "Monaco", monospace;
+  text-align: center;
+  color: rgb(224, 100, 187);
+  text-transform: uppercase;
+  overflow: hidden;
+  position: relative;
+  padding-top: 20px;
+
+}
+
+header h2 {
+ margin: 0;
+  padding-left:1.3em;
+  font-size: 3em;
+  font-family: "Lucida Console", "Monaco", monospace;
+  text-align: center;
+  color: rgb(224, 100, 187);
+  text-transform: uppercase;
+  overflow: hidden;
+  position: relative;
+}
+
+h4{
+  font-size: 1em;
+}
+.page{
+/*  padding: 2em;*/
+}
+
+.showResult{
+background-color: wheat;
+height: 30em;
+padding: 2em;
+}
+.showResult section{
+  padding: 1em;
+}
+
+</style>
