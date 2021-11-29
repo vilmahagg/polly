@@ -30,6 +30,8 @@
     <div class="pollCreation" v-if="isShown">
       <div class="storedQuestions">
         <p>här ska frågorna lagras på ngt vis</p>
+        {{data.questions}}
+        
       </div>
 
       <div class="display">
@@ -125,6 +127,8 @@ export default {
         q: this.question,
         a: this.answers,
       });
+      this.answers=["","","",""];
+      this.question = "";
     },
     addAnswer: function () {
       this.answers.push("");
@@ -163,6 +167,7 @@ export default {
   margin: 1em;
   display: grid;
   grid-gap: 1em;
+  grid-template-columns: 20% 20% 20% 20% 20%;
   grid-template-areas:
   "a b b . ."
   "a b b . ."
@@ -185,7 +190,7 @@ export default {
 
 .questionInput {
   height: 3em;
-  width: 20em;
+  width: 90%;
   margin: 1em;
 }
 
@@ -221,7 +226,7 @@ export default {
 }
 
 .answers {
-  padding: 2em;
+  padding: 1em;
 }
 
 .pollTitle button {
