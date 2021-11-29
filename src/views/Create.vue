@@ -19,8 +19,7 @@
     <div class="pollCreation" v-if="isShown">
       <div class="storedQuestions">
         <p>här ska frågorna lagras på ngt vis</p>
-        {{data.questions}}
-        
+        {{data.questions}} 
       </div>
 
       <div class="display">
@@ -39,6 +38,10 @@
             :placeholder="uiLabels.answer"
           />
         </div>
+      </div>
+
+      <div class="resultDesign">
+        <p>här ska man fixa resultatet</p>
       </div>
 
       <div class="controlpanel">
@@ -143,15 +146,20 @@ export default {
   grid-gap: 1em;
   grid-template-columns: 20% 20% 20% 20% 20%;
   grid-template-areas:
-  "a b b . ."
-  "a b b . ."
-  "a b b . ."
-  "a c c . ."
+  "a b b b d"
+  "a b b b d"
+  "a b b b d"
+  "a c c c d"
   ;
 }
 .storedQuestions{
   grid-area: a;
   background-color: lightgoldenrodyellow;
+}
+
+.resultDesign{
+  background-color: lightgoldenrodyellow;
+  grid-area:d;
 }
 
 .display {
