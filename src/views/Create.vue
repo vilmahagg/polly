@@ -1,9 +1,10 @@
 <template>
+ <div id="nav">
   <header>
      <div class="lang">
         <button class="languageButton" v-on:click="switchLanguage">
-          {{ uiLabels.changeLanguage }} <br />
-          <img v-bind:src="this.flag" style="width: 3rem; height: 2rem" />
+       
+          <img v-bind:src="this.flag"  />
         </button>
       </div>
       <h1>EasyPoll</h1>
@@ -43,6 +44,7 @@
     <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
   </div>
   </div>
+  </div>
 </template>
 
 <script>
@@ -53,7 +55,8 @@ export default {
   name: 'Create',
   data: function () {
     return {
-      lang: "",
+      lang: "en",
+      flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Svensk_flagg_1815.svg/2560px-Svensk_flagg_1815.svg.png",
       pollId: "",
       question: "",
       answers: ["", ""],
@@ -107,6 +110,16 @@ export default {
 </script>
 
 <style>
+
+.nav{ 
+  padding: 30px;
+}
+
+.header{
+  background: rgb(199, 205, 212);
+  height: 10em;
+  margin:0;
+}
 .display{
   background-color: wheat;
   height: 20em
