@@ -61,8 +61,7 @@ fritt att ändra/radera hur man vill */
   cursor: pointer;
   text-align:center;
   background-size: 300% 100%;
-
-    border-radius: 0.5em;
+  border-radius: 0.5em;
     
     /* moz-transition: all .4s ease-in-out;
     -o-transition: all .4s ease-in-out;

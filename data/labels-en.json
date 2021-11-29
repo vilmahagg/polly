@@ -3,8 +3,11 @@
 	"invite": "Invite participants with this link:",
 	"createPoll": "Create poll",
 	"participatePoll": "Participate in poll",
-	"question": "Question",
+	"question": "Enter question here",
 	"changeLanguage": "Byt till svenska", 
 	"backButton": "Back",
-	"pollName": "Enter poll name:"
+	"pollName": "Enter poll name:",
+	"answer": "Type answer here",
+	"addAnswer": "Add answer",
+	"removeAnswer": "Remove answer"
 }
