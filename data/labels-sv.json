@@ -3,8 +3,11 @@
 	"invite": "Bjud in deltagare med den här länken:",
 	"createPoll": "Skapa röstning",
 	"participatePoll": "Delta i röstning",
-	"question": "Fråga",
+	"question": "Skriv fråga här",
 	"changeLanguage": "Change to English", 
 	"backButton": "Tillbaka",
-	"pollName": "Skriv pollens namn:"
+	"pollName": "Skriv pollens namn:",
+	"answer": "Skriv svar här",
+	"addAnswer": "Lägg till svar",
+	"removeAnswer": "Ta bort svar"
 }

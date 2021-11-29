@@ -1,85 +1,100 @@
 <template>
   <header>
-     <div class="lang">
-        <button class="languageButton" v-on:click="switchLanguage">
-          {{ uiLabels.changeLanguage }} <br />
-          <img v-bind:src="this.flag" style="width: 3rem; height: 2rem" />
-        </button>
-      </div>
-      <h1>EasyPoll</h1>
+    <div class="lang">
+      <button class="languageButton" v-on:click="switchLanguage">
+        {{ uiLabels.changeLanguage }} <br />
+        <img v-bind:src="this.flag" style="width: 3rem; height: 2rem" />
+      </button>
+    </div>
+    <h1>EasyPoll</h1>
   </header>
-  <div>
-
+  <div class="createView">
     <div class="pollTitle" v-if="!isShown">
-    <input type="text" v-model="pollId">
-    <button v-on:click="createPoll">
-      {{ uiLabels.createPoll }}
-    </button>
+      <input type="text" v-model="pollId" />
+      <button v-on:click="createPoll">
+        {{ uiLabels.createPoll }}
+      </button>
     </div>
 
-    <div class="pollCreation" v-if="isShown"> <!--visar/döljer create -->
+    <div class="pollCreation" v-if="isShown">
+      <div class="storedQuestions">
+        <p>här ska frågorna lagras på ngt vis</p>
+      </div>
 
-    <div class="display">
-      {{uiLabels.question}}:
-      <input type="text" v-model="question">
-      <div>
-        Answers:
-        <input v-for="(_, i) in answers"
-               v-model="answers[i]"
-               v-bind:key="'answer'+i">
-        <button v-on:click="addAnswer">
-          Add answer alternative
-        </button>
+      <div class="display">
+        <input
+          class="questionInput"
+          type="text"
+          v-model="question"
+          :placeholder="uiLabels.question"
+        />
+        <div class="answers">
+          <input
+            class="answersInput"
+            v-for="(_, i) in answers"
+            v-model="answers[i]"
+            v-bind:key="'answer' + i"
+            :placeholder="uiLabels.answer"
+          />
+        </div>
+      </div>
+
+      <div class="controlpanel">
+        <div class="addRemoveButtons">
+          <button v-on:click="addAnswer">
+            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" />
+            {{ uiLabels.addAnswer }}
+          </button>
+          <button v-on:click="deleteAnswer">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
+            />
+            {{ uiLabels.removeAnswer }}
+          </button>
+        </div>
+        <button v-on:click="addQuestion">Add question</button>
+        <input type="number" v-model="questionNumber" />
+        <button v-on:click="runQuestion">Run question</button>
+        <!-- {{ data }} -->
+        <router-link v-bind:to="'/result/' + pollId">Check result</router-link>
       </div>
     </div>
-    <button v-on:click="addQuestion">
-      Add question
-    </button>
-    <input type="number" v-model="questionNumber">
-    <button v-on:click="runQuestion">
-      Run question
-    </button>
-    {{data}}
-    <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
-  </div>
   </div>
 </template>
 
 <script>
-import io from 'socket.io-client';
+import io from "socket.io-client";
 const socket = io();
 
 export default {
-  name: 'Create',
+  name: "Create",
   data: function () {
     return {
       lang: "",
       pollId: "",
       question: "",
-      answers: ["", ""],
+      answers: ["", "", "",""],
       questionNumber: 0,
       data: {},
       uiLabels: {},
-      isShown: false
-    }
+      isShown: false,
+    };
   },
   created: function () {
     this.lang = this.$route.params.lang;
     socket.emit("pageLoaded", this.lang);
     socket.on("init", (labels) => {
-      this.uiLabels = labels
-    })
-    socket.on("dataUpdate", (data) =>
-      this.data = data
-    )
-    socket.on("pollCreated", (data) =>
-      this.data = data)
+      this.uiLabels = labels;
+    });
+    socket.on("dataUpdate", (data) => (this.data = data));
+    socket.on("pollCreated", (data) => (this.data = data));
   },
   methods: {
     createPoll: function () {
-      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
+      socket.emit("createPoll", { pollId: this.pollId, lang: this.lang });
       this.isShown = true;
-   },switchLanguage: function () {
+    },
+    switchLanguage: function () {
       if (this.lang === "en") {
         this.lang = "sv";
         this.flag =
@@ -92,29 +107,105 @@ export default {
       socket.emit("switchLanguage", this.lang);
     },
     addQuestion: function () {
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers } )
-
-   },
+      socket.emit("addQuestion", {
+        pollId: this.pollId,
+        q: this.question,
+        a: this.answers,
+      });
+    },
     addAnswer: function () {
       this.answers.push("");
     },
+    deleteAnswer: function () {
+      if (this.answers.length <= 2) {
+        return;
+      }
+      this.answers.pop();
+    },
     runQuestion: function () {
-
-      socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
-    }
+      socket.emit("runQuestion", {
+        pollId: this.pollId,
+        questionNumber: this.questionNumber,
+      });
+    },
   },
-}
+};
 </script>
 
 <style>
-.display{
-  background-color: wheat;
-  height: 20em
+.pollCreation {
+  margin: 1em;
+  display: grid;
+  grid-gap: 1em;
+  grid-template-areas:
+  "a b b . ."
+  "a b b . ."
+  "a b b . ."
+  "a c c . ."
+  ;
+}
+.storedQuestions{
+  grid-area: a;
+  background-color: lightgoldenrodyellow;
 }
 
-.pollTitle button{
- height: 3em; width:10em;
+.display {
+  background-color: wheat;
+  grid-area: b;
+  height: 25em;
+  
 }
-.pollTitle input{height: 2.6em; width: 12em;}
-.pollTitle{padding:3em}
+
+.questionInput {
+  height: 3em;
+  width: 20em;
+  margin: 1em;
+}
+
+.answersInput {
+  height: 4em;
+  width: 10em;
+  margin: 2em;
+}
+
+.display input {
+  border: none;
+  text-align: center;
+  background-size: 300% 100%;
+  border-radius: 0.5em;
+  transition: 0.3s;
+}
+
+.display input:hover {
+  background-color: rgb(201, 192, 192);
+}
+
+.controlpanel {
+  margin: 1em;
+  grid-area: c;
+}
+
+.controlpanel img {
+  height: 1em;
+}
+
+.controlpanel button{
+  margin: 0.3em;
+}
+
+.answers {
+  padding: 2em;
+}
+
+.pollTitle button {
+  height: 3em;
+  width: 10em;
+}
+.pollTitle input {
+  height: 2.6em;
+  width: 12em;
+}
+.pollTitle {
+  padding: 3em;
+}
 </style>
