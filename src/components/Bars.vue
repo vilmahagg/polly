@@ -4,7 +4,7 @@
     <div v-bind:style="{height: item + '5px'}">
       <span> {{item}} </span>
     </div>
-    <div>
+    <div class="text">
       {{key}}
     </div>
   </div>
@@ -22,9 +22,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+.text{
+color: black;
+font-family: "Lucida Console", "Monaco", monospace;
+}
+
 .bar {
   display: inline-block;
-  width: 50px;
+  width: 70px;
   vertical-align: bottom;
   padding: 20px;
 }
@@ -32,6 +38,7 @@ export default {
 .bar span {
   position: relative;
   top: -1.2em;
+
 }
 .bar:nth-child(1) div:nth-child(1) {
   background-color:red;
@@ -50,6 +57,9 @@ export default {
 }
 
 .wrapper {
-  padding:3em;
+padding:3em;
+  word-wrap: break-word;
+
 }
+
 </style>

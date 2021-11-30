@@ -13,7 +13,7 @@
 
 <main class="page">
   <section class="showResult">
-<div>
+<div class="theBars">
   <Bars v-bind:data="data"/></div>
 </section>
 </main>
@@ -101,11 +101,15 @@ h4{
 /*  padding: 2em;*/
 }
 
+.theBars{
+}
+
 .showResult{
 background-color: wheat;
 height: 30em;
 padding: 2em;
 }
+
 .showResult section{
   padding: 1em;
 }

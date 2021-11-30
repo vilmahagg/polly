@@ -1,15 +1,5 @@
 <template>
- <div id="nav">
   <header>
-<<<<<<< HEAD
-     <div class="lang">
-        <button class="languageButton" v-on:click="switchLanguage">
-       
-          <img v-bind:src="this.flag"  />
-        </button>
-      </div>
-      <h1>EasyPoll</h1>
-=======
     <div class="lang">
       <button class="languageButton" v-on:click="switchLanguage">
         {{ uiLabels.changeLanguage }} <br />
@@ -17,7 +7,6 @@
       </button>
     </div>
     <h1>EasyPoll</h1>
->>>>>>> f3a0eecc6de2a14f13f2b83ee46e9a303c5b8da9
   </header>
   <div class="createView">
     <div class="pollTitle" v-if="!isShown">
@@ -31,7 +20,6 @@
       <div class="storedQuestions">
         <p>här ska frågorna lagras på ngt vis</p>
         {{data.questions}}
-        
       </div>
 
       <div class="display">
@@ -50,6 +38,10 @@
             :placeholder="uiLabels.answer"
           />
         </div>
+      </div>
+
+      <div class="resultDesign">
+        <p>här ska man fixa resultatet</p>
       </div>
 
       <div class="controlpanel">
@@ -73,19 +65,16 @@
       </div>
     </div>
   </div>
-  </div>
 </template>
 
 <script>
 import io from "socket.io-client";
 const socket = io();
-
 export default {
   name: "Create",
   data: function () {
     return {
-      lang: "en",
-      flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Svensk_flagg_1815.svg/2560px-Svensk_flagg_1815.svg.png",
+      lang: "",
       pollId: "",
       question: "",
       answers: ["", "", "",""],
@@ -150,56 +139,42 @@ export default {
 </script>
 
 <style>
-<<<<<<< HEAD
-
-.nav{ 
-  padding: 30px;
-}
-
-.header{
-  background: rgb(199, 205, 212);
-  height: 10em;
-  margin:0;
-}
-.display{
-=======
 .pollCreation {
   margin: 1em;
   display: grid;
   grid-gap: 1em;
   grid-template-columns: 20% 20% 20% 20% 20%;
   grid-template-areas:
-  "a b b . ."
-  "a b b . ."
-  "a b b . ."
-  "a c c . ."
+  "a b b b d"
+  "a b b b d"
+  "a b b b d"
+  "a c c c d"
   ;
 }
 .storedQuestions{
   grid-area: a;
   background-color: lightgoldenrodyellow;
 }
-
+.resultDesign{
+  background-color: lightgoldenrodyellow;
+  grid-area:d;
+}
 .display {
->>>>>>> f3a0eecc6de2a14f13f2b83ee46e9a303c5b8da9
   background-color: wheat;
   grid-area: b;
   height: 25em;
-  
-}
 
+}
 .questionInput {
   height: 3em;
   width: 90%;
   margin: 1em;
 }
-
 .answersInput {
   height: 4em;
   width: 10em;
   margin: 2em;
 }
-
 .display input {
   border: none;
   text-align: center;
@@ -207,28 +182,22 @@ export default {
   border-radius: 0.5em;
   transition: 0.3s;
 }
-
 .display input:hover {
   background-color: rgb(201, 192, 192);
 }
-
 .controlpanel {
   margin: 1em;
   grid-area: c;
 }
-
 .controlpanel img {
   height: 1em;
 }
-
 .controlpanel button{
   margin: 0.3em;
 }
-
 .answers {
   padding: 1em;
 }
-
 .pollTitle button {
   height: 3em;
   width: 10em;
