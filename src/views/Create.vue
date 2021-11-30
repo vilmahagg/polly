@@ -27,6 +27,7 @@
         <p>här ska frågorna lagras på ngt vis</p>
         {{data}} <br>
         Fråga:{{question}}, Svar:{{answers}}
+
       </div>
 
       <div class="display">
@@ -83,7 +84,6 @@
 <script>
 import io from "socket.io-client";
 const socket = io();
-
 export default {
   name: "Create",
   data: function () {
@@ -170,7 +170,6 @@ export default {
   grid-area: a;
   background-color: lightgoldenrodyellow;
 }
-
 .resultDesign{
   background-color: lightgoldenrodyellow;
   grid-area:d;
@@ -195,13 +194,11 @@ export default {
   width: 90%;
   margin: 1em;
 }
-
 .answersInput {
   height: 4em;
   width: 10em;
   margin: 2em;
 }
-
 .display input {
   border: none;
   text-align: center;
@@ -209,28 +206,22 @@ export default {
   border-radius: 0.5em;
   transition: 0.3s;
 }
-
 .display input:hover {
   background-color: rgb(201, 192, 192);
 }
-
 .controlpanel {
   margin: 1em;
   grid-area: c;
 }
-
 .controlpanel img {
   height: 1em;
 }
-
 .controlpanel button{
   margin: 0.3em;
 }
-
 .answers {
   padding: 1em;
 }
-
 .createPollButton{
   height: 3em;
   width: 10em;
