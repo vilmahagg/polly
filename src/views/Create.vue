@@ -10,8 +10,14 @@
   </header>
   <div class="createView">
     <div class="pollTitle" v-if="!isShown">
+     <router-link v-bind:to="'/'" tag="button">
+          <button class="back">
+            {{uiLabels.backButton}}
+          </button>
+      </router-link>
+
       <input type="text" v-model="pollId" />
-      <button v-on:click="createPoll">
+      <button class="createPollButton" v-on:click="createPoll">
         {{ uiLabels.createPoll }}
       </button>
     </div>
@@ -143,7 +149,6 @@ export default {
   margin: 1em;
   display: grid;
   grid-gap: 1em;
-  grid-template-columns: 20% 20% 20% 20% 20%;
   grid-template-areas:
   "a b b b d"
   "a b b b d"
@@ -198,13 +203,14 @@ export default {
 .answers {
   padding: 1em;
 }
-.pollTitle button {
+.createPollButton{
   height: 3em;
   width: 10em;
 }
 .pollTitle input {
   height: 2.6em;
   width: 12em;
+  margin:2em;
 }
 .pollTitle {
   padding: 3em;
