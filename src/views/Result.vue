@@ -1,5 +1,5 @@
-<template>
 
+<template>
   <header>
     <h4 id="rubrikRext"> Result</h4><br>
     <div>
@@ -10,21 +10,18 @@
     {{question}}
   </h2></div>
 </header>
-
 <main class="page">
   <section class="showResult">
-<div>
+<div class="theBars">
   <Bars v-bind:data="data"/></div>
 </section>
 </main>
 </template>
-
 <script>
 // @ is an alias to /src
 import Bars from '@/components/Bars.vue';
 import io from 'socket.io-client';
 const socket = io();
-
 export default {
   name: 'Result',
   components: {
@@ -49,7 +46,6 @@ export default {
       this.data = {};
     })
   },
-
   methods: {
     switchLanguage: function () {
       if (this.lang === "en") {
@@ -66,9 +62,7 @@ export default {
   },
 }
 </script>
-
 <style>
-
 header h4 {
  margin: 0;
   padding-left:1.3em;
@@ -79,9 +73,7 @@ header h4 {
   overflow: hidden;
   position: relative;
   padding-top: 20px;
-
 }
-
 header h2 {
  margin: 0;
   padding-left:1.3em;
@@ -93,14 +85,14 @@ header h2 {
   overflow: hidden;
   position: relative;
 }
-
 h4{
   font-size: 1em;
 }
 .page{
 /*  padding: 2em;*/
 }
-
+.theBars{
+}
 .showResult{
 background-color: wheat;
 height: 30em;
@@ -109,5 +101,4 @@ padding: 2em;
 .showResult section{
   padding: 1em;
 }
-
 </style>
