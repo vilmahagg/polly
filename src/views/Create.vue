@@ -25,7 +25,8 @@
     <div class="pollCreation" v-if="isShown">
       <div class="storedQuestions">
         <p>här ska frågorna lagras på ngt vis</p>
-        {{data.questions}} 
+        {{data}} <br>
+        Fråga:{{question}}, Svar:{{answers}}
       </div>
 
       <div class="display">
@@ -46,8 +47,14 @@
         </div>
       </div>
 
-      <div class="resultDesign">
+      <div class="resultDesign"> 
         <p>här ska man fixa resultatet</p>
+        <div class="resultDisplay">
+          <p>shows example of result</p>
+        </div>
+        <button class="bars" v-on:click="resultType='bars'">Bars</button><br>
+        <button class="circle" v-on:click="resultType = 'circle'">Circle</button>
+        {{resultType}}
       </div>
 
       <div class="controlpanel">
@@ -89,6 +96,7 @@ export default {
       data: {},
       uiLabels: {},
       isShown: false,
+      resultType: "bars" //försök till att kunna skicka med vilken typ av resultat det ska vara. ej klart.
     };
   },
   created: function () {
@@ -122,6 +130,7 @@ export default {
         pollId: this.pollId,
         q: this.question,
         a: this.answers,
+        resultType: this.resultType
       });
       this.answers=["","","",""];
       this.question = "";
@@ -145,11 +154,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .pollCreation {
-  margin: 1em;
   display: grid;
-  grid-gap: 1em;
+  grid-gap: 1%;
+  grid-auto-columns: minmax(0, 1fr);
   grid-template-areas:
   "a b b b d"
   "a b b b d"
@@ -167,10 +176,17 @@ export default {
   grid-area:d;
 }
 
+.resultDisplay{
+  background-color: white;
+  width:90%;
+  height:20%;
+  margin:auto;
+}
+
 .display {
   background-color: wheat;
   grid-area: b;
-  height: 25em;
+  min-height: 25em;
   
 }
 
