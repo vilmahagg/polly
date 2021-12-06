@@ -1,5 +1,5 @@
 <template>
-  <div class="question" v-if="selectedAnswer == null">
+  <div class="question" v-if="selectedAnswer == null || answered==false">
     <p class="theQuestion">{{ question.q }}</p>
     <div class="answers">
       <button
@@ -29,10 +29,17 @@
 </template>
 
 <script>
+
 export default {
   name: "Bars",
   props: {
     question: Object,
+  },
+  watch: {
+    question: function() {
+      this.answered = false;
+      
+    }
   },
   data: function () {
     return {
@@ -106,9 +113,7 @@ fritt att ändra/radera hur man vill */
     transition: all .4s ease-in-out; */
 }
 
-.selectedAnswer {
-  color: black;
-}
+
 
 .waitingDiv {
   position:relative;
