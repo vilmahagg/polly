@@ -34,6 +34,10 @@ Data.prototype.createPoll = function(pollId, lang="en") {
   return this.polls[pollId];
 }
 
+Data.prototype.createQuestion = function(pollId,) {
+  poll.question = {};
+}
+
 Data.prototype.addQuestion = function(pollId, q) {
   const poll = this.polls[pollId];
   console.log("question added to", pollId, q);
@@ -41,6 +45,14 @@ Data.prototype.addQuestion = function(pollId, q) {
     poll.questions.push(q);
   }
 }
+
+Data.prototype.editQuestion = function(pollId, index, newQuestion) {
+  const poll = this.polls[pollId];
+  if (typeof poll !== 'undefined') {
+  poll.questions[index] = newQuestion;
+  }
+  console.log("question ", index, " in poll: ", pollId, " updated to:", newQuestion)
+}  //skicka med datan för den editade frågan i newQuestion
 
 Data.prototype.getQuestion = function(pollId, qId=null) {
   const poll = this.polls[pollId];
@@ -52,6 +64,13 @@ Data.prototype.getQuestion = function(pollId, qId=null) {
     return poll.questions[poll.currentQuestion];
   }
   return []
+}
+
+Data.prototype.getAllQuestions = function(pollId) {
+  const poll = this.polls[pollId];
+  if (typeof poll !== 'undefined') {
+    return poll.questions
+  }
 }
 
 Data.prototype.submitAnswer = function(pollId, answer) {

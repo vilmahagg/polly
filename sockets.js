@@ -14,9 +14,16 @@ function sockets(io, socket, data) {
   });
 
   socket.on('addQuestion', function(d) {
-    data.addQuestion(d.pollId, {q: d.q, a: d.a}, d.resultType);
+    data.addQuestion(d.pollId, {q: d.q, a: d.a});
     socket.emit('dataUpdate', data.getAnswers(d.pollId));
   });
+
+  socket.on('editQuestion', function(d) {
+    data.editQuestion(d.pollId, d.index, {q: d.q, a: d.a});
+    socket.emit('questionEdited', data.getAllQuestions(d.pollId));
+    console.log("EDIT2", d.index);
+  });
+    
 
   socket.on('joinPoll', function(pollId) {
     socket.join(pollId);
