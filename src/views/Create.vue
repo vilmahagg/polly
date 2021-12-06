@@ -2,7 +2,7 @@
   <header>
     <div class="lang">
       <button class="languageButton" v-on:click="switchLanguage">
-        {{ uiLabels.changeLanguage }} <br />
+        <!-- {{ uiLabels.changeLanguage }} <br /> -->
         <img v-bind:src="this.flag" style="width: 3rem; height: 2rem" />
       </button>
     </div>
@@ -10,10 +10,10 @@
   </header>
   <div class="createView">
     <div class="pollTitle" v-if="!isShown">
-     <router-link v-bind:to="'/'" tag="button">
-          <button class="back">
-            {{uiLabels.backButton}}
-          </button>
+      <router-link v-bind:to="'/'" tag="button">
+        <button class="back">
+          {{ uiLabels.backButton }}
+        </button>
       </router-link>
 
       <input type="text" v-model="pollId" />
@@ -25,9 +25,17 @@
     <div class="pollCreation" v-if="isShown">
       <div class="storedQuestions">
         <p>här ska frågorna lagras på ngt vis</p>
-        {{data}} <br>
-        Fråga:{{question}}, Svar:{{answers}}
 
+        <div v-for="(question,index) in data.questions" v-bind:key="'question' + index">
+          <button v-on:click="showQuestion(question, index)">
+             {{index}}: {{ question.q }}
+          </button>
+        </div>
+
+        <!-- Fråga:{{ question }}, Svar:{{ answers }} -->
+        <div>
+          <button v-on:click="addSlide">Add new slide/question</button>
+        </div>
       </div>
 
       <div class="display">
@@ -37,41 +45,58 @@
           v-model="question"
           :placeholder="uiLabels.question"
         />
-        <div class="answers">
+        <div
+          class="answers"
+          v-for="(_, i) in answers"
+          v-bind:key="'answer' + i"
+        >
           <input
             class="answersInput"
-            v-for="(_, i) in answers"
             v-model="answers[i]"
-            v-bind:key="'answer' + i"
             :placeholder="uiLabels.answer"
           />
+          <button v-on:click="deleteAnswer(i)">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
+            />
+          </button>
         </div>
       </div>
 
-      <div class="resultDesign"> 
+      <div class="resultDesign">
         <p>här ska man fixa resultatet</p>
         <div class="resultDisplay">
           <p>shows example of result</p>
         </div>
-        <button class="bars" v-on:click="resultType='bars'">Bars</button><br>
-        <button class="circle" v-on:click="resultType = 'circle'">Circle</button>
-        {{resultType}}
+        <button class="bars" v-on:click="resultType = 'bars'">Bars</button
+        ><br />
+        <button class="circle" v-on:click="resultType = 'circle'">
+          Circle
+        </button>
+        {{ resultType }}
       </div>
 
       <div class="controlpanel">
         <div class="addRemoveButtons">
+           <div class="addAnswer">
           <button v-on:click="addAnswer">
             <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" />
             {{ uiLabels.addAnswer }}
           </button>
-          <button v-on:click="deleteAnswer">
+        </div>
+          <!-- <button v-on:click="addAnswer">
+            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" />
+            {{ uiLabels.addAnswer }}
+          </button> -->
+          <!-- <button v-on:click="deleteAnswer">
             <img
               src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
             />
             {{ uiLabels.removeAnswer }}
-          </button>
+          </button> -->
         </div>
         <button v-on:click="addQuestion">Add question</button>
+        <button v-on:click="editQuestion">Save/Edit question</button>
         <input type="number" v-model="questionNumber" />
         <button v-on:click="runQuestion">Run question</button>
         <!-- {{ data }} -->
@@ -91,12 +116,13 @@ export default {
       lang: "",
       pollId: "",
       question: "",
-      answers: ["", "", "",""],
+      answers: ["", "", "", ""],
+      index: null,
       questionNumber: 0,
       data: {},
       uiLabels: {},
       isShown: false,
-      resultType: "bars" //försök till att kunna skicka med vilken typ av resultat det ska vara. ej klart.
+      resultType: "bars", //försök till att kunna skicka med vilken typ av resultat det ska vara. ej klart.
     };
   },
   created: function () {
@@ -107,6 +133,7 @@ export default {
     });
     socket.on("dataUpdate", (data) => (this.data = data));
     socket.on("pollCreated", (data) => (this.data = data));
+    socket.on("questionEdited", (data) => (this.data = data));
   },
   methods: {
     createPoll: function () {
@@ -130,25 +157,42 @@ export default {
         pollId: this.pollId,
         q: this.question,
         a: this.answers,
-        resultType: this.resultType
       });
-      this.answers=["","","",""];
+    },
+
+    editQuestion: function () {
+      console.log("EDIT");
+      socket.emit("editQuestion", {
+        pollId: this.pollId,
+        q: this.question,
+        a: this.answers,
+        index: this.index
+      });
+    },
+
+    addSlide: function () {
+      this.answers = ["", "", "", ""];
       this.question = "";
     },
     addAnswer: function () {
       this.answers.push("");
     },
-    deleteAnswer: function () {
+    deleteAnswer: function (i) {
       if (this.answers.length <= 2) {
         return;
       }
-      this.answers.pop();
+      this.answers.splice(i, 1);
     },
     runQuestion: function () {
       socket.emit("runQuestion", {
         pollId: this.pollId,
         questionNumber: this.questionNumber,
       });
+    },
+    showQuestion: function (question, index) {
+      this.question = question.q;
+      this.answers = question.a;
+      this.index = index;
     },
   },
 };
@@ -160,33 +204,31 @@ export default {
   grid-gap: 1%;
   grid-auto-columns: minmax(0, 1fr);
   grid-template-areas:
-  "a b b b d"
-  "a b b b d"
-  "a b b b d"
-  "a c c c d"
-  ;
+    "a b b b d"
+    "a b b b d"
+    "a b b b d"
+    "a c c c d";
 }
-.storedQuestions{
+.storedQuestions {
   grid-area: a;
   background-color: lightgoldenrodyellow;
 }
-.resultDesign{
+.resultDesign {
   background-color: lightgoldenrodyellow;
-  grid-area:d;
+  grid-area: d;
 }
 
-.resultDisplay{
+.resultDisplay {
   background-color: white;
-  width:90%;
-  height:20%;
-  margin:auto;
+  width: 90%;
+  height: 20%;
+  margin: auto;
 }
 
 .display {
   background-color: wheat;
   grid-area: b;
   min-height: 25em;
-  
 }
 
 .questionInput {
@@ -197,7 +239,7 @@ export default {
 .answersInput {
   height: 4em;
   width: 10em;
-  margin: 2em;
+  margin: 0.5em;
 }
 .display input {
   border: none;
@@ -207,7 +249,7 @@ export default {
   transition: 0.3s;
 }
 .display input:hover {
-  background-color: rgb(201, 192, 192);
+  background-color: rgb(209, 209, 209);
 }
 .controlpanel {
   margin: 1em;
@@ -216,20 +258,40 @@ export default {
 .controlpanel img {
   height: 1em;
 }
-.controlpanel button{
+.controlpanel button {
   margin: 0.3em;
 }
+
 .answers {
-  padding: 1em;
+  display: inline-block;
+  margin: 1em;
 }
-.createPollButton{
+.answers button {
+  border: none;
+  border-radius: 2em;
+  height: 1.5em;
+  width: 1.5em;
+  padding: 0.01em;
+}
+.answers img {
+  height: 1.5em;
+  width: 1.5em;
+}
+.addAnswer{
+  position: relative;
+  float: right;
+}
+.addAnswer img{
+  height:2em;
+}
+.createPollButton {
   height: 3em;
   width: 10em;
 }
 .pollTitle input {
   height: 2.6em;
   width: 12em;
-  margin:2em;
+  margin: 2em;
 }
 .pollTitle {
   padding: 3em;
