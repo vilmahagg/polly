@@ -6,7 +6,10 @@
         <img v-bind:src="this.flag" style="width: 3rem; height: 2rem" />
       </button>
     </div>
+    <router-link v-bind:to="'/'" tag="h1">
     <h1>EasyPoll</h1>
+    </router-link>
+    <p>The name of this poll is <span class="pollName">{{pollId}}</span></p>
   </header>
   <div class="createView">
     <div class="pollTitle" v-if="!isShown">
@@ -15,7 +18,8 @@
           {{ uiLabels.backButton }}
         </button>
       </router-link>
-
+      <h3>Choose a name for your poll!</h3>
+      <h5> Make sure to remember the name, it will be used to access to poll later.</h5>
       <input type="text" v-model="pollId" />
       <button class="createPollButton" v-on:click="createPoll">
         {{ uiLabels.createPoll }}
@@ -24,13 +28,17 @@
 
     <div class="pollCreation" v-if="isShown">
       <div class="storedQuestions">
-        <p>här ska frågorna lagras på ngt vis</p>
+        <p>QUESTIONS</p>
 
         <div v-for="(question,index) in data.questions" v-bind:key="'question' + index">
           <button v-on:click="showQuestion(question, index)">
              {{index}}: {{ question.q }}
           </button>
         </div>
+
+        <!-- <div v-for="(slide,index) in slides" v-bind:key="'slide' +index">
+          <button>hej</button>
+        </div> -->
 
         <!-- Fråga:{{ question }}, Svar:{{ answers }} -->
         <div>
@@ -64,16 +72,17 @@
       </div>
 
       <div class="resultDesign">
-        <p>här ska man fixa resultatet</p>
+        <h4>RESULT (elr annan titel)</h4>
+        <h5>Choose how you want the result of your poll to be presented:</h5>
         <div class="resultDisplay">
-          <p>shows example of result</p>
+          <img v-if="resultType == 'bars'" src="https://www.pngrepo.com/png/326909/512/bar-chart-sharp.png">
+          <img v-if="resultType == 'circle'" src="https://static.thenounproject.com/png/32976-200.png">
         </div>
-        <button class="bars" v-on:click="resultType = 'bars'">Bars</button
-        ><br />
+        <button class="bars" v-on:click="resultType = 'bars'">Bar Chart</button>
         <button class="circle" v-on:click="resultType = 'circle'">
-          Circle
+          Pie Chart
         </button>
-        {{ resultType }}
+       
       </div>
 
       <div class="controlpanel">
@@ -122,6 +131,7 @@ export default {
       data: {},
       uiLabels: {},
       isShown: false,
+      slides: [""],
       resultType: "bars", //försök till att kunna skicka med vilken typ av resultat det ska vara. ej klart.
     };
   },
@@ -156,7 +166,7 @@ export default {
       socket.emit("addQuestion", {
         pollId: this.pollId,
         q: this.question,
-        a: this.answers,
+        a: this.answers
       });
     },
 
@@ -171,6 +181,12 @@ export default {
     },
 
     addSlide: function () {
+      this.slides.push("");
+      // socket.emit("addSlide", {
+      //   pollId: this.pollId,
+      //   q: "",
+      //   a: ["", "", "", ""]
+      // });
       this.answers = ["", "", "", ""];
       this.question = "";
     },
@@ -212,17 +228,38 @@ export default {
 .storedQuestions {
   grid-area: a;
   background-color: lightgoldenrodyellow;
+  padding:0.5em;
+}
+.storedQuestions button{
+  background-color: white;
+  border: 0.1em solid black;
+  /* border-radius: 0.5em; */
+  transition: 0.3s;
+  width: 100%;
+  height: 4em;
+  margin-bottom: 0.5em;
+}
+.storedQuestions button:hover{
+  background-color: rgb(223, 223, 219);
+  
 }
 .resultDesign {
   background-color: lightgoldenrodyellow;
   grid-area: d;
+  
 }
 
-.resultDisplay {
-  background-color: white;
+.resultDisplay img{
   width: 90%;
   height: 20%;
   margin: auto;
+  
+}
+
+.resultDesign button{
+  margin:0.5em;
+  height:5em;
+  
 }
 
 .display {
@@ -284,16 +321,39 @@ export default {
 .addAnswer img{
   height:2em;
 }
-.createPollButton {
-  height: 3em;
-  width: 10em;
+
+
+
+/* CSS för att anpassa header */
+header{
+  height:6em;
 }
-.pollTitle input {
-  height: 2.6em;
-  width: 12em;
-  margin: 2em;
+header a{
+  text-decoration: none;
 }
+
+.pollName{
+  font-family:"Lucida Console", "Monaco", monospace;;
+  font-size:1em;
+}
+
+
+/* CSS för pollId-sidan */
 .pollTitle {
   padding: 3em;
 }
+.back {
+  float:left;
+}
+.createPollButton {
+  height: 3em;
+  width: 10em;
+  border-radius: 0.5em;
+}
+.pollTitle input {
+  height: 2.6em;
+  width: 18em;
+  margin: 2em;
+}
+
 </style>
