@@ -1,9 +1,14 @@
 <template>
-  <div class="pollName">
-    {{pollId}}
+<header>
+    
+    <h1>EasyPoll</h1>
+    <div class="pollName">
+    <p>PollId:{{pollId}}</p>
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
   </div>
+  </header>
+  
 </template>
 
 <script>
@@ -36,7 +41,9 @@ export default {
   methods: {
     submitAnswer: function (answer) {
       socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
-    }
+    }, 
+  
+  
   }
 }
 </script>
