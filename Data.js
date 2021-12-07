@@ -46,6 +46,13 @@ Data.prototype.addQuestion = function(pollId, q) {
   }
 }
 
+Data.prototype.deleteQuestion = function(pollId,q,index) {
+  const poll = this.polls[pollId];
+  if (typeof poll !== 'undefined') {
+    poll.questions.splice(index,1);
+  }
+}
+
 Data.prototype.editQuestion = function(pollId, index, newQuestion) {
   const poll = this.polls[pollId];
   if (typeof poll !== 'undefined') {
