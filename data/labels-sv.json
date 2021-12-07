@@ -9,5 +9,7 @@
 	"pollName": "Skriv pollens namn:",
 	"answer": "Skriv svar här",
 	"addAnswer": "Lägg till svar",
-	"removeAnswer": "Ta bort svar"
+	"removeAnswer": "Ta bort svar",
+	"aboutUs": "Om oss", 
+	"service": "Kundservice"
 }

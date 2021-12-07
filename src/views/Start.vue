@@ -13,6 +13,10 @@
           Welcome to our poll application EasyPoll! <br />
           Choose if you want to create or participate in a poll
         </p>
+
+        <h2 class= "aboutUs">{{ uiLabels.aboutUS }}</h2>
+       <h2 class = "service"> {{ uiLabels.service }} </h2>
+
       </header>
     
 
@@ -20,7 +24,7 @@
       <div class="create" v-if="!ready">
         <router-link v-bind:to="'/create/' + lang" tag="button">
           <button class="createButton">
-            <h3>{{ uiLabels.createPoll }}</h3>
+            <h3>{{ uiLabels.createPoll }} </h3>
           </button>
         </router-link>
       </div>
@@ -90,20 +94,29 @@ export default {
 
 <style>
 header {
-  background: rgb(199, 205, 212);
-  height: 10em;
+  background-image: url("https://data.whicdn.com/images/334251300/original.gif");
+  height: 12em;
   margin:0;
+  border-radius: 25px;
+margin-bottom: 3em;
+
+
 }
 header h1 {
- margin: 0; 
-  padding-left:1.3em;
-  font-size: 3em;
-  font-family: "Lucida Console", "Monaco", monospace;
   text-align: center;
+  margin: 0; 
+  font-size: 3.5em;
+  font-family: "Lucida Console", "Monaco", monospace;
+  
   color: rgb(224, 100, 187);
   text-transform: uppercase;
-  overflow: hidden;
+  
   position: relative;
+  display: inline-block;
+}
+
+header p{
+  text-align:center 
 }
 
 h3{
@@ -123,9 +136,25 @@ h3{
 }
 
 .createButton {
-  width: 80%;
+  width: 70%;
   height: 100%;
-  background-color: rgb(159, 208, 236);
+  background-size: 300% 100%;
+  border-radius: 25px;
+  text-transform: uppercase;
+
+
+   background-image: linear-gradient(
+    to right,
+    #e89aeb,
+    #b67ee4,
+    #b9a0e9,
+    #dc3cf1
+  );
+  box-shadow: 7px 7px 15px 0 rgba(199, 23, 190, 0.75);
+}
+.createButton:hover {
+  background-position: 100% 0;
+  
 }
 
 .participate {
@@ -136,12 +165,30 @@ h3{
   width: 80%;
   height: 50%;
   background-color: rgb(164, 209, 164);
+  border-radius: 25px;
 }
 
 .readyButton {
-  width: 80%;
+  width: 70%;
   height: 100%;
   background-color: rgb(161, 209, 161);
+  border-radius: 25px;
+  text-transform: uppercase;
+  background-size: 300% 100%;
+
+
+   background-image: linear-gradient(
+    to right,
+    #e89aeb,
+    #b67ee4,
+    #b9a0e9,
+    #dc3cf1
+  );
+  box-shadow: 7px 7px 15px 0 rgba(199, 23, 190, 0.75);
+}
+.readyButton:hover {
+  background-position: 100% 0;
+  
 }
 .lang{margin:0; padding:0;}
 
@@ -150,6 +197,7 @@ h3{
   font-weight: bold;
   width: 5em;
   height: 3em;
+  display: inline-block;
 }
 .languageButton img {
   width: 4em;
@@ -162,7 +210,7 @@ button:hover {
 
 .start {
   height: 30em;
-  background-color: rgb(240, 181, 158);
+  background-color: rgb(255, 255, 255);
   padding: 2em;
 }
 .start div {
