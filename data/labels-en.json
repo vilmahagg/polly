@@ -9,5 +9,7 @@
 	"pollName": "Enter poll name:",
 	"answer": "Type answer here",
 	"addAnswer": "Add answer",
-	"removeAnswer": "Remove answer"
+	"removeAnswer": "Remove answer",
+	"aboutUs": "About Us", 
+	"service": "Customer Service"
 }

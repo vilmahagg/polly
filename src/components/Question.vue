@@ -1,5 +1,5 @@
 <template>
-  <div class="question" v-if="selectedAnswer == null || answered==false">
+  <div class="question" v-if="selectedAnswer == null || answered == false">
     <p class="theQuestion">{{ question.q }}</p>
     <div class="answers">
       <button
@@ -14,32 +14,36 @@
     </div>
   </div>
   <div v-if="answered">
-  <div
-    class="waitingDiv"
-    :class="{ selectedAnswer: selectedAnswer == index }"
-    
-  >
-    
-      <h2>"WaitingScreen"</h2>
+    <div
+      class="waitingDiv"
+      :class="{ selectedAnswer: selectedAnswer == index }"
+    >
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
 
-      <h1> You answered: <h1 class = "waitingAnswer"> {{question.a[selectedAnswer]}}</h1></h1>
+      <h1 class = "youAnswered">
+        You answered:
+        <h1 class="waitingAnswer">{{question.a[selectedAnswer]}}</h1>
+      </h1>
       <h2>Get ready for the next question</h2>
     </div>
   </div>
 </template>
 
 <script>
-
 export default {
-  name: "Bars",
+  name: "Question",
   props: {
     question: Object,
   },
   watch: {
-    question: function() {
+    question: function () {
       this.answered = false;
-      
-    }
+    },
   },
   data: function () {
     return {
@@ -47,12 +51,12 @@ export default {
       answered: false,
     };
   },
+
   methods: {
     answer: function (answer, index) {
       this.$emit("answer", answer);
       this.selectedAnswer = index;
       this.answered = true;
-      
     },
   },
 };
@@ -113,22 +117,73 @@ fritt att ändra/radera hur man vill */
     transition: all .4s ease-in-out; */
 }
 
-
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  z-index: 999;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  margin-top: 12em;
+  margin-left: 13em;
+  border: 8px solid #fdd;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fdd transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 .waitingDiv {
-  position:relative;
- 
+
+  position: relative;
   font-family: "Lucida Console", "Monaco", monospace;
   height: 20em;
-  width: 40em;
+  width: 35em;
   background-color: rgb(223, 158, 228);
-   position: fixed;
-    top: 30%;
-    left: 30%;
+  top: 10em;
+  margin: 0 auto;
+  border-radius: 25px;
+ 
 }
-.waitingAnswer{
-  color:rgb(226, 51, 21);
-  font-size: 1em;
+
+.waitingDiv h1{
+  
+  display: inline;
+}
+.waitingAnswer {
+  color: rgb(226, 51, 21);
+  font-size: 1.3em;
+  padding: 0em;
+}
+
+.youAnswered{
+   color: rgb(160, 116, 240);
+  font-size: 2em;
+  padding:0em;
+  
 }
 
 .theQuestion {

@@ -14,14 +14,18 @@ function sockets(io, socket, data) {
   });
 
   socket.on('addQuestion', function(d) {
-    data.addQuestion(d.pollId, {q: d.q, a: d.a});
+    data.addQuestion(d.pollId, {q: d.q, a: d.a, result: d.resultType});
+    socket.emit('dataUpdate', data.getAnswers(d.pollId));
+  });
+
+  socket.on('deleteQuestion', function(d) {
+    data.deleteQuestion(d.pollId, {q: d.q, a: d.a, result: d.resultType},d.index);
     socket.emit('dataUpdate', data.getAnswers(d.pollId));
   });
 
   socket.on('editQuestion', function(d) {
     data.editQuestion(d.pollId, d.index, {q: d.q, a: d.a});
     socket.emit('questionEdited', data.getAllQuestions(d.pollId));
-    console.log("EDIT2", d.index);
   });
     
 
