@@ -12,7 +12,7 @@
     <p>The name of this poll is <span class="pollName">{{pollId}}</span></p>
   </header>
   <div class="createView">
-    <div class="pollTitle" v-if="!isShown">
+    <div class="pollTitle" v-if="!isShown && !isFinished">
       <router-link v-bind:to="'/'" tag="button">
         <button class="back">
           {{ uiLabels.backButton }}
@@ -85,6 +85,19 @@
        
       </div>
 
+      <br>
+
+
+      <button class="finishButton" v-on:click="finishPresentation">
+        {{uiLabels.finishPresentation}}
+      </button>
+
+      <!--<div class="finishButton">
+        <router-link to="/finished">
+          <button v-on:click="finishPresentation">Finish Presentation</button>
+        </router-link>
+      </div>-->
+
       <div class="controlpanel">
         <div class="addRemoveButtons">
            <div class="addAnswer">
@@ -112,6 +125,25 @@
         <router-link v-bind:to="'/result/' + pollId">Check result</router-link>
       </div>
     </div>
+
+    <div class="" v-if="isFinished">
+        <h2>You successfully created your poll!!</h2>
+      <div>
+        <p>This is your poll-code, save and share it with your participants...(två olika koder?)</p>
+      </div>
+
+      <div class="waitButton">
+        <router-link to="/">
+          <button v-on:click="waitUntilLater">Wait until later</button>
+        </router-link>
+      </div>
+      <br>
+      <div class="startButton">
+        <button>
+          Start Poll now!
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -133,6 +165,7 @@ export default {
       isShown: false,
       slides: [""],
       resultType: "bars", //försök till att kunna skicka med vilken typ av resultat det ska vara. ej klart.
+      isFinished: false,
     };
   },
   created: function () {
@@ -210,8 +243,15 @@ export default {
       this.answers = question.a;
       this.index = index;
     },
-  },
-};
+    finishPresentation: function () {
+      socket.emit("finishPresentation", {});
+      this.isFinished = true;
+      this.isShown = false;
+
+    },
+},
+  };
+
 </script>
 
 <style scoped>
