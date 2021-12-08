@@ -13,19 +13,29 @@
 <main class="page">
   <section class="showResult">
 <div class="theBars">
-  <Bars v-bind:data="data"/></div>
+  <Bars v-bind:data="data"/>
+  <!--<Circle v-bind:data="data"/> --> </div>
 </section>
+
+
+
+<button v-on:click="runQuestion">Next Question</button>
+
+
 </main>
 </template>
 <script>
 // @ is an alias to /src
 import Bars from '@/components/Bars.vue';
+/*import Circle from '@/components/Circle.vue';*/
 import io from 'socket.io-client';
 const socket = io();
 export default {
   name: 'Result',
   components: {
-    Bars
+    Bars,
+    /*Circle,*/
+    /*questionNumber: 0,*/
   },
   data: function () {
     return {
@@ -59,6 +69,16 @@ export default {
       }
       socket.emit("switchLanguage", this.lang);
     },
+    runQuestion: function () {
+      socket.emit("runQuestion", {
+        pollId: this.pollId,
+        questionNumber: this.questionNumber,
+      }),
+      this.questionNumber +=1;
+    },
+  /*  nextQuestion: function (){
+      this.questionNumber +=1;
+    },*/
   },
 }
 </script>
