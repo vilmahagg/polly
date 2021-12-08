@@ -16,11 +16,13 @@ function sockets(io, socket, data) {
   socket.on('addQuestion', function(d) {
     data.addQuestion(d.pollId, {q: d.q, a: d.a, result: d.resultType});
     socket.emit('dataUpdate', data.getAnswers(d.pollId));
+    socket.emit('contentUpdate', data.getAllQuestions(d.pollId));
   });
 
   socket.on('deleteQuestion', function(d) {
-    data.deleteQuestion(d.pollId, {q: d.q, a: d.a, result: d.resultType},d.index);
+    data.deleteQuestion(d.pollId, d.index);
     socket.emit('dataUpdate', data.getAnswers(d.pollId));
+    socket.emit('contentUpdate', data.getAllQuestions(d.pollId));
   });
 
   socket.on('editQuestion', function(d) {
