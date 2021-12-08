@@ -9,20 +9,34 @@
                 v-on:answer="submitAnswer"/>
     {{question}}
   </h2></div>
+  <main class="page">
+    <section class="showResult">
+  <div class="theBars">
+    <Bars v-bind:data="data"/>
+    <!--<Circle v-bind:data="data"/> --> </div>
+
+  </section>
+
+  <section class="knapppanel">
+    <div class="knappIResult">
+    fråga nummer: {{questionNumber}} <br><br>
+    <!--<input type="number" v-model="questionNumber" />-->
+      <!-- {{ data }} -->
+
+      <!-- denna länk under borde kanske vara någon annan stans?-->
+      <!--<router-link v-bind:to="'/result/' + pollId">Check result</router-link>-->
+      <router-link v-bind:to="'/poll/' + pollId">next Question</router-link>
+    <button class="nextButton" v-on:click="runQuestion">Next Answer</button>
+    <button class="prevButton" v-on:click="prevQuestion">Previous Answer</button>
+    </div>
+  </section>
+
+
+
+
+  </main>
 </header>
-<main class="page">
-  <section class="showResult">
-<div class="theBars">
-  <Bars v-bind:data="data"/>
-  <!--<Circle v-bind:data="data"/> --> </div>
-</section>
 
-
-
-<button v-on:click="runQuestion">Next Question</button>
-
-
-</main>
 </template>
 <script>
 // @ is an alias to /src
@@ -35,11 +49,12 @@ export default {
   components: {
     Bars,
     /*Circle,*/
-    /*questionNumber: 0,*/
   },
   data: function () {
     return {
       question: "",
+      questionNumber:0,
+
       data: {
       }
     }
@@ -76,6 +91,13 @@ export default {
       }),
       this.questionNumber +=1;
     },
+    prevQuestion: function (){
+      socket.emit("runQuestion", {
+        pollId: this.pollId,
+        questionNumber: this.questionNumber,
+      }),
+      this.questionNumber -=1;
+    }
   /*  nextQuestion: function (){
       this.questionNumber +=1;
     },*/
@@ -115,10 +137,31 @@ h4{
 }
 .showResult{
 background-color: wheat;
-height: 30em;
+height: 25em;
 padding: 2em;
 }
 .showResult section{
   padding: 1em;
+}
+.nextButton{
+  background-color: #e6f0ff;
+  width: 80px;
+  height: 40px;
+  position: relative;
+  box-shadow: 0 -0.2em 0 -0.35em
+  rgba(0, 0, 0, 0.17);
+  /*color:#ff6666*/
+  font-family: "Lucida Console", "Monaco", monospace;
+}
+.prevButton{
+  background-color: #e6f0ff;
+  width: 80px;
+  height: 40px;
+  position: relative;
+  box-shadow: 0 -0.2em 0 -0.35em
+  rgba(0, 0, 0, 0.17);
+  /*color:#ff6666*/
+  font-family: "Lucida Console", "Monaco", monospace;
+
 }
 </style>
