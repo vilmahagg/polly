@@ -130,6 +130,7 @@
 
 
       <button class="finishButton" v-on:click="finishPresentation">
+        Finish Presentation
         {{uiLabels.finishPresentation}}
       </button>
 
