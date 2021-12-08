@@ -2,7 +2,6 @@
   <header>
     <div class="lang">
       <button class="languageButton" v-on:click="switchLanguage">
-        <!-- {{ uiLabels.changeLanguage }} <br /> -->
         <img v-bind:src="this.flag" style="width: 3rem; height: 2rem" />
       </button>
     </div>
@@ -11,7 +10,7 @@
     </router-link>
     <div class="error" v-if="error">Please fill all fields before continuing</div>
     <p v-if="!error">
-      The name of this poll is <span class="pollName">{{ pollId }}</span>
+      <!--The name of this poll is <span class="pollName">{{ pollId }}</span>-->
     </p>
   </header>
   
@@ -205,6 +204,7 @@ export default {
   data: function () {
     return {
       lang: "",
+      flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Svensk_flagg_1815.svg/2560px-Svensk_flagg_1815.svg.png",
       pollId: "",
       question: "",
       answers: ["", "", "", ""],
@@ -561,9 +561,7 @@ export default {
 header {
   height: 6em;
 }
-header a {
-  text-decoration: none;
-}
+
 .pollName {
   font-weight:bold;
   font-size: 1em;

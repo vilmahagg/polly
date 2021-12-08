@@ -11,5 +11,6 @@
 	"addAnswer": "Lägg till svar",
 	"removeAnswer": "Ta bort svar",
 	"aboutUs": "Om oss", 
-	"service": "Kundservice"
-}
+	"service": "Kundservice", 
+	"welcome":"Välkommen", 
+	"choose": "Välj om du vill gå med i en omröstning eller skapa en egen"}
