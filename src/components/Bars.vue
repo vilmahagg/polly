@@ -36,16 +36,16 @@ font-family: "Lucida Console", "Monaco", monospace;
   top: -1.2em;
 }
 .bar:nth-child(1) div:nth-child(1) {
-  background-color:red;
+  background-color:#809fff;
 }
 .bar:nth-child(2) div:nth-child(1) {
-  background-color:blue;
+  background-color:#ff80bf;
 }
 .bar:nth-child(3) div:nth-child(1) {
-  background-color:teal;
+  background-color:#80aaff;
 }
 .bar:nth-child(4) div:nth-child(1) {
-  background-color:purple;
+  background-color:#c266ff;
 }
 .bar:nth-child(5) div:nth-child(1) {
   background-color:yellow;
