@@ -11,5 +11,7 @@
 	"addAnswer": "Add answer",
 	"removeAnswer": "Remove answer",
 	"aboutUs": "About Us", 
-	"service": "Customer Service"
+	"service": "Customer Service",
+	"welcome": "Welcome to our poll application EasyPoll!",
+	"choose": "Choose if you want to create or participate in a poll"
 }

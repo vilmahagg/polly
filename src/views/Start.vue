@@ -1,30 +1,33 @@
 <template>
   <div id="nav">
-    <div class="lang">
-          <button class="languageButton" v-on:click="switchLanguage">
-            <img v-bind:src="this.flag" />
-          </button>
-        </div>
-   
-      <header>
-        
-        <h1 id="header">EasyPoll</h1>
-        <p>
-          Welcome to our poll application EasyPoll! <br />
-          Choose if you want to create or participate in a poll
-        </p>
+    <header>
+      <div class="lang">
+        <button class="languageButton" v-on:click="switchLanguage">
+          <img v-bind:src="this.flag" />
+        </button>
+      </div>
 
-        <h2 class= "aboutUs">{{ uiLabels.aboutUS }}</h2>
-       <h2 class = "service"> {{ uiLabels.service }} </h2>
+      <h1 id="header">EasyPoll</h1>
 
-      </header>
-    
+      <p class = "welcomeMessage">{{ uiLabels.welcome }} <br />
+        {{ uiLabels.choose }}
+      </p>
 
-    <div class="firstMenu">
+     
+      <button class="aboutUs" v-on:click="wantInfo = true">{{ uiLabels.aboutUs }}</button>
+
+      <!--<button class="aboutUs">{{ uiLabels.aboutUs }}</button>-->
+      <button class="service">{{ uiLabels.service }}</button>
+
+       
+    </header>
+
+    <div class="firstMenu" v-if="!wantInfo">
+      
       <div class="create" v-if="!ready">
         <router-link v-bind:to="'/create/' + lang" tag="button">
           <button class="createButton">
-            <h3>{{ uiLabels.createPoll }} </h3>
+            <h3>{{ uiLabels.createPoll }}</h3>
           </button>
         </router-link>
       </div>
@@ -37,10 +40,12 @@
     </div>
 
     <div class="start" v-if="ready">
-      <button class="back" v-on:click="ready = false">{{uiLabels.backButton}}</button>
+      <button class="back" v-on:click="ready = false">
+        {{ uiLabels.backButton }}
+      </button>
       <div>
-        <label id ="pollName">
-          {{uiLabels.pollName}}
+        <label id="pollName">
+          {{ uiLabels.pollName }}
           <input type="text" v-model="id" />
         </label>
       </div>
@@ -52,6 +57,49 @@
         </router-link>
       </div>
     </div>
+
+     <div class="info" v-if="wantInfo">
+       <button class="back" v-on:click="wantInfo = false" style="float:left">
+        {{ uiLabels.backButton }}
+      </button>
+
+      <h3>General info and bussinessidea</h3>
+
+      <p>The best webapplication ever made, easy pollcreation 4 the win</p>
+      <h3>The creators</h3>
+      <div class = "creatorInfo">
+        
+        <div class = "vilmaInfo">
+           <img class ="vilma" src="https://scontent-arn2-1.xx.fbcdn.net/v/t1.18169-9/14600832_1364866180211034_1798950174594637318_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=174925&_nc_ohc=QEsj39RxgkQAX9eqH_1&_nc_ht=scontent-arn2-1.xx&oh=17508b40364919d9ae6db547e369a9d1&oe=61D62D74" >
+           <p>Instagram: <a href="https://www.instagram.com/vilmahggedelnn/?hl=sv">VilmasInstagram</a></p>
+           <p>Mail: vilmahggedelnn@gmail.com</p>
+        </div>
+       
+       <div class = "viktoriaSInfo">
+        <img class ="viktoriaS" src="https://scontent-arn2-1.xx.fbcdn.net/v/t1.18169-9/22310701_1197227793711557_2200564642596610941_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=bjgP2Grj6N0AX9S451u&_nc_ht=scontent-arn2-1.xx&oh=ec3a8246e4883f999f04a34a5b609593&oe=61D82352" >
+        <p>Instagram :<a href="https://www.instagram.com/viktoria_svensson/?hl=sv">VickansInstagram</a></p>
+        <p>Mail: vilmahggedelnn@gmail.com</p>
+        </div>
+        
+        <div class = "viktoriaZInfo">
+        <img class ="viktoriaZ" src="https://scontent-arn2-1.xx.fbcdn.net/v/t1.6435-9/62450140_10156688965284055_2495346217672769536_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=vrKwecNNKPsAX-B2SIm&_nc_ht=scontent-arn2-1.xx&oh=679f4db2cc0df53639e7c43be4f014f5&oe=61D79D55" >
+         <p>Instagram:<a href="https://www.instagram.com/victoriiazubenko/?hl=sv">VickansInstagram</a></p>
+         <p>Mail: vilmahggedelnn@gmail.com</p>
+        </div>
+
+         <div class = "aliceInfo">
+         <img class ="alice" src="https://avatars.githubusercontent.com/u/93650060?v=4" >
+         <p>Instagram:<a href="https://www.instagram.com/alicegardell/?hl=sv">AliceInstagram</a></p>
+         <p>Mail: alice.gardell@icloud.com</p>
+
+        </div>
+
+
+      </div>
+
+
+      </div>
+
   </div>
 </template>
 
@@ -68,6 +116,7 @@ export default {
       lang: "en",
       flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Svensk_flagg_1815.svg/2560px-Svensk_flagg_1815.svg.png",
       ready: false,
+      wantInfo:false
     };
   },
   created: function () {
@@ -93,35 +142,104 @@ export default {
 </script>
 
 <style>
+
+
 header {
   background-image: url("https://data.whicdn.com/images/334251300/original.gif");
   height: 12em;
-  margin:0;
+  margin: 0;
   border-radius: 25px;
-margin-bottom: 3em;
-
 
 }
+
 header h1 {
+
   text-align: center;
-  margin: 0; 
+  margin: 0;
   font-size: 3.5em;
   font-family: "Lucida Console", "Monaco", monospace;
-  
+
   color: rgb(224, 100, 187);
   text-transform: uppercase;
-  
+
   position: relative;
   display: inline-block;
 }
 
-header p{
-  text-align:center 
+.firstMenu{margin-top: 5em;}
+
+
+
+
+.aboutUs {
+  padding-left:3em;
+  padding-right:3em;
+  float:left;
+  background: none;
+  border: none;
+  text-decoration: underline;
+  font-weight: bold;
 }
 
-h3{
-  font-size: 2em;
 
+
+.vilmaInfo{
+    display: inline-block;
+}
+.viktoriaSInfo{
+display: inline-block;
+}
+
+.viktoriaZInfo{
+display: inline-block;
+}
+
+.aliceInfo{
+  display: inline-block;
+}
+
+.vilma{
+  width: 10em;
+  border-radius: 50px;
+}
+
+.viktoriaS{
+  border-radius: 50px;
+width: 10em;
+}
+
+.viktoriaZ{
+  border-radius: 50px;
+width: 10em;
+}
+
+.alice{
+  border-radius: 50px;
+width: 10em;
+}
+
+.creatorInfo{
+  
+}
+.creatorInfo img{
+ 
+ padding:2.6em;
+}
+
+.info{
+  height: 20em;
+}
+.service {
+  float:left;
+
+  background: none;
+  border: none;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 2em;
 }
 .firstMenu {
   display: grid;
@@ -142,8 +260,7 @@ h3{
   border-radius: 25px;
   text-transform: uppercase;
 
-
-   background-image: linear-gradient(
+  background-image: linear-gradient(
     to right,
     #e89aeb,
     #b67ee4,
@@ -154,7 +271,6 @@ h3{
 }
 .createButton:hover {
   background-position: 100% 0;
-  
 }
 
 .participate {
@@ -176,8 +292,7 @@ h3{
   text-transform: uppercase;
   background-size: 300% 100%;
 
-
-   background-image: linear-gradient(
+  background-image: linear-gradient(
     to right,
     #e89aeb,
     #b67ee4,
@@ -188,12 +303,16 @@ h3{
 }
 .readyButton:hover {
   background-position: 100% 0;
-  
 }
-.lang{margin:0; padding:0;}
+.lang {
+  margin: 0;
+  padding: 0;
+}
 
 .languageButton {
   float:right;
+  margin-top:5em;
+
   font-weight: bold;
   width: 5em;
   height: 3em;
@@ -217,11 +336,12 @@ button:hover {
   padding: 1em;
 }
 
-#pollName{
-font-size: 1.5em;
-
+#pollName {
+  font-size: 1.5em;
 }
 
-#pollName input{height: 1.5em; width: 12em;}
-
+#pollName input {
+  height: 1.5em;
+  width: 12em;
+}
 </style>
