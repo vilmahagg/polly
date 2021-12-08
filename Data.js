@@ -46,11 +46,14 @@ Data.prototype.addQuestion = function(pollId, q) {
   }
 }
 
-Data.prototype.deleteQuestion = function(pollId,q,index) {
+Data.prototype.deleteQuestion = function(pollId,index) {
   const poll = this.polls[pollId];
+  console.log("delete: ", poll.questions[index]);
   if (typeof poll !== 'undefined') {
     poll.questions.splice(index,1);
+    return poll.questions
   }
+  return []
 }
 
 Data.prototype.editQuestion = function(pollId, index, newQuestion) {
@@ -76,11 +79,13 @@ Data.prototype.getQuestion = function(pollId, qId=null) {
 }
 
 Data.prototype.getAllQuestions = function(pollId) {
+  
   const poll = this.polls[pollId];
-  console.log("get all questions");
+  console.log("get all questions: ", poll.questions);
   if (typeof poll !== 'undefined') {
     return poll.questions
   }
+  return []
 }
 
 Data.prototype.submitAnswer = function(pollId, answer) {

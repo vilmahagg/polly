@@ -8,7 +8,6 @@
     <p v-if="!error">
       <!--The name of this poll is <span class="pollName">{{ pollId }}</span>-->
     </p>
-    
   </header>
   
   <div class="createView">
@@ -44,7 +43,7 @@
     <div class="pollCreation" v-if="isShown">
       <div class="storedQuestions">
         <p>QUESTIONS</p>
-
+        <div v-if="data!=={}">
         <div
           class="slides"
           v-for="(question, index) in data.questions"
@@ -57,7 +56,9 @@
             <img
               src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
             />
+            <div class="tooltipDelAns">Delete Slide</div>
           </button>
+        </div>
         </div>
 
         <!-- <div v-for="(slide,index) in slides" v-bind:key="'slide' +index">
@@ -125,6 +126,7 @@
 
 
       <button class="finishButton" v-on:click="finishPresentation">
+        Finish Presentation
         {{uiLabels.finishPresentation}}
       </button>
 
@@ -206,6 +208,7 @@ export default {
       index: null,
       questionNumber: 0,
       data: {},
+      //questions: [],
       uiLabels: {},
       isShown: false,
       slides: [""],
@@ -221,8 +224,9 @@ export default {
       this.uiLabels = labels;
     });
     socket.on("dataUpdate", (data) => (this.data = data));
-    socket.on("pollCreated", (data) => (this.data = data));
-    socket.on("questionEdited", (data) => (this.data = data));
+    socket.on("pollCreated", (data) => this.data = data);
+    socket.on("questionEdited", (data) => this.data = data);
+    socket.on("contentUpdate", (questions) => this.data.questions = questions);
   },
   methods: {
     createPoll: function () {
@@ -294,7 +298,6 @@ export default {
     },
 
     deleteSlide: function (i){
-      console.log("HEJ");
       socket.emit("deleteQuestion", {
         pollId: this.pollId,
         q: this.question,
@@ -303,10 +306,13 @@ export default {
       });
     },
     addAnswer: function () {
+      if (this.answers.length >= 12) {
+        return;
+      }
       this.answers.push("");
     },
     deleteAnswer: function (i) {
-      if (this.answers.length <= 2) {
+      if (this.answers.length <= 1) {
         return;
       }
       this.answers.splice(i, 1);
@@ -356,15 +362,19 @@ export default {
   background-color: lightgoldenrodyellow;
   
 }
+.slides{
+  display:inline-block;
+  width:100%
+}
 
 .slide {
   background-color: white;
   border: 0.1em solid black;
   /* border-radius: 0.5em; */
   transition: 0.3s;
-  width: 80%;
-  height: 4em;
   margin: 0.5em;
+  height:4em;
+  width:8em;
 }
 .slide:hover {
   background-color: rgb(223, 223, 219);
@@ -374,7 +384,7 @@ export default {
   width: 100%;
   display: inline-block;
   padding: 0.7em 1.4em;
-  margin: 0 0.3em 0.3em 0;
+  margin: 1em 0.3em 0.3em 0;
   border-radius: 0.15em;
   box-sizing: border-box;
   text-decoration: none;
