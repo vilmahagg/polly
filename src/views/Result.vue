@@ -15,32 +15,40 @@
     <div class="clicked" v-if= "isClicked">
     </div>
     <Bars v-bind:data="data"/>
-    <!--<Circle v-bind:data="data"/> --> </div>
+    <!--<Circle v-bind:data="data"/> --></div>
 
-  </section>
-{{questions}}{{questions.length}}
-  <section class="knapppanel">
-    <div class="knappIResult">
-    fråga nummer: {{questionNumber}} (bara för tydlighet atm) <br><br>
-    <!--<input type="number" v-model="questionNumber" />-->
-      <!-- {{ data }} -->
 
-      <!-- denna länk under borde kanske vara någon annan stans?-->
-      <!--<router-link v-bind:to="'/result/' + pollId">Check result</router-link>-->
-      <router-link v-bind:to="'/poll/' + pollId">next Question</router-link>
-    <button class="prevButton" v-on:click="prevQuestion">Previous Question</button>
-    <button class="nextButton" v-on:click="runQuestion">Next Question</button>
-    <button class ="revanswer" v-on:click="clicked"> Reveal Answer</button>
-    {{isClicked}}
+    <div v-if= "!isClicked" class="waitingDiv">
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+
+      <h3 class = "youAnswered">
+      Answers submitted <br><br> <h1 class ="answers"> {{numberOfAnswers}}
+      </h1>
+    </h3>
+
+      <h2></h2>
+    </div>
+    <div class="knapppanel">
+      <div class="knappIResult">
+
+      <!--  <router-link v-bind:to="'/poll/' + pollId">next Question</router-link>-->
+      <button class="prevButton" v-on:click="prevQuestion">Previous Question</button>
+      <button class="nextButton" v-on:click="runQuestion">Next Question</button>
+      <button class ="revanswer" v-on:click="clicked"> Reveal Answer</button>
+    <br><br><br><br>{{isClicked}} <br>(för förtydl. atm)fråga nummer: {{questionNumber}} (bara för tydlighet atm)
+      </div>
+
     </div>
   </section>
 
-
-
-
+{{questions}}{{questions.length}}
   </main>
 </header>
-
 </template>
 <script>
 // @ is an alias to /src
@@ -52,7 +60,7 @@ export default {
   name: 'Result',
   components: {
     Bars,
-    /*Circle,*/
+  /*  Circle,*/
   },
   data: function () {
     return {
@@ -60,10 +68,16 @@ export default {
       questionNumber:0,
       questions: 0,
       isClicked: false,
-
-
       data: {
       }
+    }
+  },
+  computed: {
+    numberOfAnswers: function () {
+      let tot = 0;
+      for (let a of Object.keys(this.data))
+        tot += this.data[a];
+      return tot;
     }
   },
   created: function () {
@@ -149,14 +163,24 @@ h4{
 /*  padding: 2em;*/
 }
 .theBars{
+  position: relative;
+  font-family: "Lucida Console", "Monaco", monospace;
+  height: 20em;
+  width: 35em;
+  background-color: wheat;
+  margin: 0 auto;
+  border-radius: 25px;
 }
 .showResult{
 background-color: wheat;
-height: 25em;
+height: 30em;
 padding: 2em;
 }
 .showResult section{
   padding: 1em;
+}
+.knapppanel{
+  padding-bottom: 4em;
 }
 .nextButton{
   background-color: #e6f0ff;
@@ -178,7 +202,6 @@ padding: 2em;
   /*color:#ff6666*/
   font-family: "Lucida Console", "Monaco", monospace;
 }
-
 .revanswer{
   background-color: #e6f0ff;
   width: 80px;
@@ -188,5 +211,24 @@ padding: 2em;
   rgba(0, 0, 0, 0.17);
   /*color:#ff6666*/
   font-family: "Lucida Console", "Monaco", monospace;
+}
+.hideResult{
+}
+
+.waitingDiv {
+  position: relative;
+  font-family: "Lucida Console", "Monaco", monospace;
+  height: 20em;
+  width: 35em;
+  background-color: rgb(223, 158, 228);
+  margin: 0 auto;
+  border-radius: 25px;
+}
+.youAnswered{
+  color:black;
+  padding-top: 1em;
+}
+.answers{
+  colour: purple;
 }
 </style>

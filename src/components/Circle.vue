@@ -5,7 +5,7 @@ circle
 <div class="wrapper">
   <div class="circle" v-for="(item, key) in data" v-bind:key="key">
     <!--<div v-bind:style="{width: item + '5px'}">-->
-    <div class ="panel" v-bind:style="{height: '5px'}"></div>
+    <div class ="panel" v-bind:style="{witdh: '5px'}"></div>
       <span> {{item}} </span>
     <div class="text">
       {{key}}
@@ -15,59 +15,36 @@ circle
 </template>
 
 <script>
-export default {
-  name: 'Circle',
-  props: {
-    data: Object,
-  }
-}
+component('pie-chart', {
+	extends: VueChartJs.Pie,
+	data: function () {
+		return {
+			datacollection: {
+				labels: ['Pie 1', 'Pie 2', 'Pie 3', 'Pie 4', 'Pie 5'],
+				datasets: [
+					{
+						backgroundColor: [ '#1E9600', '#99C802', '#FFF200', '#F89403',	'#FF0000' ],
+						data: [1, 2, 3, 4, 5],
+					},
+				],
+			},
+			options: {
+				responsive: true,
+				legend: {
+					display: true,
+					position: 'right',
+				},
+  	 },
+		}
+	},
+	mounted () {
+		// this.chartData is created in the mixin
+		this.renderChart(this.datacollection, this.options)
+	}
 
 
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-.panel{
-color: black;
-font-family: "Lucida Console", "Monaco", monospace;
-display: inline-block;
-}
-
-.text {
-  width: 70px;
-  height: 50px;
-  vertical-align: bottom;
-  padding: 20px;
-  display: inline-block;
-}
-
-.circle{
-  /*display: inline-block;*/
-}
-.panel{
-  display: inline-block;
-}
-.panel span {
-  position: relative;
-  top: -1.2em;
-}
-.panel:nth-child(1) div:nth-child(1) {
-  background-color:red;
-}
-.panel:nth-child(2) div:nth-child(1) {
-  background-color:blue;
-}
-.panel:nth-child(3) div:nth-child(1) {
-  background-color:teal;
-}
-.panel:nth-child(4) div:nth-child(1) {
-  background-color:purple;
-}
-.panel:nth-child(5) div:nth-child(1) {
-  background-color:yellow;
-}
-.wrapper {
-padding:3em;
-  word-wrap: break-word;
-}
 </style>
