@@ -5,7 +5,7 @@
     <router-link v-bind:to="'/'" tag="h1">
       <h1>EasyPoll</h1>
     </router-link>
-    <div class="error" v-if="error">Please fill all fields before continuing</div>
+    <div class="error" v-if="error">Please fill all fields before saving question</div>
     <p v-if="!error">
       The name of this poll is <span class="pollName">{{ pollId }}</span>
     </p>
@@ -44,7 +44,7 @@
     <div class="pollCreation" v-if="isShown">
       <div class="storedQuestions">
         <p>QUESTIONS</p>
-        
+        {{slide}}
         <div
           class="slides"
           v-for="(question, index) in data.questions"
@@ -61,12 +61,14 @@
           <button class="slide" v-on:click="showQuestion(question, index)">
             {{ index }}: {{ question.q }}
           </button>
+          <div class="slideDelete">
           <button class="deleteButton" v-on:click="deleteSlide(index)">
             <img
               src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
             />
             <div class="tooltipDelAns">Delete Slide</div>
           </button>
+          </div>
         </div>
         
 
@@ -89,6 +91,7 @@
       </div>
 
       <div class="display">
+        <div v-if="start">
         <input
           class="questionInput"
           type="text"
@@ -100,7 +103,8 @@
           v-for="(_, i) in answers"
           v-bind:key="'answer' + i"
         >
-          <input
+          <input 
+            v-if="start"
             class="answersInput"
             v-model="answers[i]"
             :placeholder="uiLabels.answer"
@@ -121,6 +125,7 @@
               />
               <div class="tooltipAddAns">Add Answer Alternativ</div>
             </button>
+          </div>
           </div>
       </div>
 
@@ -232,7 +237,7 @@ export default {
       flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Svensk_flagg_1815.svg/2560px-Svensk_flagg_1815.svg.png",
       pollId: "",
       question: "",
-      answers: [],
+      answers: ["","","",""],
       index: 0,
       questionNumber: 0,
       data: {},
@@ -241,6 +246,7 @@ export default {
       isShown: false,
       slide: 0,
       error: false,
+      start: false,
       edit:false,
       resultType: "bars", //försök till att kunna skicka med vilken typ av resultat det ska vara. ej klart.
       isFinished: false,
@@ -314,6 +320,7 @@ export default {
           index: this.index,
           slide: this.slide,
         });
+        
       }
     },
 
@@ -322,21 +329,27 @@ export default {
         pollId: this.pollId,
         q: "",
         a: ["", "", "", ""],
-        resultType: null,
+        resultType: this.resultType,
         slide: this.slide,
         index: this.index
       });
       this.slide ++;
+      
+      
     },
 
     deleteSlide: function (i){
       this.slide--;
+      if (this.slide <= 0){
+        return;
+      }
       socket.emit("deleteQuestion", {
         pollId: this.pollId,
         q: this.question,
         a: this.answers,
         index: i
       });
+      
     },
 
     moveUp: function(i) {
@@ -382,7 +395,8 @@ export default {
       this.question = question.q;
       this.answers = question.a;
       this.index = index;
-      // this.resultType = question.resultType;
+      this.resultType = question.resultType;
+      this.start = true;
     },
     finishPresentation: function () {
       socket.emit("finishPresentation", {});
@@ -415,16 +429,22 @@ export default {
 /* "Slides" aka sparade frågor*/
 .storedQuestions {
   grid-area: a;
-  background-color: lightgoldenrodyellow;
+  background-color: rgba(111, 168, 128, 0.507);
   
 }
 .slides{
   width:100%;
+  display: inline-block;
 
+}
+.slideDelete{
+  display: inline-block;
+  width:15%;
 }
 .changePlaceButtons{
   display: inline-block;
   vertical-align: middle;
+  width:15%;
 }
 .changePlaceButtons img{
   height:1em;
@@ -441,12 +461,15 @@ export default {
 
 .slide {
   background-color: white;
-  border: 0.1em solid black;
+  border: 0.1em solid rgb(177, 177, 177);
+  /* border:none; */
   /* border-radius: 0.5em; */
   transition: 0.3s;
-  margin: 0.5em;
   height:4em;
-  width:8em;
+  width:60%;
+  border-radius: 0.3em;
+  margin:0.5em;
+
 }
 .slide:hover {
   background-color: rgb(223, 223, 219);
