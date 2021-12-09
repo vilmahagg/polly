@@ -179,23 +179,31 @@
           <span class="pollCode"> {{ pollId }}</span></h4>
       </div>
 
+      <section class="waitandstartButton">
+      <div class="stButton">
+        <router-link v-bind:to="'/result/' + pollId">
+          <button class="startButton">Start poll now!</button>
+        </router-link>
+      </div>
+
+      <br>
       <div class="wtButton">
         <router-link to="/">
           <button v-on:click="waitUntilLater" class="waitButton">Wait until later</button>
         </router-link>
       </div>
-      <br>
-      <div class="stButton">
-        <router-link v-bind:to="'/result/' + pollId">
-          <button class="startButton">Start poll now!</button>
-        </router-link>
+      </section>
+
+
+
+
 
 
 
 
       </div>
     </div>
-  </div>
+
 </template>
 
 <script>
@@ -699,13 +707,14 @@ header {
 
 }
 .stButton{
-  margin:90px 100px;
-  float:right;
+  width: available;
+  height: available;
+  position: relative;
+  margin-left: 25%;
 
 }
 .wtButton{
-  margin:100px 300px;
-  float:right;
+
 
 }
 
@@ -741,6 +750,11 @@ header {
   border: none;
 
 }
+
+.waitandstartButton{
+  margin-top: 130px;
+}
+
 
 
 </style>
