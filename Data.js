@@ -46,9 +46,18 @@ Data.prototype.addQuestion = function(pollId, q) {
   }
 }
 
+Data.prototype.addSlide = function(pollId, q, slide) {
+  const poll = this.polls[pollId];
+  console.log("add slide", slide);
+  
+  if (typeof poll !== 'undefined') {
+    poll.questions[slide]=q;
+  }
+}
+
 Data.prototype.deleteQuestion = function(pollId,index) {
   const poll = this.polls[pollId];
-  console.log("delete: ", poll.questions[index]);
+  console.log("delete: ",index, poll.questions[index]);
   if (typeof poll !== 'undefined') {
     poll.questions.splice(index,1);
     return poll.questions
@@ -56,7 +65,7 @@ Data.prototype.deleteQuestion = function(pollId,index) {
   return []
 }
 
-Data.prototype.editQuestion = function(pollId, index, newQuestion) {
+Data.prototype.editQuestion = function(pollId, newQuestion, index) {
   const poll = this.polls[pollId];
   if (typeof poll !== 'undefined') {
     poll.questions[index] = newQuestion;
