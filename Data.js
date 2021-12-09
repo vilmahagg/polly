@@ -46,17 +46,18 @@ Data.prototype.addQuestion = function(pollId, q) {
   }
 }
 
-Data.prototype.addSlide = function(pollId, q, index) {
+Data.prototype.addSlide = function(pollId, q, slide) {
   const poll = this.polls[pollId];
-  console.log("add slide", index);
+  console.log("add slide", slide);
+  
   if (typeof poll !== 'undefined') {
-    poll.questions.push(q);
+    poll.questions[slide]=q;
   }
 }
 
 Data.prototype.deleteQuestion = function(pollId,index) {
   const poll = this.polls[pollId];
-  console.log("delete: ", poll.questions[index]);
+  console.log("delete: ",index, poll.questions[index]);
   if (typeof poll !== 'undefined') {
     poll.questions.splice(index,1);
     return poll.questions
