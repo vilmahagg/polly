@@ -1,4 +1,6 @@
 
+circle
+
 <template>
 <div class="wrapper">
   <div class="circle" v-for="(item, key) in data" v-bind:key="key">
@@ -11,13 +13,16 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
   name: 'Circle',
   props: {
-    data: Object
+    data: Object,
   }
 }
+
+
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>

@@ -1,10 +1,6 @@
 <template>
   <header>
-    <div class="lang">
-      <button class="languageButton" v-on:click="switchLanguage">
-        <img v-bind:src="this.flag" style="width: 3rem; height: 2rem" />
-      </button>
-    </div>
+    
     <router-link v-bind:to="'/'" tag="h1">
       <h1>EasyPoll</h1>
     </router-link>
@@ -130,6 +126,7 @@
 
 
       <button class="finishButton" v-on:click="finishPresentation">
+        Finish Presentation
         {{uiLabels.finishPresentation}}
       </button>
 

@@ -16,7 +16,7 @@
     <!--<Circle v-bind:data="data"/> --> </div>
 
   </section>
-
+{{questions}}
   <section class="knapppanel">
     <div class="knappIResult">
     fråga nummer: {{questionNumber}} <br><br>
@@ -26,8 +26,8 @@
       <!-- denna länk under borde kanske vara någon annan stans?-->
       <!--<router-link v-bind:to="'/result/' + pollId">Check result</router-link>-->
       <router-link v-bind:to="'/poll/' + pollId">next Question</router-link>
-    <button class="nextButton" v-on:click="runQuestion">Next Answer</button>
-    <button class="prevButton" v-on:click="prevQuestion">Previous Answer</button>
+    <button class="nextButton" v-on:click="runQuestion">Next Question</button>
+    <button class="prevButton" v-on:click="prevQuestion">Previous Question</button>
     </div>
   </section>
 
@@ -54,6 +54,7 @@ export default {
     return {
       question: "",
       questionNumber:0,
+      questions: length.question,
 
       data: {
       }
@@ -85,19 +86,22 @@ export default {
       socket.emit("switchLanguage", this.lang);
     },
     runQuestion: function () {
-      socket.emit("runQuestion", {
-        pollId: this.pollId,
-        questionNumber: this.questionNumber,
-      }),
       this.questionNumber +=1;
-    },
-    prevQuestion: function (){
       socket.emit("runQuestion", {
         pollId: this.pollId,
         questionNumber: this.questionNumber,
-      }),
+      })
+      /*hitta max antal numebr för att få avslutande bild
+      if this.questionNumber > */
+    },
+
+    prevQuestion: function (){
       this.questionNumber -=1;
-    }
+      socket.emit("runQuestion", {
+        pollId: this.pollId,
+        questionNumber: this.questionNumber,
+      })
+    },
   /*  nextQuestion: function (){
       this.questionNumber +=1;
     },*/
