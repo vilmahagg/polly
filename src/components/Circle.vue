@@ -2,19 +2,17 @@
 circle
 
 <template>
-<div class="wrapper">
-  <div class="circle" v-for="(item, key) in data" v-bind:key="key">
-    <!--<div v-bind:style="{width: item + '5px'}">-->
-    <div class ="panel" v-bind:style="{witdh: '5px'}"></div>
-      <span> {{item}} </span>
-    <div class="text">
-      {{key}}
-    </div>
-    </div>
+  <div class="app" style="padding-left: 100px;">
+  	<h1>This is a pie chart</h1>
+  	<pie-chart  style="width: 400px; height: 400px" />
   </div>
 </template>
 
 <script>
+
+import VueCharts from 'vue-chartjs'
+import { Bar, Line } from 'vue-chartjs'
+
 component('pie-chart', {
 	extends: VueChartJs.Pie,
 	data: function () {
@@ -35,16 +33,19 @@ component('pie-chart', {
 					position: 'right',
 				},
   	 },
-		}
-	},
+   }
+ },
+
 	mounted () {
 		// this.chartData is created in the mixin
-		this.renderChart(this.datacollection, this.options)
-	}
+		this.renderChart(this.datacollection, this.options,
+    this.options)
+    	}
+    })
 
 
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
 
 </style>
