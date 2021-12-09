@@ -1,10 +1,6 @@
 <template>
   <header>
-    <div class="lang">
-      <button class="languageButton" v-on:click="switchLanguage">
-        <img v-bind:src="this.flag" style="width: 3rem; height: 2rem" />
-      </button>
-    </div>
+    
     <router-link v-bind:to="'/'" tag="h1">
       <h1>EasyPoll</h1>
     </router-link>
@@ -290,21 +286,24 @@ export default {
           pollId: this.pollId,
           q: this.question,
           a: this.answers,
+          resultType: this.resultType,
           index: this.index,
         });
       }
     },
 
-    addSlide: function () {
-      this.slides.push("");
-      // socket.emit("addSlide", {
-      //   pollId: this.pollId,
-      //   q: "",
-      //   a: ["", "", "", ""]
-      // });
-      this.answers = ["", "", "", ""];
-      this.question = "";
-    },
+    // addSlide: function () {
+    //   this.slides.push("");
+    //   socket.emit("addSlide", {
+    //     pollId: this.pollId,
+    //     q: "",
+    //     a: ["", "", "", ""],
+    //     resultType: this.resultType,
+    //     index: this.index ++
+    //   });
+    //   this.answers = ["", "", "", ""];
+    //   this.question = "";
+    // },
 
     deleteSlide: function (i){
       socket.emit("deleteQuestion", {

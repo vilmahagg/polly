@@ -19,6 +19,12 @@ function sockets(io, socket, data) {
     socket.emit('contentUpdate', data.getAllQuestions(d.pollId));
   });
 
+  socket.on('addSlide', function(d){
+    data.addSlide(d.polId, {q: d.q, a: d.a, result: d.resultType}, d.index);
+    socket.emit('dataUpdate', data.getAnswers(d.pollId));
+    socket.emit('contentUpdate', data.getAllQuestions(d.pollId));
+  })
+
   socket.on('deleteQuestion', function(d) {
     data.deleteQuestion(d.pollId, d.index);
     socket.emit('dataUpdate', data.getAnswers(d.pollId));
@@ -26,7 +32,7 @@ function sockets(io, socket, data) {
   });
 
   socket.on('editQuestion', function(d) {
-    data.editQuestion(d.pollId, d.index, {q: d.q, a: d.a});
+    data.editQuestion(d.pollId, {q: d.q, a: d.a, result: d.resultType}, d.index);
     socket.emit('questionEdited', data.getAllQuestions(d.pollId));
   });
     
