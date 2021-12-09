@@ -11,23 +11,27 @@
   </h2></div>
   <main class="page">
     <section class="showResult">
-  <div class="theBars">
+  <div v-if="isClicked" class="theBars">
+    <div class="clicked" v-if= "isClicked">
+    </div>
     <Bars v-bind:data="data"/>
     <!--<Circle v-bind:data="data"/> --> </div>
 
   </section>
-{{questions}}
+{{questions}}{{questions.length}}
   <section class="knapppanel">
     <div class="knappIResult">
-    fråga nummer: {{questionNumber}} <br><br>
+    fråga nummer: {{questionNumber}} (bara för tydlighet atm) <br><br>
     <!--<input type="number" v-model="questionNumber" />-->
       <!-- {{ data }} -->
 
       <!-- denna länk under borde kanske vara någon annan stans?-->
       <!--<router-link v-bind:to="'/result/' + pollId">Check result</router-link>-->
       <router-link v-bind:to="'/poll/' + pollId">next Question</router-link>
-    <button class="nextButton" v-on:click="runQuestion">Next Question</button>
     <button class="prevButton" v-on:click="prevQuestion">Previous Question</button>
+    <button class="nextButton" v-on:click="runQuestion">Next Question</button>
+    <button class ="revanswer" v-on:click="clicked"> Reveal Answer</button>
+    {{isClicked}}
     </div>
   </section>
 
@@ -54,7 +58,9 @@ export default {
     return {
       question: "",
       questionNumber:0,
-      questions: length.question,
+      questions: 0,
+      isClicked: false,
+
 
       data: {
       }
@@ -86,6 +92,7 @@ export default {
       socket.emit("switchLanguage", this.lang);
     },
     runQuestion: function () {
+      this.isClicked=false;
       this.questionNumber +=1;
       socket.emit("runQuestion", {
         pollId: this.pollId,
@@ -97,11 +104,15 @@ export default {
 
     prevQuestion: function (){
       this.questionNumber -=1;
+      this.isClicked=false;
       socket.emit("runQuestion", {
         pollId: this.pollId,
         questionNumber: this.questionNumber,
       })
     },
+    clicked: function(){
+      this.isClicked=true;
+    }
   /*  nextQuestion: function (){
       this.questionNumber +=1;
     },*/
@@ -166,6 +177,16 @@ padding: 2em;
   rgba(0, 0, 0, 0.17);
   /*color:#ff6666*/
   font-family: "Lucida Console", "Monaco", monospace;
+}
 
+.revanswer{
+  background-color: #e6f0ff;
+  width: 80px;
+  height: 40px;
+  position: relative;
+  box-shadow: 0 -0.2em 0 -0.35em
+  rgba(0, 0, 0, 0.17);
+  /*color:#ff6666*/
+  font-family: "Lucida Console", "Monaco", monospace;
 }
 </style>

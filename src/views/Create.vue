@@ -1,4 +1,5 @@
 <template>
+<div class="all">
   <header>
     
     <router-link v-bind:to="'/'" tag="h1">
@@ -6,7 +7,7 @@
     </router-link>
     <div class="error" v-if="error">Please fill all fields before continuing</div>
     <p v-if="!error">
-      <!--The name of this poll is <span class="pollName">{{ pollId }}</span>-->
+      The name of this poll is <span class="pollName">{{ pollId }}</span>
     </p>
   </header>
   
@@ -66,10 +67,13 @@
         </div> -->
 
         <!-- Fråga:{{ question }}, Svar:{{ answers }} -->
-        <div>
-          <button class="addSlideButton" v-on:click="addSlide">
+        <div class="slideButtons">
+          <button v-on:click="addSlide">
             Add new slide
           </button>
+          <button v-on:click="editQuestion">
+            Save Question
+            </button>
           <!-- <button class="deleteSlideButton" v-on:click="deleteSlide">
             Delete slide
           </button> -->
@@ -101,6 +105,15 @@
             <div class="tooltipDelAns">Delete Answer</div>
           </button>
         </div>
+         <div class="addAnswer">
+            <button v-on:click="addAnswer">
+              <!-- {{ uiLabels.addAnswer }} -->
+              <img
+                src="https://cdn-icons.flaticon.com/png/512/3524/premium/3524388.png?token=exp=1639049491~hmac=d026f57965dbf2b29aea2657e3653a52"
+              />
+              <div class="tooltipAddAns">Add Answer Alternativ</div>
+            </button>
+          </div>
       </div>
 
       <div class="resultDesign">
@@ -137,16 +150,9 @@
       </div>-->
 
       <div class="controlpanel">
-        <div class="addRemoveButtons">
-          <div class="addAnswer">
-            <button v-on:click="addAnswer">
-              {{ uiLabels.addAnswer }}
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/992/992651.png"
-              />
-            </button>
-          </div>
-          <!-- <button v-on:click="addAnswer">
+        <!-- <div class="addRemoveButtons">
+    
+          <button v-on:click="addAnswer">
             <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" />
             {{ uiLabels.addAnswer }}
           </button> -->
@@ -155,39 +161,53 @@
               src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
             />
             {{ uiLabels.removeAnswer }}
-          </button> -->
-        </div>
+          </button>
+        </div> -->
         
-        <button v-on:click="addQuestion">Add question</button>
-        <button v-on:click="editQuestion">Save/Edit question</button>
+        <!-- <button v-on:click="addQuestion">Add question</button> -->
+        
         
         
       </div>
-      <div class="skaFlyttas">
+      <!-- <div class="skaFlyttas">
         de här knapparna ska ej vara i denna vy :)
       <input type="number" v-model="questionNumber" />
         <button v-on:click="runQuestion">Run question</button>
-        <!-- {{ data }} -->
+        
         <router-link v-bind:to="'/result/' + pollId">Check result</router-link>
-      </div>
+      </div> -->
+
     </div>
 
     <div class="" v-if="isFinished">
         <h2>You successfully created your poll!!</h2>
       <div>
-        <p>This is your poll-code, save and share it with your participants...(två olika koder?)</p>
+        <h4>THIS IS YOUR POLL-CODE, SAVE AND SHARE IT WITH YOUR PARTICIPANTS  : <br> <br>
+          <span class="pollCode"> {{ pollId }}</span></h4>
       </div>
 
-      <div class="waitButton">
-        <router-link to="/">
-          <button v-on:click="waitUntilLater">Wait until later</button>
+      <section class="waitandstartButton">
+      <div class="stButton">
+        <router-link v-bind:to="'/result/' + pollId">
+          <button class="startButton">Start poll now!</button>
         </router-link>
       </div>
+
       <br>
-      <div class="startButton">
-        <button>
-          Start Poll now!
-        </button>
+      <div class="wtButton">
+        <router-link to="/">
+          <button v-on:click="waitUntilLater" class="waitButton">Wait until later</button>
+        </router-link>
+      </div>
+      </section>
+
+
+
+
+
+
+
+
       </div>
     </div>
   </div>
@@ -211,8 +231,9 @@ export default {
       //questions: [],
       uiLabels: {},
       isShown: false,
-      slides: [""],
+      slide: 0,
       error: false,
+      edit:false,
       resultType: "bars", //försök till att kunna skicka med vilken typ av resultat det ska vara. ej klart.
       isFinished: false,
     };
@@ -225,7 +246,7 @@ export default {
     });
     socket.on("dataUpdate", (data) => (this.data = data));
     socket.on("pollCreated", (data) => this.data = data);
-    socket.on("questionEdited", (data) => this.data = data);
+    // socket.on("questionEdited", (data) => this.data = data);
     socket.on("contentUpdate", (questions) => this.data.questions = questions);
   },
   methods: {
@@ -281,23 +302,28 @@ export default {
           pollId: this.pollId,
           q: this.question,
           a: this.answers,
+          resultType: this.resultType,
           index: this.index,
         });
       }
     },
 
     addSlide: function () {
-      this.slides.push("");
-      // socket.emit("addSlide", {
-      //   pollId: this.pollId,
-      //   q: "",
-      //   a: ["", "", "", ""]
-      // });
+      socket.emit("addSlide", {
+        pollId: this.pollId,
+        q: "",
+        a: ["", "", "", ""],
+        resultType: null,
+        slide: this.slide,
+        index: this.index
+      });
       this.answers = ["", "", "", ""];
       this.question = "";
+      this.slide ++;
     },
 
     deleteSlide: function (i){
+      this.slide--;
       socket.emit("deleteQuestion", {
         pollId: this.pollId,
         q: this.question,
@@ -380,8 +406,12 @@ export default {
   background-color: rgb(223, 223, 219);
 }
 
-.addSlideButton {
-  width: 100%;
+.slideButtons{
+  display: inline-block;
+}
+
+.slideButtons button {
+  width: 40%;
   display: inline-block;
   padding: 0.7em 1.4em;
   margin: 1em 0.3em 0.3em 0;
@@ -398,7 +428,7 @@ export default {
   position: relative;
   border: none;
 }
-.addSlideButton:active {
+.slideButtons button:active {
   box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
   transform: translateY(0.1em);
 }
@@ -447,9 +477,12 @@ export default {
 /* Skapa fråga */
 
 .display {
+  position:relative;
   background-color: wheat;
   grid-area: b;
   min-height: 25em;
+  padding-bottom: 2em;
+  
 }
 
 .questionInput {
@@ -475,17 +508,19 @@ export default {
 .tooltipDelAns{
   visibility: hidden;
   font-family: arial;
-  font-size:0.9em;
-  padding:0.5em;
+  font-size:0.8em;
+  padding:0.4em;
   background-color: black;
   color: white;
   position: absolute;
   text-align: center;
   border-radius:0.5em;
+  
  
 }
 .deleteButton:hover .tooltipDelAns{
   visibility: visible;
+  z-index:1;
 }
 .deleteButton .tooltipDelAns::after{
   content: " ";
@@ -506,13 +541,68 @@ export default {
 .display input {
   border: none;
   text-align: center;
-  background-size: 300% 100%;
+  /* background-size: 300% 100%; */
   border-radius: 0.5em;
   transition: 0.3s;
 }
 .display input:hover {
   background-color: rgb(209, 209, 209);
 }
+
+.addAnswer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.addAnswer img {
+  height: 2em;
+}
+.addAnswer button{
+  float:right;
+  width:3em;
+  height:3em;
+  padding:0.2em;
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 2em;
+  box-sizing: border-box;
+  background-color: #90e494;
+  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
+  text-align: center;
+  position: relative;
+  border: none;
+}
+.addAnswer button:active{
+  box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
+  transform: translateY(0.1em);
+}
+
+.tooltipAddAns{
+  visibility: hidden;
+  width:9em;
+  font-family: arial;
+  font-size:0.8em;
+  padding:0.4em;
+  background-color: black;
+  color: white;
+  position: absolute;
+  text-align: center;
+  border-radius:0.5em;
+ 
+}
+.addAnswer button:hover .tooltipAddAns{
+  visibility: visible;
+  z-index:1;
+}
+.addAnswer button:hover .tooltipAddAns::after{
+  content: " ";
+  position: absolute;
+  bottom: 100%; 
+  right: 80%;
+  margin-left: -0.5em;
+  border-width: 0.3em;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+} 
 
 /* Knapparna nedanför display*/
 .controlpanel {
@@ -525,34 +615,7 @@ export default {
 .controlpanel button {
   margin: 0.3em;
 }
-.addAnswer {
-  position: relative;
-  float: right;
-}
-.addAnswer img {
-  height: 1em;
-}
-.addAnswer button{
-  display: inline-block;
-  padding: 0.7em 1.4em;
-  margin: 0 0.3em 0.3em 0;
-  border-radius: 0.15em;
-  box-sizing: border-box;
-  text-decoration: none;
-  font-family: "Roboto", sans-serif;
-  text-transform: uppercase;
-  font-weight: 400;
-  color: black;
-  background-color: #90e494;
-  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
-  text-align: center;
-  position: relative;
-  border: none;
-}
-.addAnswer button:active{
-  box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
-  transform: translateY(0.1em);
-}
+
 
 /* CSS för att anpassa header */
 header {
@@ -647,4 +710,103 @@ header {
   font-weight: bold;
   border: solid 1px red;
 }
+.startButton{
+  float: left;
+  width: 12em;
+  height:6em;
+  padding: 0.35em 0.7em;
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 0.15em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #113952;
+  background-color: #60c265;
+  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
+  text-align: center;
+  position: relative;
+  border: none;
+
+}
+.waitButton{
+  width: 12em;
+  height: 6em;
+  display: inline-block;
+  padding: 0.7em 1.4em;
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 0.15em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: white;
+  background-color: #e765d6;
+  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
+  text-align: center;
+  position: relative;
+  border: none;
+
+}
+.stButton{
+  width: available;
+  height: available;
+  position: relative;
+  margin-left: 25%;
+
+}
+.wtButton{
+
+
+}
+
+.pollCode{
+  text-transform: uppercase;
+  font-weight:bold;
+  font-size:25px;
+  color: #b6409b;
+  font-family: monaco;
+  border: 5px solid;
+  border-color: #392873;
+
+
+}
+
+.finishButton{
+  height: 50px;
+  weight: 50px;
+  display: inline-block;
+  padding: 0.7em 1.4em;
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 0.15em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: white;
+  background-color: #397194;
+  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
+  text-align: center;
+  position: relative;
+  border: none;
+
+}
+
+.waitandstartButton{
+  margin-top: 130px;
+}
+
+.all{
+  font-size:16px;
+}
+
+@media only screen and (max-width: 700px) {
+  .all{
+    font-size:12px;
+  }
+}
+
 </style>
