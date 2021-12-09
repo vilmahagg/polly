@@ -1,34 +1,32 @@
 <template>
   <div id="nav">
     <header>
-      
-
       <h1 id="header">EasyPoll</h1>
 
-      <p class = "welcomeMessage">{{ uiLabels.welcome }} <br />
+      <p class="welcomeMessage">
+        {{ uiLabels.welcome }} <br />
         {{ uiLabels.choose }}
       </p>
 
-     <div class="lang">
+      <div class="lang">
         <button class="languageButton" v-on:click="switchLanguage">
           <img v-bind:src="this.flag" />
           <div class="hoverLang">Change Language</div>
+        </button>
+      </div>
+      <button class="aboutUs" v-on:click="wantInfo = true && !wantHelp">
+        {{ uiLabels.aboutUs }}
       </button>
 
-      </div>
-      <button class="aboutUs" v-on:click="wantInfo = true">{{ uiLabels.aboutUs }}</button>
-
       <!--<button class="aboutUs">{{ uiLabels.aboutUs }}</button>-->
-      <button class="service">{{ uiLabels.service }}</button>
-
-      
-      
-
-       
+      <!--<button class="service">{{ uiLabels.service }}</button>-->
+      <button class="service" v-on:click="wantHelp = true && !wantInfo">
+        {{ uiLabels.service }}
+      </button>
     </header>
+    
 
-    <div class="firstMenu" v-if="!wantInfo">
-      
+    <div class="firstMenu" v-if="!wantInfo && !wantHelp">
       <div class="create" v-if="!ready">
         <router-link v-bind:to="'/create/' + lang" tag="button">
           <button class="createButton">
@@ -63,48 +61,90 @@
       </div>
     </div>
 
-     <div class="info" v-if="wantInfo">
-       <button class="back" v-on:click="wantInfo = false" style="float:left">
+    <div class="help" v-if="wantHelp">
+      <button class="back" v-on:click="wantHelp = false" style="float: left">
         {{ uiLabels.backButton }}
       </button>
 
-      <h3>General info and bussiness idea </h3>
+      <h3>Customer Information</h3>
+      <p>If you have any concerns regarding the website please call: 073-397 70 53</p>
 
-      <p>The best webapplication ever made, easy pollcreation 4 the win <br> EasyPoll works best in a classroom so the result can be shown on a big screen for the students</p>
+    </div>
+
+    <div class="info" v-if="wantInfo">
+      <button class="back" v-on:click="wantInfo = false" style="float: left">
+        {{ uiLabels.backButton }}
+      </button>
+
+      <h3>General info and bussiness idea</h3>
+
+      <p>
+        The best webapplication ever made, easy pollcreation 4 the win <br />
+        EasyPoll works best in a classroom so the result can be shown on a big
+        screen for the students
+      </p>
       <h3>The creators</h3>
-      <div class = "creatorInfo">
-        
-        <div class = "vilmaInfo">
+      <div class="creatorInfo">
+        <div class="vilmaInfo">
           <p>Vilma Hägg Edelönn</p>
-           <img class ="vilma" src="https://scontent-arn2-1.xx.fbcdn.net/v/t1.18169-9/14600832_1364866180211034_1798950174594637318_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=174925&_nc_ohc=QEsj39RxgkQAX9eqH_1&_nc_ht=scontent-arn2-1.xx&oh=17508b40364919d9ae6db547e369a9d1&oe=61D62D74" >
-           <p>Instagram: <a href="https://www.instagram.com/vilmahggedelnn/?hl=sv">VilmasInstagram</a></p>
-           <p>Mail: vilmahggedelnn@gmail.com</p>
+          <img
+            class="vilma"
+            src="https://scontent-arn2-1.xx.fbcdn.net/v/t1.18169-9/14600832_1364866180211034_1798950174594637318_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=174925&_nc_ohc=QEsj39RxgkQAX9eqH_1&_nc_ht=scontent-arn2-1.xx&oh=17508b40364919d9ae6db547e369a9d1&oe=61D62D74"
+          />
+          <p>
+            Instagram:
+            <a href="https://www.instagram.com/vilmahggedelnn/?hl=sv"
+              >VilmasInstagram</a
+            >
+          </p>
+          <p>Mail: vilmahggedelnn@gmail.com</p>
         </div>
-       
-       <div class = "viktoriaSInfo">
-         <p>Viktoria Svensson</p>
-        <img class ="viktoriaS" src="https://scontent-arn2-1.xx.fbcdn.net/v/t1.18169-9/22310701_1197227793711557_2200564642596610941_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=bjgP2Grj6N0AX9S451u&_nc_ht=scontent-arn2-1.xx&oh=ec3a8246e4883f999f04a34a5b609593&oe=61D82352" >
-        <p>Instagram :<a href="https://www.instagram.com/viktoria_svensson/?hl=sv">VickansInstagram</a></p>
-        <p>Mail: vilmahggedelnn@gmail.com</p>
+
+        <div class="viktoriaSInfo">
+          <p>Viktoria Svensson</p>
+          <img
+            class="viktoriaS"
+            src="https://scontent-arn2-1.xx.fbcdn.net/v/t1.18169-9/22310701_1197227793711557_2200564642596610941_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=bjgP2Grj6N0AX9S451u&_nc_ht=scontent-arn2-1.xx&oh=ec3a8246e4883f999f04a34a5b609593&oe=61D82352"
+          />
+          <p>
+            Instagram :<a
+              href="https://www.instagram.com/viktoria_svensson/?hl=sv"
+              >VickansInstagram</a
+            >
+          </p>
+          <p>Mail: vilmahggedelnn@gmail.com</p>
         </div>
-        
-        <div class = "viktoriaZInfo">
+
+        <div class="viktoriaZInfo">
           <p>Viktoria Zubenko</p>
-        <img class ="viktoriaZ" src="https://scontent-arn2-1.xx.fbcdn.net/v/t1.6435-9/62450140_10156688965284055_2495346217672769536_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=vrKwecNNKPsAX-B2SIm&_nc_ht=scontent-arn2-1.xx&oh=679f4db2cc0df53639e7c43be4f014f5&oe=61D79D55" >
-         <p>Instagram:<a href="https://www.instagram.com/victoriiazubenko/?hl=sv">VickansInstagram</a></p>
-         <p>Mail: vilmahggedelnn@gmail.com</p>
+          <img
+            class="viktoriaZ"
+            src="https://scontent-arn2-1.xx.fbcdn.net/v/t1.6435-9/62450140_10156688965284055_2495346217672769536_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=vrKwecNNKPsAX-B2SIm&_nc_ht=scontent-arn2-1.xx&oh=679f4db2cc0df53639e7c43be4f014f5&oe=61D79D55"
+          />
+          <p>
+            Instagram:<a
+              href="https://www.instagram.com/victoriiazubenko/?hl=sv"
+              >VickansInstagram</a
+            >
+          </p>
+          <p>Mail: vilmahggedelnn@gmail.com</p>
         </div>
 
-         <div class = "aliceInfo">
-           <p>Alice Gardell</p>
-         <img class ="alice" src="https://avatars.githubusercontent.com/u/93650060?v=4" >
-         <p>Instagram:<a href="https://www.instagram.com/alicegardell/?hl=sv">AliceInstagram</a></p>
-         <p>Mail: alice.gardell@icloud.com</p>
-
+        <div class="aliceInfo">
+          <p>Alice Gardell</p>
+          <img
+            class="alice"
+            src="https://avatars.githubusercontent.com/u/93650060?v=4"
+          />
+          <p>
+            Instagram:<a href="https://www.instagram.com/alicegardell/?hl=sv"
+              >AliceInstagram</a
+            >
+          </p>
+          <p>Mail: alice.gardell@icloud.com</p>
         </div>
       </div>
-      </div>
-
+    </div>
   </div>
 </template>
 
@@ -121,7 +161,8 @@ export default {
       lang: "en",
       flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Svensk_flagg_1815.svg/2560px-Svensk_flagg_1815.svg.png",
       ready: false,
-      wantInfo:false
+      wantInfo: false,
+      wantHelp: false,
     };
   },
   created: function () {
@@ -147,18 +188,14 @@ export default {
 </script>
 
 <style>
-
-
 header {
   background-image: url("https://data.whicdn.com/images/334251300/original.gif");
   height: 12em;
   margin: 0;
   border-radius: 25px;
-
 }
 
 header h1 {
-
   text-align: center;
   margin: 0;
   font-size: 3.5em;
@@ -171,75 +208,81 @@ header h1 {
   display: inline-block;
 }
 
-.firstMenu{margin-top: 5em;}
+.welcomeMessage {
+  margin-bottom: 2.3em;
+}
 
+#nav {
+  background: rgb(243, 220, 243);
+  height: 50em;
+}
 
-
+.firstMenu {
+  margin-top: 5em;
+}
 
 .aboutUs {
-  padding-left:3em;
-  padding-right:3em;
-  float:left;
+  padding-left: 3em;
+  padding-right: 3em;
+  margin: 0;
+  float: left;
   background: none;
   border: none;
   text-decoration: underline;
   font-weight: bold;
 }
 
-.vilmaInfo{
-    display: inline-block;
+.vilmaInfo {
+  display: inline-block;
 }
-.viktoriaSInfo{
-display: inline-block;
-}
-
-.viktoriaZInfo{
-display: inline-block;
-}
-
-.aliceInfo{
+.viktoriaSInfo {
   display: inline-block;
 }
 
-.vilma{
+.viktoriaZInfo {
+  display: inline-block;
+}
+
+.aliceInfo {
+  display: inline-block;
+}
+
+.vilma {
   width: 10em;
   border-radius: 50px;
 }
 
-.viktoriaS{
+.viktoriaS {
   border-radius: 50px;
-width: 10em;
+  width: 10em;
 }
 
-.viktoriaZ{
+.viktoriaZ {
   border-radius: 50px;
-width: 10em;
+  width: 10em;
 }
 
-.alice{
+.alice {
   border-radius: 50px;
-width: 10em;
+  width: 10em;
 }
 
-.creatorInfo{
-  background:thistle;
+.creatorInfo {
+  background: thistle;
   border-radius: 25em;
-  
 }
-.creatorInfo img{
-  
- 
- padding-left:2.6em;
- padding-right: 2.8em;
+.creatorInfo img {
+  padding-left: 2.6em;
+  padding-right: 2.8em;
 }
 
-.info{
+.info {
   height: 20em;
   background: thistle;
   border-radius: 25em;
 }
 .service {
-  float:left;
+  float: left;
 
   background: none;
   border: none;
@@ -319,31 +362,30 @@ h3 {
 }
 
 .languageButton {
- 
-  float:left;
-  margin-left:1em;
+  float: left;
+  margin-left: 1em;
   font-weight: bold;
   width: 4em;
   height: 2em;
-  
 }
 .languageButton img {
+ 
+ 
   width: 3.3em;
   height: 1.6em;
 }
-.hoverLang{
+.hoverLang {
   visibility: hidden;
   font-family: arial;
-  font-size:0.9em;
-  padding:0.5em;
+  font-size: 0.9em;
+  padding: 0.5em;
   background-color: black;
   color: white;
   position: absolute;
   text-align: center;
-  border-radius:0.5em;
- 
+  border-radius: 0.5em;
 }
-.languageButton:hover .hoverLang{
+.languageButton:hover .hoverLang {
   visibility: visible;
 }
 
@@ -353,7 +395,7 @@ button:hover {
 
 .start {
   height: 30em;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(243, 220, 243);
   padding: 2em;
 }
 .start div {
