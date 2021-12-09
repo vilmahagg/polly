@@ -6,7 +6,7 @@
     </router-link>
     <div class="error" v-if="error">Please fill all fields before continuing</div>
     <p v-if="!error">
-      <!--The name of this poll is <span class="pollName">{{ pollId }}</span>-->
+      The name of this poll is <span class="pollName">{{ pollId }}</span>
     </p>
   </header>
   
@@ -224,7 +224,7 @@ export default {
       //questions: [],
       uiLabels: {},
       isShown: false,
-      slides: [""],
+      slide: 0,
       error: false,
       resultType: "bars", //försök till att kunna skicka med vilken typ av resultat det ska vara. ej klart.
       isFinished: false,
@@ -238,7 +238,7 @@ export default {
     });
     socket.on("dataUpdate", (data) => (this.data = data));
     socket.on("pollCreated", (data) => this.data = data);
-    socket.on("questionEdited", (data) => this.data = data);
+    // socket.on("questionEdited", (data) => this.data = data);
     socket.on("contentUpdate", (questions) => this.data.questions = questions);
   },
   methods: {
@@ -300,20 +300,23 @@ export default {
       }
     },
 
-    // addSlide: function () {
-    //   this.slides.push("");
-    //   socket.emit("addSlide", {
-    //     pollId: this.pollId,
-    //     q: "",
-    //     a: ["", "", "", ""],
-    //     resultType: this.resultType,
-    //     index: this.index ++
-    //   });
-    //   this.answers = ["", "", "", ""];
-    //   this.question = "";
-    // },
+    addSlide: function () {
+      
+      socket.emit("addSlide", {
+        pollId: this.pollId,
+        q: "",
+        a: ["", "", "", ""],
+        resultType: null,
+        slide: this.slide,
+        index: this.index
+      });
+      this.answers = ["", "", "", ""];
+      this.question = "";
+      this.slide ++;
+    },
 
     deleteSlide: function (i){
+      this.slide--;
       socket.emit("deleteQuestion", {
         pollId: this.pollId,
         q: this.question,
