@@ -32,11 +32,21 @@ function sockets(io, socket, data) {
   });
 
   socket.on('editQuestion', function(d) {
-    data.editQuestion(d.pollId, {q: d.q, a: d.a, result: d.resultType}, d.index);
+    data.editQuestion(d.pollId, {q: d.q, a: d.a, result: d.resultType}, d.index, d.slide);
     // socket.emit('questionEdited', data.getAllQuestions(d.pollId));
+    socket.emit('contentUpdate', data.getAllQuestions(d.pollId));
+    
+  });
+
+  socket.on('moveUp', function(d){
+    data.moveUp(d.pollId,d.index);
     socket.emit('contentUpdate', data.getAllQuestions(d.pollId));
   });
     
+  socket.on('moveDown', function(d){
+    data.moveDown(d.pollId,d.index);
+    socket.emit('contentUpdate', data.getAllQuestions(d.pollId));
+  });
 
   socket.on('joinPoll', function(pollId) {
     socket.join(pollId);

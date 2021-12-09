@@ -44,12 +44,20 @@
     <div class="pollCreation" v-if="isShown">
       <div class="storedQuestions">
         <p>QUESTIONS</p>
-        <div v-if="data!=={}">
+        
         <div
           class="slides"
           v-for="(question, index) in data.questions"
           v-bind:key="'question' + index"
         >
+          <div class="changePlaceButtons">
+          <button v-on:click="moveUp(index)">
+            <img src="https://cdn-icons-png.flaticon.com/512/467/467293.png">
+          </button>
+          <button v-on:click="moveDown(index)">
+            <img src="https://cdn-icons-png.flaticon.com/512/467/467264.png">
+          </button>
+          </div>
           <button class="slide" v-on:click="showQuestion(question, index)">
             {{ index }}: {{ question.q }}
           </button>
@@ -60,7 +68,7 @@
             <div class="tooltipDelAns">Delete Slide</div>
           </button>
         </div>
-        </div>
+        
 
         <!-- <div v-for="(slide,index) in slides" v-bind:key="'slide' +index">
           <button>hej</button>
@@ -224,8 +232,8 @@ export default {
       flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Svensk_flagg_1815.svg/2560px-Svensk_flagg_1815.svg.png",
       pollId: "",
       question: "",
-      answers: ["", "", "", ""],
-      index: null,
+      answers: [],
+      index: 0,
       questionNumber: 0,
       data: {},
       //questions: [],
@@ -271,23 +279,23 @@ export default {
       }
       socket.emit("switchLanguage", this.lang);
     },
-    addQuestion: function () {
-      for (let i = 0; i < this.answers.length; i++) {
-        if (this.answers[i] === "" || this.question == "") {
-          this.error = true;
-        } else {
-          this.error = false;
-        }
-      }
-      if (!this.error) {
-        socket.emit("addQuestion", {
-          pollId: this.pollId,
-          q: this.question,
-          a: this.answers,
-          resultType: this.resultType,
-        });
-      }
-    },
+    // addQuestion: function () {
+    //   for (let i = 0; i < this.answers.length; i++) {
+    //     if (this.answers[i] === "" || this.question == "") {
+    //       this.error = true;
+    //     } else {
+    //       this.error = false;
+    //     }
+    //   }
+    //   if (!this.error) {
+    //     socket.emit("addQuestion", {
+    //       pollId: this.pollId,
+    //       q: this.question,
+    //       a: this.answers,
+    //       resultType: this.resultType,
+    //     });
+    //   }
+    // },
 
     editQuestion: function () {
       for (let i = 0; i < this.answers.length; i++) {
@@ -304,6 +312,7 @@ export default {
           a: this.answers,
           resultType: this.resultType,
           index: this.index,
+          slide: this.slide,
         });
       }
     },
@@ -317,8 +326,6 @@ export default {
         slide: this.slide,
         index: this.index
       });
-      this.answers = ["", "", "", ""];
-      this.question = "";
       this.slide ++;
     },
 
@@ -331,6 +338,28 @@ export default {
         index: i
       });
     },
+
+    moveUp: function(i) {
+      if (i == 0){
+        return
+      }
+      socket.emit("moveUp", {
+        pollId: this.pollId,
+        q: this.question,
+        a: this.answers,
+        index: i
+      });
+    },
+
+    moveDown: function(i) {
+      socket.emit("moveDown", {
+        pollId: this.pollId,
+        q: this.question,
+        a: this.answers,
+        index: i
+      });
+    },
+
     addAnswer: function () {
       if (this.answers.length >= 12) {
         return;
@@ -353,6 +382,7 @@ export default {
       this.question = question.q;
       this.answers = question.a;
       this.index = index;
+      // this.resultType = question.resultType;
     },
     finishPresentation: function () {
       socket.emit("finishPresentation", {});
@@ -389,9 +419,25 @@ export default {
   
 }
 .slides{
-  display:inline-block;
-  width:100%
+  width:100%;
+
 }
+.changePlaceButtons{
+  display: inline-block;
+  vertical-align: middle;
+}
+.changePlaceButtons img{
+  height:1em;
+}
+.changePlaceButtons button{
+  height:2em;
+  width:2em;
+  display:block;
+  border-radius:1em;
+  border:none;
+  background-color: rgba(255, 255, 255, 0);
+}
+
 
 .slide {
   background-color: white;

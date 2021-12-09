@@ -69,11 +69,30 @@ Data.prototype.editQuestion = function(pollId, newQuestion, index) {
   const poll = this.polls[pollId];
   if (typeof poll !== 'undefined') {
     poll.questions[index] = newQuestion;
-  //  Vue.set(poll.questions, index, newQuestion);
   }
   console.log("question ", index, " in poll: ", pollId, " updated to:", newQuestion)
 }  //skicka med datan för den editade frågan i newQuestion
 
+Data.prototype.moveUp = function(pollId, index){
+  console.log("data moveup",index,index-1);
+  const poll = this.polls[pollId];
+  if (typeof poll !== 'undefined') {
+    let temp = poll.questions[index];
+    let temp2 = poll.questions[index-1]
+    poll.questions[index] = temp2;
+    poll.questions[index-1] = temp;
+  }
+}
+Data.prototype.moveDown = function(pollId, index){
+  console.log("data movedown",index,index+1);
+  const poll = this.polls[pollId];
+  if (typeof poll !== 'undefined') {
+    let temp = poll.questions[index];
+    let temp2 = poll.questions[index+1]
+    poll.questions[index] = temp2;
+    poll.questions[index+1] = temp;
+  }
+}
 
 Data.prototype.getQuestion = function(pollId, qId=null) {
   const poll = this.polls[pollId];
