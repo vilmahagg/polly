@@ -175,19 +175,24 @@
     <div class="" v-if="isFinished">
         <h2>You successfully created your poll!!</h2>
       <div>
-        <p>This is your poll-code, save and share it with your participants...(två olika koder?)</p>
+        <h4>THIS IS YOUR POLL-CODE, SAVE AND SHARE IT WITH YOUR PARTICIPANTS  : <br> <br>
+          <span class="pollCode"> {{ pollId }}</span></h4>
       </div>
 
-      <div class="waitButton">
+      <div class="wtButton">
         <router-link to="/">
-          <button v-on:click="waitUntilLater">Wait until later</button>
+          <button v-on:click="waitUntilLater" class="waitButton">Wait until later</button>
         </router-link>
       </div>
       <br>
-      <div class="startButton">
-        <button>
-          Start Poll now!
-        </button>
+      <div class="stButton">
+        <router-link v-bind:to="'/result/' + pollId">
+          <button class="startButton">Start poll now!</button>
+        </router-link>
+
+
+
+
       </div>
     </div>
   </div>
@@ -653,4 +658,89 @@ header {
   font-weight: bold;
   border: solid 1px red;
 }
+.startButton{
+  float: left;
+  width: 12em;
+  height:6em;
+  padding: 0.35em 0.7em;
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 0.15em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #113952;
+  background-color: #60c265;
+  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
+  text-align: center;
+  position: relative;
+  border: none;
+
+}
+.waitButton{
+  width: 12em;
+  height: 6em;
+  display: inline-block;
+  padding: 0.7em 1.4em;
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 0.15em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: white;
+  background-color: #e765d6;
+  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
+  text-align: center;
+  position: relative;
+  border: none;
+
+}
+.stButton{
+  margin:90px 100px;
+  float:right;
+
+}
+.wtButton{
+  margin:100px 300px;
+  float:right;
+
+}
+
+.pollCode{
+  text-transform: uppercase;
+  font-weight:bold;
+  font-size:25px;
+  color: #b6409b;
+  font-family: monaco;
+  border: 5px solid;
+  border-color: #392873;
+
+
+}
+
+.finishButton{
+  height: 50px;
+  weight: 50px;
+  display: inline-block;
+  padding: 0.7em 1.4em;
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 0.15em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: white;
+  background-color: #397194;
+  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
+  text-align: center;
+  position: relative;
+  border: none;
+
+}
+
+
 </style>
