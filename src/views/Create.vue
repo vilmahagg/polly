@@ -284,21 +284,24 @@ export default {
           pollId: this.pollId,
           q: this.question,
           a: this.answers,
+          resultType: this.resultType,
           index: this.index,
         });
       }
     },
 
-    addSlide: function () {
-      this.slides.push("");
-      // socket.emit("addSlide", {
-      //   pollId: this.pollId,
-      //   q: "",
-      //   a: ["", "", "", ""]
-      // });
-      this.answers = ["", "", "", ""];
-      this.question = "";
-    },
+    // addSlide: function () {
+    //   this.slides.push("");
+    //   socket.emit("addSlide", {
+    //     pollId: this.pollId,
+    //     q: "",
+    //     a: ["", "", "", ""],
+    //     resultType: this.resultType,
+    //     index: this.index ++
+    //   });
+    //   this.answers = ["", "", "", ""];
+    //   this.question = "";
+    // },
 
     deleteSlide: function (i){
       socket.emit("deleteQuestion", {
