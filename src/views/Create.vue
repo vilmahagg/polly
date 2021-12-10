@@ -33,13 +33,13 @@
         <ul class="tip">
           <li>
             <img
-              src="https://cdn-icons.flaticon.com/png/512/2697/premium/2697245.png?token=exp=1638890476~hmac=903b4845a6c94cdc68a573a64689be3e"
+              src=..\..\public\img\light-bulb-color.png
             />
             Remember the name to access the poll later
           </li>
           <li>
             <img
-              src="https://cdn-icons.flaticon.com/png/512/2697/premium/2697245.png?token=exp=1638890476~hmac=903b4845a6c94cdc68a573a64689be3e"
+              src=..\..\public\img\light-bulb-color.png
             />
             Want to edit an existing poll? Enter the name of the poll above to
             continue where you left off!
@@ -50,8 +50,9 @@
       <div class="pollCreation" v-if="isShown">
         <div class="storedQuestions">
           <p>QUESTIONS</p>
-         slide: {{ slide }}, index:{{index}}, selected:{{selectedSlide}}
-         {{data.questions}}
+         slide: {{ slide }}, index:{{index}}, selected:{{selectedSlide}}<br>
+         <!-- {{data.questions}} -->
+         
           <div
             class="slides"
             v-for="(question, index) in data.questions"
@@ -79,8 +80,8 @@
             </button>
             <div class="slideDelete">
               <button class="deleteButton" v-on:click="deleteSlide(index)">
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
+                 <img
+                  src=..\..\public\img\red-x.png
                 />
                 <div class="tooltipDelAns">Delete Slide</div>
               </button>
@@ -106,6 +107,7 @@
             <h2>Choose Slide to Start Editing</h2>
           </div>
           <div v-if="start">
+            {{index +1}}
             <input
               class="questionInput"
               type="text"
@@ -125,7 +127,7 @@
 
               <button class="deleteButton" v-on:click="deleteAnswer(i)">
                 <img
-                  src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
+                  src=..\..\public\img\red-x.png
                 />
                 <div class="tooltipDelAns">Delete Answer</div>
               </button>
@@ -133,10 +135,13 @@
             <div class="addAnswer">
               <button v-on:click="addAnswer">
                 <!-- {{ uiLabels.addAnswer }} -->
-                <img
+                <!-- <img
                   src="https://cdn-icons.flaticon.com/png/512/3524/premium/3524388.png?token=exp=1639049491~hmac=d026f57965dbf2b29aea2657e3653a52"
+                /> -->
+                <img
+                  src=..\..\public\img\plus.png
                 />
-                <div class="tooltipAddAns">Add Answer Alternativ</div>
+                <div class="tooltipAddAns">Add Answer Alternative</div>
               </button>
             </div>
           </div>
@@ -253,7 +258,6 @@ export default {
       data: {},
       uiLabels: {},
       isShown: false,
-      slide: 0,
       selectedSlide: null,
       error: false,
       start: false,
@@ -261,6 +265,11 @@ export default {
       resultType: "bars", //försök till att kunna skicka med vilken typ av resultat det ska vara. ej klart.
       isFinished: false,
     };
+  },
+  computed: {
+    slide: function() {
+      return this.data.questions.length;
+    }
   },
   created: function () {
     this.lang = this.$route.params.lang;
@@ -325,6 +334,7 @@ export default {
         }
       }
       if (!this.error) {
+        console.log(this.index,this.slide,this.resultType);
         socket.emit("editQuestion", {
           pollId: this.pollId,
           q: this.question,
@@ -338,6 +348,7 @@ export default {
     },
 
     addSlide: function () {
+      console.log(this.resultType);
       socket.emit("addSlide", {
         pollId: this.pollId,
         q: "",
@@ -346,11 +357,11 @@ export default {
         slide: this.slide,
         index: this.index,
       });
-      this.slide++;
+      
     },
 
     deleteSlide: function (i) {
-      this.slide--;
+    
       if (this.slide <= 0) {
         return;
       }
@@ -410,10 +421,11 @@ export default {
       });
     },
     showQuestion: function (question, index) {
+      console.log(this.resultType);
       this.question = question.q;
       this.answers = question.a;
       this.index = index;
-      this.resultType = question.resultType;
+      question.resultType = this.resultType;
       this.start = true;
       this.save = true;
       this.selectedSlide = index;
@@ -575,7 +587,7 @@ export default {
 
 .questionInput {
   height: 3em;
-  width: 90%;
+  width: 80%;
   margin: 1em;
 }
 .answers {
@@ -584,18 +596,21 @@ export default {
 }
 .deleteButton {
   border: none;
-  border-radius: 2em;
-  height: 1.5em;
-  width: 1.5em;
-  padding: 0.01em;
+  border-radius: 50%;
+  height: 1.2rem;
+  width: 1.2rem;
+  vertical-align: middle;
+  padding:0;
+  background-color: rgb(255, 255, 255);
 }
-.deleteButton img {
-  height: 1.5em;
-  width: 1.5em;
+.deleteButton img{
+  height:1.2rem;
 }
+
 .tooltipDelAns {
   visibility: hidden;
   font-family: arial;
+  width:7em;
   font-size: 0.8em;
   padding: 0.4em;
   background-color: black;
@@ -611,10 +626,10 @@ export default {
 .deleteButton .tooltipDelAns::after {
   content: " ";
   position: absolute;
-  bottom: 100%;
-  right: 85%;
+  bottom: 95%;
+  right: 80%;
   margin-left: -0.5em;
-  border-width: 0.3em;
+  border-width: 0.4em;
   border-style: solid;
   border-color: transparent transparent black transparent;
 }
@@ -640,14 +655,13 @@ export default {
   right: 0;
   bottom: 0;
 }
-.addAnswer img {
-  height: 2em;
-}
+
 .addAnswer button {
   float: right;
-  width: 3em;
-  height: 3em;
-  padding: 0.2em;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0em;
+
   margin: 0 0.3em 0.3em 0;
   border-radius: 2em;
   box-sizing: border-box;
@@ -656,23 +670,29 @@ export default {
   text-align: center;
   position: relative;
   border: none;
+  
 }
+
+.addAnswer button img{
+  height: 1.7em;
+}
+
 .addAnswer button:active {
-  box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
-  transform: translateY(0.1em);
+  box-shadow: 0 -0.2rem 0 -0.35rem rgba(0, 0, 0, 0.17);
+  transform: translateY(0.1rem);
 }
 
 .tooltipAddAns {
   visibility: hidden;
-  width: 9em;
+  width: 9rem;
   font-family: arial;
-  font-size: 0.8em;
-  padding: 0.4em;
+  font-size: 0.8rem;
+  padding: 0.4rem;
   background-color: black;
   color: white;
   position: absolute;
   text-align: center;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
 }
 .addAnswer button:hover .tooltipAddAns {
   visibility: visible;
