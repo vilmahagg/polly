@@ -1,169 +1,185 @@
 <template>
-<div class="all">
-  <header>
-    
-    <router-link v-bind:to="'/'" tag="h1">
-      <h1>EasyPoll</h1>
-    </router-link>
-    <div class="error" v-if="error">Please fill all fields before saving question</div>
-    <p v-if="!error">
-      The name of this poll is <span class="pollName">{{ pollId }}</span>
-    </p>
-  </header>
-  
-  <div class="createView">
-    <div class="pollTitle" v-if="!isShown && !isFinished">
-      <router-link v-bind:to="'/'" tag="button">
-        <button class="back">
-          {{ uiLabels.backButton }}
-        </button>
+  <div class="all">
+    <header>
+      <router-link v-bind:to="'/'" tag="h1">
+        <h1>EasyPoll</h1>
       </router-link>
+      <div class="error" v-if="error">
+        Please fill all fields before saving question
+      </div>
+      <p v-if="!error">
+        The name of this poll is <span class="pollName">{{ pollId }}</span>
+      </p>
+    </header>
 
-      <h3>Choose a name for your poll!</h3>
+    <div class="createView">
+      <div class="pollTitle" v-if="!isShown && !isFinished">
+        <router-link v-bind:to="'/'" tag="button">
+          <button class="back">
+            {{ uiLabels.backButton }}
+          </button>
+        </router-link>
 
+        <h3>Choose a name for your poll!</h3>
 
-      <input type="text" v-model="pollId" />
-      <button class="createPollButton" v-on:click="createPoll">
-        {{ uiLabels.createPoll }}
-      </button>
-      <br>
-      <!-- <div class="error" v-if="error">
+        <input type="text" v-model="pollId" />
+        <button class="createPollButton" v-on:click="createPoll">
+          {{ uiLabels.createPoll }}
+        </button>
+        <br />
+        <!-- <div class="error" v-if="error">
         Please give the poll a title before continuing
       </div> -->
-      <ul class="tip">
-        <li><img src="https://cdn-icons.flaticon.com/png/512/2697/premium/2697245.png?token=exp=1638890476~hmac=903b4845a6c94cdc68a573a64689be3e">
-          Remember the name to access the poll later</li>
-         <li><img src="https://cdn-icons.flaticon.com/png/512/2697/premium/2697245.png?token=exp=1638890476~hmac=903b4845a6c94cdc68a573a64689be3e">
-          Want to edit an existing poll? Enter the name of the poll above to continue where you left off! </li>
-      </ul>
-
-      
-    
-    </div>
-
-    <div class="pollCreation" v-if="isShown">
-      <div class="storedQuestions">
-        <p>QUESTIONS</p>
-        {{slide}}
-        <div
-          class="slides"
-          v-for="(question, index) in data.questions"
-          v-bind:key="'question' + index"
-        >
-          <div class="changePlaceButtons">
-          <button v-on:click="moveUp(index)">
-            <img src="https://cdn-icons-png.flaticon.com/512/467/467293.png">
-          </button>
-          <button v-on:click="moveDown(index)">
-            <img src="https://cdn-icons-png.flaticon.com/512/467/467264.png">
-          </button>
-          </div>
-          <button class="slide" v-on:click="showQuestion(question, index)">
-            {{ index }}: {{ question.q }}
-          </button>
-          <div class="slideDelete">
-          <button class="deleteButton" v-on:click="deleteSlide(index)">
+        <ul class="tip">
+          <li>
             <img
-              src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
+              src="https://cdn-icons.flaticon.com/png/512/2697/premium/2697245.png?token=exp=1638890476~hmac=903b4845a6c94cdc68a573a64689be3e"
             />
-            <div class="tooltipDelAns">Delete Slide</div>
-          </button>
-          </div>
-        </div>
-        
+            Remember the name to access the poll later
+          </li>
+          <li>
+            <img
+              src="https://cdn-icons.flaticon.com/png/512/2697/premium/2697245.png?token=exp=1638890476~hmac=903b4845a6c94cdc68a573a64689be3e"
+            />
+            Want to edit an existing poll? Enter the name of the poll above to
+            continue where you left off!
+          </li>
+        </ul>
+      </div>
 
-        <!-- <div v-for="(slide,index) in slides" v-bind:key="'slide' +index">
+      <div class="pollCreation" v-if="isShown">
+        <div class="storedQuestions">
+          <p>QUESTIONS</p>
+         slide: {{ slide }}, index:{{index}}, selected:{{selectedSlide}}
+         {{data.questions}}
+          <div
+            class="slides"
+            v-for="(question, index) in data.questions"
+            v-bind:key="'question' + index"
+          >
+            <div class="changePlaceButtons">
+              <button v-on:click="moveUp(index)">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/467/467293.png"
+                />
+              </button>
+              <button v-on:click="moveDown(index)">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/467/467264.png"
+                />
+              </button>
+            </div>
+            
+            <button
+              class="slide"
+              :class="{thisSlide: selectedSlide == index}"
+              v-on:click="showQuestion(question, index, slide)"
+            >
+              {{ index }}: {{ question.q }}
+            </button>
+            <div class="slideDelete">
+              <button class="deleteButton" v-on:click="deleteSlide(index)">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
+                />
+                <div class="tooltipDelAns">Delete Slide</div>
+              </button>
+            </div>
+          </div>
+
+          <!-- <div v-for="(slide,index) in slides" v-bind:key="'slide' +index">
           <button>hej</button>
         </div> -->
 
-        <!-- Fråga:{{ question }}, Svar:{{ answers }} -->
-        <div class="slideButtons">
-          <button v-on:click="addSlide">
-            Add new slide
-          </button>
-          <button v-on:click="editQuestion">
-            Save Question
-            </button>
-          <!-- <button class="deleteSlideButton" v-on:click="deleteSlide">
+          <!-- Fråga:{{ question }}, Svar:{{ answers }} -->
+          <div class="slideButtons">
+            <button v-if="!save" v-on:click="addSlide">Add new slide</button>
+            <button v-if="save" v-on:click="editQuestion">Save Question</button>
+            <!-- <button class="deleteSlideButton" v-on:click="deleteSlide">
             Delete slide
           </button> -->
+          </div>
         </div>
-      </div>
 
-      <div class="display">
-        <div v-if="start">
-        <input
-          class="questionInput"
-          type="text"
-          v-model="question"
-          :placeholder="uiLabels.question"
-        />
-        <div
-          class="answers"
-          v-for="(_, i) in answers"
-          v-bind:key="'answer' + i"
-        >
-          <input 
-            v-if="start"
-            class="answersInput"
-            v-model="answers[i]"
-            :placeholder="uiLabels.answer"
-          />
-          
-          <button class="deleteButton" v-on:click="deleteAnswer(i)">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
+        <div class="display">
+          <div class="startDisplay" v-if="!start">
+            <h2>Choose Slide to Start Editing</h2>
+          </div>
+          <div v-if="start">
+            <input
+              class="questionInput"
+              type="text"
+              v-model="question"
+              :placeholder="uiLabels.question"
             />
-            <div class="tooltipDelAns">Delete Answer</div>
-          </button>
-        </div>
-         <div class="addAnswer">
-            <button v-on:click="addAnswer">
-              <!-- {{ uiLabels.addAnswer }} -->
-              <img
-                src="https://cdn-icons.flaticon.com/png/512/3524/premium/3524388.png?token=exp=1639049491~hmac=d026f57965dbf2b29aea2657e3653a52"
+            <div
+              class="answers"
+              v-for="(_, i) in answers"
+              v-bind:key="'answer' + i"
+            >
+              <input
+                class="answersInput"
+                v-model="answers[i]"
+                :placeholder="uiLabels.answer"
               />
-              <div class="tooltipAddAns">Add Answer Alternativ</div>
+
+              <button class="deleteButton" v-on:click="deleteAnswer(i)">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
+                />
+                <div class="tooltipDelAns">Delete Answer</div>
+              </button>
+            </div>
+            <div class="addAnswer">
+              <button v-on:click="addAnswer">
+                <!-- {{ uiLabels.addAnswer }} -->
+                <img
+                  src="https://cdn-icons.flaticon.com/png/512/3524/premium/3524388.png?token=exp=1639049491~hmac=d026f57965dbf2b29aea2657e3653a52"
+                />
+                <div class="tooltipAddAns">Add Answer Alternativ</div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="resultDesign">
+          <h4>RESULT (elr annan titel)</h4>
+          <h5>Choose how you want the result of your poll to be presented:</h5>
+          <div class="resultDisplay">
+            <img
+              v-if="resultType == 'bars'"
+              src="https://www.pngrepo.com/png/326909/512/bar-chart-sharp.png"
+            />
+            <img
+              v-if="resultType == 'pie'"
+              src="https://static.thenounproject.com/png/32976-200.png"
+            />
+          </div>
+          <div class="resultOptions">
+            <button class="bars" v-on:click="resultType = 'bars'">
+              Bar Chart
+            </button>
+            <button class="pie" v-on:click="resultType = 'pie'">
+              Pie Chart
             </button>
           </div>
-          </div>
-      </div>
-
-      <div class="resultDesign">
-        <h4>RESULT (elr annan titel)</h4>
-        <h5>Choose how you want the result of your poll to be presented:</h5>
-        <div class="resultDisplay">
-          <img
-            v-if="resultType == 'bars'"
-            src="https://www.pngrepo.com/png/326909/512/bar-chart-sharp.png"
-          />
-          <img
-            v-if="resultType == 'pie'"
-            src="https://static.thenounproject.com/png/32976-200.png"
-          />
         </div>
-        <div class="resultOptions">
-        <button class="bars" v-on:click="resultType = 'bars'">Bar Chart</button>
-        <button class="pie" v-on:click="resultType = 'pie'">Pie Chart</button>
-        </div>
-      </div>
 
-      <br>
+        <br />
 
+        <button class="finishButton" v-on:click="finishPresentation">
+          Finish Presentation
+          {{ uiLabels.finishPresentation }}
+        </button>
 
-      <button class="finishButton" v-on:click="finishPresentation">
-        Finish Presentation
-        {{uiLabels.finishPresentation}}
-      </button>
-
-      <!--<div class="finishButton">
+        <!--<div class="finishButton">
         <router-link to="/finished">
           <button v-on:click="finishPresentation">Finish Presentation</button>
         </router-link>
       </div>-->
 
-      <div class="controlpanel">
-        <!-- <div class="addRemoveButtons">
+        <div class="controlpanel">
+          <!-- <div class="addRemoveButtons">
     
           <button v-on:click="addAnswer">
             <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" />
@@ -176,51 +192,45 @@
             {{ uiLabels.removeAnswer }}
           </button>
         </div> -->
-        
-        <!-- <button v-on:click="addQuestion">Add question</button> -->
-        
-        
-        
-      </div>
-      <!-- <div class="skaFlyttas">
+
+          <!-- <button v-on:click="addQuestion">Add question</button> -->
+        </div>
+        <!-- <div class="skaFlyttas">
         de här knapparna ska ej vara i denna vy :)
       <input type="number" v-model="questionNumber" />
         <button v-on:click="runQuestion">Run question</button>
         
         <router-link v-bind:to="'/result/' + pollId">Check result</router-link>
       </div> -->
+      </div>
 
-    </div>
-
-    <div class="" v-if="isFinished">
+      <div class="" v-if="isFinished">
         <h2>You successfully created your poll!!</h2>
-      <div>
-        <h4>THIS IS YOUR POLL-CODE, SAVE AND SHARE IT WITH YOUR PARTICIPANTS  : <br> <br>
-          <span class="pollCode"> {{ pollId }}</span></h4>
-      </div>
+        <div>
+          <h4>
+            THIS IS YOUR POLL-CODE, SAVE AND SHARE IT WITH YOUR PARTICIPANTS :
+            <br />
+            <br />
+            <span class="pollCode"> {{ pollId }}</span>
+          </h4>
+        </div>
 
-      <section class="waitandstartButton">
-      <div class="stButton">
-        <router-link v-bind:to="'/result/' + pollId">
-          <button class="startButton">Start poll now!</button>
-        </router-link>
-      </div>
+        <section class="waitandstartButton">
+          <div class="stButton">
+            <router-link v-bind:to="'/result/' + pollId">
+              <button class="startButton">Start poll now!</button>
+            </router-link>
+          </div>
 
-      <br>
-      <div class="wtButton">
-        <router-link to="/">
-          <button v-on:click="waitUntilLater" class="waitButton">Wait until later</button>
-        </router-link>
-      </div>
-      </section>
-
-
-
-
-
-
-
-
+          <br />
+          <div class="wtButton">
+            <router-link to="/">
+              <button v-on:click="waitUntilLater" class="waitButton">
+                Wait until later
+              </button>
+            </router-link>
+          </div>
+        </section>
       </div>
     </div>
   </div>
@@ -237,17 +247,17 @@ export default {
       flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Svensk_flagg_1815.svg/2560px-Svensk_flagg_1815.svg.png",
       pollId: "",
       question: "",
-      answers: ["","","",""],
+      answers: ["", "", "", ""],
       index: 0,
       questionNumber: 0,
       data: {},
-      //questions: [],
       uiLabels: {},
       isShown: false,
       slide: 0,
+      selectedSlide: null,
       error: false,
       start: false,
-      edit:false,
+      save: false,
       resultType: "bars", //försök till att kunna skicka med vilken typ av resultat det ska vara. ej klart.
       isFinished: false,
     };
@@ -259,9 +269,12 @@ export default {
       this.uiLabels = labels;
     });
     socket.on("dataUpdate", (data) => (this.data = data));
-    socket.on("pollCreated", (data) => this.data = data);
+    socket.on("pollCreated", (data) => (this.data = data));
     // socket.on("questionEdited", (data) => this.data = data);
-    socket.on("contentUpdate", (questions) => this.data.questions = questions);
+    socket.on(
+      "contentUpdate",
+      (questions) => (this.data.questions = questions)
+    );
   },
   methods: {
     createPoll: function () {
@@ -320,7 +333,7 @@ export default {
           index: this.index,
           slide: this.slide,
         });
-        
+        this.save = false;
       }
     },
 
@@ -331,46 +344,51 @@ export default {
         a: ["", "", "", ""],
         resultType: this.resultType,
         slide: this.slide,
-        index: this.index
+        index: this.index,
       });
-      this.slide ++;
-      
-      
+      this.slide++;
     },
 
-    deleteSlide: function (i){
+    deleteSlide: function (i) {
       this.slide--;
-      if (this.slide <= 0){
+      if (this.slide <= 0) {
         return;
       }
       socket.emit("deleteQuestion", {
         pollId: this.pollId,
         q: this.question,
         a: this.answers,
-        index: i
+        index: i,
       });
-      
+      this.save = false;
     },
 
-    moveUp: function(i) {
-      if (i == 0){
-        return
+    moveUp: function (i) {
+      if (i <= 0) {
+        return;
       }
+      //2 radern under är ful-lösning...
+      this.start=false;
+      this.selectedSlide=null;
       socket.emit("moveUp", {
         pollId: this.pollId,
         q: this.question,
         a: this.answers,
-        index: i
+        index: i,
       });
     },
 
-    moveDown: function(i) {
+    moveDown: function (i) {
+      //2 radern under är ful-lösning...
+      this.start=false;
+      this.selectedSlide=null;
       socket.emit("moveDown", {
         pollId: this.pollId,
         q: this.question,
         a: this.answers,
-        index: i
+        index: i,
       });
+      
     },
 
     addAnswer: function () {
@@ -397,21 +415,21 @@ export default {
       this.index = index;
       this.resultType = question.resultType;
       this.start = true;
+      this.save = true;
+      this.selectedSlide = index;
     },
     finishPresentation: function () {
       socket.emit("finishPresentation", {});
       this.isFinished = true;
       this.isShown = false;
-
     },
-},
-  };
-
+  },
+};
 </script>
 
 <style scoped>
 /* createview = hela bakgrunden i allt*/
-.createView{
+.createView {
   height: 100vh;
   background-color: white;
 }
@@ -430,34 +448,31 @@ export default {
 .storedQuestions {
   grid-area: a;
   background-color: rgba(111, 168, 128, 0.507);
-  
 }
-.slides{
-  width:100%;
+.slides {
+  width: 100%;
   display: inline-block;
-
 }
-.slideDelete{
+.slideDelete {
   display: inline-block;
-  width:15%;
+  width: 15%;
 }
-.changePlaceButtons{
+.changePlaceButtons {
   display: inline-block;
   vertical-align: middle;
-  width:15%;
+  width: 15%;
 }
-.changePlaceButtons img{
-  height:1em;
+.changePlaceButtons img {
+  height: 1em;
 }
-.changePlaceButtons button{
-  height:2em;
-  width:2em;
-  display:block;
-  border-radius:1em;
-  border:none;
+.changePlaceButtons button {
+  height: 2em;
+  width: 2em;
+  display: block;
+  border-radius: 1em;
+  border: none;
   background-color: rgba(255, 255, 255, 0);
 }
-
 
 .slide {
   background-color: white;
@@ -465,22 +480,24 @@ export default {
   /* border:none; */
   /* border-radius: 0.5em; */
   transition: 0.3s;
-  height:4em;
-  width:60%;
+  height: 4em;
+  width: 60%;
   border-radius: 0.3em;
-  margin:0.5em;
-
+  margin: 0.5em;
+}
+.thisSlide {
+  border:2px solid black;
 }
 .slide:hover {
   background-color: rgb(223, 223, 219);
 }
 
-.slideButtons{
+.slideButtons {
   display: inline-block;
 }
 
 .slideButtons button {
-  width: 40%;
+  width: 80%;
   display: inline-block;
   padding: 0.7em 1.4em;
   margin: 1em 0.3em 0.3em 0;
@@ -514,10 +531,9 @@ export default {
   margin: auto;
 }
 
-.resultOptions{
+.resultOptions {
   padding-top: 1em;
   padding-bottom: 1em;
-  
 }
 
 .resultDesign button {
@@ -544,14 +560,17 @@ export default {
 }
 
 /* Skapa fråga */
-
+.startDisplay {
+  height: 100%;
+  padding: 5rem;
+  color: rgb(161, 161, 161);
+}
 .display {
-  position:relative;
+  position: relative;
   background-color: wheat;
   grid-area: b;
   min-height: 25em;
   padding-bottom: 2em;
-  
 }
 
 .questionInput {
@@ -574,33 +593,31 @@ export default {
   height: 1.5em;
   width: 1.5em;
 }
-.tooltipDelAns{
+.tooltipDelAns {
   visibility: hidden;
   font-family: arial;
-  font-size:0.8em;
-  padding:0.4em;
+  font-size: 0.8em;
+  padding: 0.4em;
   background-color: black;
   color: white;
   position: absolute;
   text-align: center;
-  border-radius:0.5em;
-  
- 
+  border-radius: 0.5em;
 }
-.deleteButton:hover .tooltipDelAns{
+.deleteButton:hover .tooltipDelAns {
   visibility: visible;
-  z-index:1;
+  z-index: 1;
 }
-.deleteButton .tooltipDelAns::after{
+.deleteButton .tooltipDelAns::after {
   content: " ";
   position: absolute;
-  bottom: 100%; 
+  bottom: 100%;
   right: 85%;
   margin-left: -0.5em;
   border-width: 0.3em;
   border-style: solid;
   border-color: transparent transparent black transparent;
-} 
+}
 
 .answersInput {
   height: 4em;
@@ -626,11 +643,11 @@ export default {
 .addAnswer img {
   height: 2em;
 }
-.addAnswer button{
-  float:right;
-  width:3em;
-  height:3em;
-  padding:0.2em;
+.addAnswer button {
+  float: right;
+  width: 3em;
+  height: 3em;
+  padding: 0.2em;
   margin: 0 0.3em 0.3em 0;
   border-radius: 2em;
   box-sizing: border-box;
@@ -640,38 +657,37 @@ export default {
   position: relative;
   border: none;
 }
-.addAnswer button:active{
+.addAnswer button:active {
   box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
   transform: translateY(0.1em);
 }
 
-.tooltipAddAns{
+.tooltipAddAns {
   visibility: hidden;
-  width:9em;
+  width: 9em;
   font-family: arial;
-  font-size:0.8em;
-  padding:0.4em;
+  font-size: 0.8em;
+  padding: 0.4em;
   background-color: black;
   color: white;
   position: absolute;
   text-align: center;
-  border-radius:0.5em;
- 
+  border-radius: 0.5em;
 }
-.addAnswer button:hover .tooltipAddAns{
+.addAnswer button:hover .tooltipAddAns {
   visibility: visible;
-  z-index:1;
+  z-index: 1;
 }
-.addAnswer button:hover .tooltipAddAns::after{
+.addAnswer button:hover .tooltipAddAns::after {
   content: " ";
   position: absolute;
-  bottom: 100%; 
+  bottom: 100%;
   right: 80%;
   margin-left: -0.5em;
   border-width: 0.3em;
   border-style: solid;
   border-color: transparent transparent black transparent;
-} 
+}
 
 /* Knapparna nedanför display*/
 .controlpanel {
@@ -685,47 +701,43 @@ export default {
   margin: 0.3em;
 }
 
-
 /* CSS för att anpassa header */
 header {
   height: 6em;
 }
 
 .pollName {
-  font-weight:bold;
+  font-weight: bold;
   font-size: 1em;
 }
 
-
 /* CSS för pollId-sidan */
 .pollTitle {
-  width:65%;
-  
-  margin:auto;
+  width: 65%;
+
+  margin: auto;
   padding: 3em;
-  
-  
 }
-.pollTitle img{
-  height:2em;
+.pollTitle img {
+  height: 2em;
 }
 .tip {
-  width:80%;
-  margin:auto;
+  width: 80%;
+  margin: auto;
   list-style-type: none;
   text-align: left;
 }
-.tip img{
+.tip img {
   display: inline-block;
   vertical-align: middle;
 }
-.tip li{
-  margin:1em;
+.tip li {
+  margin: 1em;
 }
 .back {
   float: left;
   width: 5em;
-  height:2em;
+  height: 2em;
   padding: 0.35em 0.7em;
   margin: 0 0.3em 0.3em 0;
   border-radius: 0.15em;
@@ -779,10 +791,10 @@ header {
   font-weight: bold;
   border: solid 1px red;
 }
-.startButton{
+.startButton {
   float: left;
   width: 12em;
-  height:6em;
+  height: 6em;
   padding: 0.35em 0.7em;
   margin: 0 0.3em 0.3em 0;
   border-radius: 0.15em;
@@ -797,9 +809,8 @@ header {
   text-align: center;
   position: relative;
   border: none;
-
 }
-.waitButton{
+.waitButton {
   width: 12em;
   height: 6em;
   display: inline-block;
@@ -817,35 +828,31 @@ header {
   text-align: center;
   position: relative;
   border: none;
-
 }
-.stButton{
+.stButton {
   width: available;
   height: available;
   position: relative;
   margin-left: 25%;
-
 }
-.wtButton{
+/* .wtButton{
 
 
-}
+} */
 
-.pollCode{
+.pollCode {
   text-transform: uppercase;
-  font-weight:bold;
-  font-size:25px;
+  font-weight: bold;
+  font-size: 25px;
   color: #b6409b;
   font-family: monaco;
   border: 5px solid;
   border-color: #392873;
-
-
 }
 
-.finishButton{
+.finishButton {
   height: 50px;
-  weight: 50px;
+  /* height: 50px; */
   display: inline-block;
   padding: 0.7em 1.4em;
   margin: 0 0.3em 0.3em 0;
@@ -861,21 +868,19 @@ header {
   text-align: center;
   position: relative;
   border: none;
-
 }
 
-.waitandstartButton{
+.waitandstartButton {
   margin-top: 130px;
 }
 
-.all{
-  font-size:16px;
+.all {
+  font-size: 16px;
 }
 
 @media only screen and (max-width: 700px) {
-  .all{
-    font-size:12px;
+  .all {
+    font-size: 12px;
   }
 }
-
 </style>
