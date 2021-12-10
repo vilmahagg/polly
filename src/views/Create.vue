@@ -203,24 +203,32 @@
         <router-link v-bind:to="'/result/' + pollId">Check result</router-link>
       </div> -->
       </div>
+<br>
+      <div class="finishedSide" v-if="isFinished">
+        <h2>YOU SUCCESSFULLY CREATED YOUR POLL!!</h2>
+        <div class="msg-icn"  >
+          Note: This code is also used to edit the poll later on!
+        </div>
 
-      <div class="" v-if="isFinished">
-        <h2>You successfully created your poll!!</h2>
-        <div>
-          <h4>
+
+
+        <div class="wrapper">
+          <div class="pollCode2">
             THIS IS YOUR POLL-CODE, SAVE AND SHARE IT WITH YOUR PARTICIPANTS :
-            <br />
-            <br />
+          </div>
+            <div >
             <span class="pollCode"> {{ pollId }}</span>
-          </h4>
+            </div>
+
+
         </div>
 
         <section class="waitandstartButton">
-          <div class="stButton">
-            <router-link v-bind:to="'/result/' + pollId">
-              <button class="startButton">Start poll now!</button>
-            </router-link>
-          </div>
+          <router-link v-bind:to="'/result/' + pollId">
+            <div>
+              <button class="next-button" type="button">Start poll now!</button><div class="next-point"></div>
+            </div>
+          </router-link>
 
           <br />
           <div class="wtButton">
@@ -229,7 +237,16 @@
                 Wait until later
               </button>
             </router-link>
+
           </div>
+
+<!--<div class="stButton">
+            <router-link v-bind:to="'/result/' + pollId">
+              <button class="startButton">Start poll now!</button>
+            </router-link>
+          </div>
+          -->
+
         </section>
       </div>
     </div>
@@ -844,10 +861,16 @@ header {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 25px;
-  color: #b6409b;
-  font-family: monaco;
+  color: #10080e;
+  font-family: "Roboto", sans-serif;
   border: 5px solid;
-  border-color: #392873;
+  border-color: #e16c76;
+}
+.pollCode2 {
+  text-family: "Roboto", sans-serif;
+  font-weight: bold;
+  margin-left:150px;
+
 }
 
 .finishButton {
@@ -871,7 +894,83 @@ header {
 }
 
 .waitandstartButton {
-  margin-top: 130px;
+  margin-top: 140px;
+  display: grid;
+  grid-template-columns: 60% 1% 2%;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 50% 5% 30%;
+}
+
+.msg-icn {
+  position: relative;
+  background: #e16c76;
+  border-radius: .4em;
+  margin-left:900px;
+  margin-right:80px;
+  font-weight: bold;
+  font-family: "American Typewriter";
+  box-shadow: 10px 5px 5px grey;
+  color: #2a2727;
+
+
+}
+
+.msg-icn:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 33px solid transparent;
+  border-top-color: #e16c76;
+  border-bottom: 0;
+  border-left: 0;
+  margin-left: -16.5px;
+  margin-bottom: -33px;
+}
+
+
+.next-button {
+  font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+  text-decoration: none;
+  color: #fff;
+  text-align: center;
+  border: none;
+  background-color: #60c265;
+  display: inline-block;
+  line-height: 80px;
+  height: 80px;
+  padding: 0 1rem;
+
+  font-weight: bold;
+  color: #113952;
+  background-color: #60c265;
+  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
+  text-align: center;
+  position: relative;
+  border: none;
+  text-transform: uppercase;
+}
+
+.next-point{
+  vertical-align: top;
+  width: 0;
+  height: 0;
+  display: inline-block;
+  border-top: 40px solid transparent;
+  border-bottom: 40px solid transparent;
+
+  border-left: 40px solid #60c265;
+  border-right: 40px solid transparent;
+
+}
+.finishedSide{
+  background-color: #f0e7f3;
+  margin-bottom: 200px;
 }
 
 .all {
