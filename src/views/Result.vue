@@ -15,7 +15,8 @@
     <div class="clicked" v-if= "isClicked">
     </div>
     <Bars v-bind:data="data"/>
-    <!--<Circle v-bind:data="data"/>--></div>
+    <!-- <Circle v-bind:data="data"/>-->
+    </div>
 
 
     <div v-if= "!isClicked" class="waitingDiv">
@@ -53,14 +54,14 @@
 <script>
 // @ is an alias to /src
 import Bars from '@/components/Bars.vue';
-/*import Circle from '@/components/Circle.vue';*/
+// import Circle from '@/components/Circle.vue';
 import io from 'socket.io-client';
 const socket = io();
 export default {
   name: 'Result',
   components: {
     Bars,
-  /*  Circle,*/
+    // Circle,
   },
   data: function () {
     return {
@@ -115,7 +116,6 @@ export default {
       /*hitta max antal numebr för att få avslutande bild
       if this.questionNumber > */
     },
-
     prevQuestion: function (){
       this.questionNumber -=1;
       this.isClicked=false;
@@ -214,7 +214,6 @@ padding: 2em;
 }
 .hideResult{
 }
-
 .waitingDiv {
   position: relative;
   font-family: "Lucida Console", "Monaco", monospace;

@@ -13,7 +13,7 @@ circle
 import VueCharts from 'vue-chartjs'
 import { Bar, Line } from 'vue-chartjs'
 
-component('pie-chart', {
+vue.component('pie-chart', {
 	extends: VueChartJs.Pie,
 	data: function () {
 		return {
