@@ -46,12 +46,12 @@ Data.prototype.addQuestion = function(pollId, q) {
   }
 }
 
-Data.prototype.addSlide = function(pollId, q, slide) {
+Data.prototype.addSlide = function(pollId, q) {
   const poll = this.polls[pollId];
-  console.log("add slide", slide);
+  console.log("add slide");
   
   if (typeof poll !== 'undefined') {
-    poll.questions[slide]=q;
+    poll.questions[q.slide]=q;
   }
 }
 
@@ -74,7 +74,6 @@ Data.prototype.editQuestion = function(pollId, newQuestion, index) {
 }  //skicka med datan för den editade frågan i newQuestion
 
 Data.prototype.moveUp = function(pollId, index){
-  console.log("data moveup",index,index-1);
   const poll = this.polls[pollId];
   if (typeof poll !== 'undefined') {
     let temp = poll.questions[index];
@@ -83,14 +82,16 @@ Data.prototype.moveUp = function(pollId, index){
     poll.questions[index-1] = temp;
   }
 }
+
 Data.prototype.moveDown = function(pollId, index){
-  console.log("data movedown",index,index+1);
   const poll = this.polls[pollId];
   if (typeof poll !== 'undefined') {
-    let temp = poll.questions[index];
-    let temp2 = poll.questions[index+1]
-    poll.questions[index] = temp2;
-    poll.questions[index+1] = temp;
+    if (typeof poll.questions[index + 1] !== 'undefined') {
+      let temp = poll.questions[index];
+      let temp2 = poll.questions[index+1]
+      poll.questions[index] = temp2;
+      poll.questions[index+1] = temp;
+    }
   }
 }
 
@@ -109,7 +110,7 @@ Data.prototype.getQuestion = function(pollId, qId=null) {
 Data.prototype.getAllQuestions = function(pollId) {
   
   const poll = this.polls[pollId];
-  console.log("get all questions: ", poll.questions);
+  console.log("get all questions");
   if (typeof poll !== 'undefined') {
     return poll.questions
   }
