@@ -418,6 +418,8 @@ export default {
 .storedQuestions {
   grid-area: a;
   background-color: rgba(111, 168, 128, 0.507);
+  max-height: 80vh;
+  overflow-y:auto;
 }
 .slides {
   width: 100%;
@@ -530,7 +532,8 @@ export default {
 
 /* Skapa fråga */
 .startDisplay {
-  height: 100%;
+  height: 15em;
+  padding-bottom: 2em;
   padding: 5rem;
   color: rgb(161, 161, 161);
 }
@@ -957,8 +960,8 @@ header {
     "b b b b b"
     "b b b b b"
     "b b b b b"
-    "a a a d d"
-    "a a a d d"
+    "d d a a a"
+    "d d a a a"
     "c c c c c";
 }
 
