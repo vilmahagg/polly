@@ -11,11 +11,11 @@
   </h2></div>
   <main class="page">
     <section class="showResult">
-  <div v-if="isClicked" class="theBars">
+    <div v-if="isClicked" class="theBars">
     <div class="clicked" v-if= "isClicked">
     </div>
     <Bars v-bind:data="data"/>
-    <!-- <Circle v-bind:data="data"/>-->
+    <!-- <Circle v-bind:data="data"/> -->
     </div>
 
 
@@ -165,7 +165,7 @@ h4{
 .theBars{
   position: relative;
   font-family: "Lucida Console", "Monaco", monospace;
-  height: 20em;
+  padding-bottom: 2em;
   width: 35em;
   background-color: wheat;
   margin: 0 auto;
@@ -173,7 +173,6 @@ h4{
 }
 .showResult{
 background-color: wheat;
-height: 30em;
 padding: 2em;
 }
 .showResult section{
