@@ -25,9 +25,10 @@
         {{ uiLabels.service }}
       </button>
     </header>
-    
+
 
     <div class="firstMenu" v-if="!wantInfo && !wantHelp">
+
       <div class="create" v-if="!ready">
         <router-link v-bind:to="'/create/' + lang" tag="button">
           <button class="createButton">
@@ -41,6 +42,14 @@
           <h3>{{ uiLabels.participatePoll }}</h3>
         </button>
       </div>
+
+      <div class="startExisting" v-if="!ready">
+          <router-link v-bind:to="'/result/' + pollId">
+            <button class="startExist">
+              <h4> {{uiLabels.startExistingPoll}}</h4>
+            </button>
+          </router-link>
+        </div>
     </div>
 
     <div class="start" v-if="ready">
@@ -324,7 +333,29 @@ h3 {
   );
   box-shadow: 7px 7px 15px 0 rgba(199, 23, 190, 0.75);
 }
+
 .createButton:hover {
+  background-position: 100% 0;
+}
+
+.startExist{
+  width: 70%;
+  height: 100%;
+  background-size: 300% 100%;
+  border-radius: 25px;
+  text-transform: uppercase;
+
+  background-image: linear-gradient(
+    to right,
+    #e89aeb,
+    #b67ee4,
+    #b9a0e9,
+    #dc3cf1
+  );
+  box-shadow: 7px 7px 15px 0 rgba(199, 23, 190, 0.75);
+}
+
+.startExist:hover{
   background-position: 100% 0;
 }
 
@@ -374,8 +405,8 @@ h3 {
   background-color: rgba(0, 0, 0, 0);
 }
 .languageButton img {
- 
- 
+
+
   width: 3.3em;
   height: 1.6em;
 }

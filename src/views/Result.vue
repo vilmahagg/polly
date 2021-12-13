@@ -118,7 +118,7 @@ export default {
     },
     runQuestion: function () {
       console.log(this.questions.length);
-      if (this.questionNumber < this.questions.length - 1) {
+      if (this.questionNumber >= this.questions.length - 1) {
         return;
       }
       this.isClicked = false;
