@@ -29,7 +29,7 @@
         You answered:
         <h1 class="waitingAnswer">{{question.a[selectedAnswer]}}</h1>
       </h1>
-      <h2>Get ready for the next question</h2>
+      <h2 class = "getready"> Get ready for the next question</h2>
     </div>
   </div>
 </template>
@@ -118,22 +118,26 @@ fritt att ändra/radera hur man vill */
 }
 
 .lds-ring {
-  display: inline-block;
+  
+  margin: 0;
+  width: 70px;
+  height: 70px;
   position: relative;
-  width: 80px;
-  height: 80px;
-  z-index: 999;
+  left: 43%;
+  top: 8%;
+ 
+
+  
 }
 .lds-ring div {
+  
   box-sizing: border-box;
   display: block;
   position: absolute;
-  width: 64px;
-  height: 64px;
-  margin: 8px;
-  margin-top: 12em;
-  margin-left: 13em;
-  border: 8px solid #fdd;
+  width: 70px;
+  height: 70px;
+  margin: 0px;
+  border: 9px solid #fdd;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   border-color: #fdd transparent transparent transparent;
@@ -157,7 +161,7 @@ fritt att ändra/radera hur man vill */
 }
 
 .waitingDiv {
-
+ display: inline-block;
   position: relative;
   font-family: "Lucida Console", "Monaco", monospace;
   height: 20em;
@@ -183,7 +187,12 @@ fritt att ändra/radera hur man vill */
    color: rgb(160, 116, 240);
   font-size: 2em;
   padding:0em;
+  top: 8%;
   
+}
+
+.getready{
+  margin-top: 8%;
 }
 
 .theQuestion {
@@ -195,7 +204,7 @@ fritt att ändra/radera hur man vill */
   overflow: hidden;
   position: relative;
 }
-/* Här tar knapplekandet slut */
+
 
 @media only screen and (max-width: 500px) {
   .all {
