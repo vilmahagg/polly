@@ -32,6 +32,8 @@
         <router-link v-bind:to="'/create/' + lang" tag="button">
           <button class="createButton">
             <h3>{{ uiLabels.createPoll }}</h3>
+            <h5> or edit existing one </h5>
+            <h5>{{ uiLabels.existing }}</h5>
           </button>
         </router-link>
       </div>
@@ -56,7 +58,7 @@
           <input type="text" v-model="pollId" />
         </label>
           <router-link v-bind:to="'/result/' + pollId" tag="button">
-            <button class="participateButton">
+            <button class="participateButton" v-on:click="runQuestion">
             STARTA
             </button>
           </router-link>
@@ -190,6 +192,7 @@ export default {
       start:false,
       isClicked: false,
       pollId: "",
+      questionNumber: 0,
     };
   },
   created: function () {
@@ -225,6 +228,12 @@ export default {
  }
  this.start=false;
  },
+/* runQuestion: function () {
+   socket.emit("runQuestion", {
+     pollId: this.pollId,
+     questionNumber: this.questionNumber,
+   });
+ },*/
   },
 };
 </script>

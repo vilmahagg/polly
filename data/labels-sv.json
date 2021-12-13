@@ -14,4 +14,6 @@
 	"aboutUs": "Om oss",
 	"service": "Kundservice",
 	"welcome":"Välkommen",
-	"choose": "Välj om du vill gå med i en omröstning eller skapa en egen"}
+	"choose": "Välj om du vill gå med i en omröstning eller skapa en egen",
+  "existing":"/eller redigera en redan existerande"
+}
