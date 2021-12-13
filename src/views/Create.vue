@@ -4,7 +4,7 @@
       <router-link v-bind:to="'/'" tag="h1">
         <h1>EasyPoll</h1>
       </router-link>
-      
+
       <p v-if="!error">
         The name of this poll is <span class="pollName">{{ pollId }}</span>
       </p>
@@ -21,21 +21,21 @@
         <h3>Choose a name for your poll!</h3>
 
         <div class="createInput">
-        <input type="text" v-model="pollId" />
-        <button class="createPollButton" v-on:click="createPoll">
-          {{ uiLabels.createPoll }}
-        </button>
+          <input type="text" v-model="pollId" />
+          <button class="createPollButton" v-on:click="createPoll">
+            {{ uiLabels.createPoll }}
+          </button>
         </div>
         <ul class="tip">
           <li>
             <img
-              src=..\..\public\img\light-bulb-color.png
+                src=..\..\public\img\light-bulb-color.png
             />
             Remember the name to access the poll later
           </li>
           <li>
             <img
-              src=..\..\public\img\light-bulb-color.png
+                src=..\..\public\img\light-bulb-color.png
             />
             Want to edit an existing poll? Enter the name of the poll above to
             continue where you left off!
@@ -46,36 +46,36 @@
       <div class="pollCreation" v-if="isShown">
         <div class="storedQuestions">
           <p>QUESTIONS</p>
-         {{slide}}
+          {{slide}}
           <div
-            class="slides"
-            v-for="(question, index, slide) in data.questions"
-            v-bind:key="'question' + index + slide"
+              class="slides"
+              v-for="(question, index, slide) in data.questions"
+              v-bind:key="'question' + index + slide"
           >
             <div class="changePlaceButtons">
               <button v-on:click="moveUp(question, index)">
                 <img
-                  src="https://cdn-icons-png.flaticon.com/512/467/467293.png"
+                    src="https://cdn-icons-png.flaticon.com/512/467/467293.png"
                 />
               </button>
               <button v-on:click="moveDown(question, index)">
                 <img
-                  src="https://cdn-icons-png.flaticon.com/512/467/467264.png"
+                    src="https://cdn-icons-png.flaticon.com/512/467/467264.png"
                 />
               </button>
             </div>
-           
+
             <button
-              class="slide"
-              :class="{thisSlide: selectedSlide == index}"
-              v-on:click="showQuestion(question, index)"
+                class="slide"
+                :class="{thisSlide: selectedSlide == index}"
+                v-on:click="showQuestion(question, index)"
             >
               {{ index+1 }}: {{ question.q }}
             </button>
             <div class="slideDelete">
               <button class="deleteButton" v-on:click="deleteSlide(index)">
-                 <img
-                  src=..\..\public\img\red-x.png
+                <img
+                    src=..\..\public\img\red-x.png
                 />
                 <div class="tooltipDelAns">Delete Slide</div>
               </button>
@@ -88,7 +88,7 @@
             <div class="error" v-if="error">
               Please fill all fields before saving question
             </div>
-        
+
           </div>
         </div>
 
@@ -99,25 +99,25 @@
           <div v-if="start">
             {{index +1}}
             <input
-              class="questionInput"
-              type="text"
-              v-model="question"
-              :placeholder="uiLabels.question"
+                class="questionInput"
+                type="text"
+                v-model="question"
+                :placeholder="uiLabels.question"
             />
             <div
-              class="answers"
-              v-for="(_, i) in answers"
-              v-bind:key="'answer' + i"
+                class="answers"
+                v-for="(_, i) in answers"
+                v-bind:key="'answer' + i"
             >
               <input
-                class="answersInput"
-                v-model="answers[i]"
-                :placeholder="uiLabels.answer"
+                  class="answersInput"
+                  v-model="answers[i]"
+                  :placeholder="uiLabels.answer"
               />
 
               <button class="deleteButton" v-on:click="deleteAnswer(i)">
                 <img
-                  src=..\..\public\img\red-x.png
+                    src=..\..\public\img\red-x.png
                 />
                 <div class="tooltipDelAns">Delete Answer</div>
               </button>
@@ -125,7 +125,7 @@
             <div class="addAnswer">
               <button v-on:click="addAnswer">
                 <img
-                  src=..\..\public\img\plus.png
+                    src=..\..\public\img\plus.png
                 />
                 <div class="tooltipAddAns">Add Answer Alternative</div>
               </button>
@@ -138,12 +138,12 @@
           <h5>Choose how you want the result of your poll to be presented:</h5>
           <div class="resultDisplay">
             <img
-              v-if="resultType == 'bars'"
-              src="https://www.pngrepo.com/png/326909/512/bar-chart-sharp.png"
+                v-if="resultType == 'bars'"
+                src="https://www.pngrepo.com/png/326909/512/bar-chart-sharp.png"
             />
             <img
-              v-if="resultType == 'pie'"
-              src="https://static.thenounproject.com/png/32976-200.png"
+                v-if="resultType == 'pie'"
+                src="https://static.thenounproject.com/png/32976-200.png"
             />
           </div>
           <div class="resultOptions">
@@ -164,13 +164,13 @@
 
         <div class="controlpanel">
           <button class="finishButton" v-on:click="finishPresentation">
-          Finish Presentation
-          {{ uiLabels.finishPresentation }}
+            Finish Presentation
+            {{ uiLabels.finishPresentation }}
           </button>
         </div>
-    
+
       </div>
-<br>
+      <br>
       <div class="finishedSide" v-if="isFinished">
         <h2>YOU SUCCESSFULLY CREATED YOUR POLL!!</h2>
         <div class="msg-icn"  >
@@ -183,9 +183,9 @@
           <div class="pollCode2">
             THIS IS YOUR POLL-CODE, SAVE AND SHARE IT WITH YOUR PARTICIPANTS :
           </div>
-            <div >
+          <div >
             <span class="pollCode"> {{ pollId }}</span>
-            </div>
+          </div>
 
 
         </div>
@@ -207,12 +207,12 @@
 
           </div>
 
-<!--<div class="stButton">
-            <router-link v-bind:to="'/result/' + pollId">
-              <button class="startButton">Start poll now!</button>
-            </router-link>
-          </div>
-          -->
+          <!--<div class="stButton">
+                      <router-link v-bind:to="'/result/' + pollId">
+                        <button class="startButton">Start poll now!</button>
+                      </router-link>
+                    </div>
+                    -->
 
         </section>
       </div>
@@ -260,8 +260,8 @@ export default {
     socket.on("pollCreated", (data) => (this.data = data));
     // socket.on("questionEdited", (data) => this.data = data);
     socket.on(
-      "contentUpdate",
-      (questions) => (this.data.questions = questions)
+        "contentUpdate",
+        (questions) => (this.data.questions = questions)
     );
   },
   methods: {
@@ -278,15 +278,14 @@ export default {
       if (this.lang === "en") {
         this.lang = "sv";
         this.flag =
-          "https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png";
+            "https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png";
       } else {
         this.lang = "en";
         this.flag =
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Svensk_flagg_1815.svg/2560px-Svensk_flagg_1815.svg.png";
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Svensk_flagg_1815.svg/2560px-Svensk_flagg_1815.svg.png";
       }
       socket.emit("switchLanguage", this.lang);
     },
-
     editQuestion: function () {
       this.error = false;
       for (let i = 0; i < this.answers.length; i++) {
@@ -306,7 +305,6 @@ export default {
         this.save = false;
       }
     },
-
     addSlide: function () {
       socket.emit("addSlide", {
         pollId: this.pollId,
@@ -316,9 +314,8 @@ export default {
         slide: this.slide,
         index: this.index,
       });
-      
-    },
 
+    },
     deleteSlide: function (i) {
       if (this.slide <= 1) {
         return;
@@ -332,7 +329,6 @@ export default {
       this.save = false;
       this.start = false;
     },
-
     moveUp: function (question, i) {
       if (i <= 0) {
         return;
@@ -346,7 +342,6 @@ export default {
       });
       this.showQuestion(question,i-1);
     },
-
     moveDown: function (question, i) {
       this.selectedSlide = i+1;
       socket.emit("moveDown", {
@@ -357,28 +352,24 @@ export default {
       });
       this.showQuestion(question,i+1);
     },
-
     addAnswer: function () {
       if (this.answers.length >= 12) {
         return;
       }
       this.answers.push("");
     },
-
     deleteAnswer: function (i) {
       if (this.answers.length <= 1) {
         return;
       }
       this.answers.splice(i, 1);
     },
-
     runQuestion: function () {
       socket.emit("runQuestion", {
         pollId: this.pollId,
         questionNumber: this.questionNumber,
       });
     },
-
     showQuestion: function (question, index) {
       this.question = question.q;
       this.answers = question.a;
@@ -413,7 +404,6 @@ export default {
     "a b b b d"
     "a c c c d";
 }
-
 /* "Slides" aka sparade frågor*/
 .storedQuestions {
   grid-area: a;
@@ -445,7 +435,6 @@ export default {
   border: none;
   background-color: rgba(255, 255, 255, 0);
 }
-
 .slide {
   background-color: white;
   border: 0.1em solid rgb(177, 177, 177);
@@ -463,11 +452,9 @@ export default {
 .slide:hover {
   background-color: rgb(223, 223, 219);
 }
-
 .slideButtons{
   width:100%;
 }
-
 .slideButtons button {
   width: 80%;
   display: inline-block;
@@ -490,23 +477,19 @@ export default {
   box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
   transform: translateY(0.1em);
 }
-
 /* Resultat */
 .resultDesign {
   background-color: lightgoldenrodyellow;
   grid-area: d;
 }
-
 .resultDisplay img {
   width: 50%;
   margin: auto;
 }
-
 .resultOptions {
   padding-top: 1em;
   padding-bottom: 1em;
 }
-
 .resultDesign button {
   width: 80%;
   display: inline-block;
@@ -529,7 +512,6 @@ export default {
   box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
   transform: translateY(0.1em);
 }
-
 /* Skapa fråga */
 .startDisplay {
   height: 15em;
@@ -544,7 +526,6 @@ export default {
   min-height: 25em;
   padding-bottom: 2em;
 }
-
 .questionInput {
   height: 3em;
   width: 80%;
@@ -566,7 +547,6 @@ export default {
 .deleteButton img{
   height:1.2rem;
 }
-
 .tooltipDelAns {
   visibility: hidden;
   font-family: arial;
@@ -593,7 +573,6 @@ export default {
   border-style: solid;
   border-color: transparent transparent black transparent;
 }
-
 .answersInput {
   height: 4em;
   width: 10em;
@@ -609,19 +588,16 @@ export default {
 .display input:hover {
   background-color: rgb(209, 209, 209);
 }
-
 .addAnswer {
   position: absolute;
   right: 0;
   bottom: 0;
 }
-
 .addAnswer button {
   float: right;
   width: 2.5rem;
   height: 2.5rem;
   padding: 0em;
-
   margin: 0 0.3em 0.3em 0;
   border-radius: 2em;
   box-sizing: border-box;
@@ -630,18 +606,15 @@ export default {
   text-align: center;
   position: relative;
   border: none;
-  
-}
 
+}
 .addAnswer button img{
   height: 1.7em;
 }
-
 .addAnswer button:active {
   box-shadow: 0 -0.2rem 0 -0.35rem rgba(0, 0, 0, 0.17);
   transform: translateY(0.1rem);
 }
-
 .tooltipAddAns {
   visibility: hidden;
   width: 9rem;
@@ -668,30 +641,23 @@ export default {
   border-style: solid;
   border-color: transparent transparent black transparent;
 }
-
 /* Knapparna nedanför display*/
 .controlpanel {
   margin: 1em;
   grid-area: c;
   width:100%;
-
 }
-
-
 /* CSS för att anpassa header */
 header {
   height: 6em;
 }
-
 .pollName {
   font-weight: bold;
   font-size: 1em;
 }
-
 /* CSS för pollId-sidan */
 .pollTitle {
   width: 65%;
-
   margin: auto;
   padding: 3em;
 }
@@ -764,7 +730,6 @@ header {
   box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
   transform: translateY(0.1em);
 }
-
 .error {
   margin:1em;
   display: inline-block;
@@ -819,10 +784,7 @@ header {
   margin-left: 25%;
 }
 /* .wtButton{
-
-
 } */
-
 .pollCode {
   text-transform: uppercase;
   font-weight: bold;
@@ -836,9 +798,7 @@ header {
   font-family: "Roboto", sans-serif;
   font-weight: bold;
   margin-left:150px;
-
 }
-
 .finishButton {
   height: 50px;
   display: inline-block;
@@ -857,18 +817,15 @@ header {
   position: relative;
   border: none;
 }
-
 .waitandstartButton {
   margin-top: 140px;
   display: grid;
   grid-template-columns: 60% 1% 2%;
 }
-
 .wrapper {
   display: grid;
   grid-template-columns: 50% 5% 30%;
 }
-
 .msg-icn {
   position: relative;
   background: #e16c76;
@@ -879,10 +836,7 @@ header {
   font-family: "American Typewriter";
   box-shadow: 10px 5px 5px grey;
   color: #2a2727;
-
-
 }
-
 .msg-icn:after {
   content: '';
   position: absolute;
@@ -897,8 +851,6 @@ header {
   margin-left: -16.5px;
   margin-bottom: -33px;
 }
-
-
 .next-button {
   font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
   text-decoration: none;
@@ -910,7 +862,6 @@ header {
   line-height: 80px;
   height: 80px;
   padding: 0 1rem;
-
   font-weight: bold;
   color: #113952;
   background-color: #60c265;
@@ -920,7 +871,6 @@ header {
   border: none;
   text-transform: uppercase;
 }
-
 .next-point{
   vertical-align: top;
   width: 0;
@@ -928,77 +878,59 @@ header {
   display: inline-block;
   border-top: 40px solid transparent;
   border-bottom: 40px solid transparent;
-
   border-left: 40px solid #60c265;
   border-right: 40px solid transparent;
-
 }
 .finishedSide{
   background-color: #f0e7f3;
   margin-bottom: 200px;
 }
-
 .all {
   font-size: 16px;
 }
-
-
-
 /* FÖR MOBIL */
-
 @media only screen and (max-width: 500px) {
   .all {
     font-size: 8px;
   }
-
-
-.pollCreation {
-  display: grid;
-  grid-gap: 1%;
-  grid-auto-columns: minmax(0, 1fr);
-  grid-template-areas:
+  .pollCreation {
+    display: grid;
+    grid-gap: 1%;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-template-areas:
     "b b b b b"
     "b b b b b"
     "b b b b b"
     "d d a a a"
     "d d a a a"
     "c c c c c";
-}
-
-.display {
-  position: relative;
-  background-color: wheat;
-  grid-area: b;
-  min-height: 40em;
-  padding-bottom: 2em;
-}
-
-.startDisplay{
-  font-size: 2em;
-}
-
-.answersInput {
-  height: 4em;
-  width: 8em;
-  margin: 0.5em;
-}
-
-.resultDesign{
-  padding:0.5em;
-}
-
-.resultDesign button {
-  width: 80%;
-  height: 4em;
-  padding:0;
-  font-size: 10px;
-}
-
-
-.slide{
-  height:3em;
-}
-
-
+  }
+  .display {
+    position: relative;
+    background-color: wheat;
+    grid-area: b;
+    min-height: 40em;
+    padding-bottom: 2em;
+  }
+  .startDisplay{
+    font-size: 2em;
+  }
+  .answersInput {
+    height: 4em;
+    width: 8em;
+    margin: 0.5em;
+  }
+  .resultDesign{
+    padding:0.5em;
+  }
+  .resultDesign button {
+    width: 80%;
+    height: 4em;
+    padding:0;
+    font-size: 10px;
+  }
+  .slide{
+    height:3em;
+  }
 }
 </style>

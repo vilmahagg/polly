@@ -117,21 +117,15 @@ export default {
       if this.questionNumber > */
     },
     prevQuestion: function (){
-      if (this.questionNumber>0){
       this.questionNumber -=1;
       this.isClicked=false;
       socket.emit("runQuestion", {
         pollId: this.pollId,
         questionNumber: this.questionNumber,
       })
-    }
-    } ,
+    },
     clicked: function(){
-      if (this.isClicked==false) {
       this.isClicked=true;
-    }
-    else
-    this.isClicked=false;
     }
   /*  nextQuestion: function (){
       this.questionNumber +=1;
@@ -228,12 +222,10 @@ padding: 2em;
   margin: 0 auto;
   border-radius: 25px;
 }
-
 .theBars{
   height: 20em;
   width: 35em;
 }
-
 .youAnswered{
   color:black;
   padding-top: 1em;
