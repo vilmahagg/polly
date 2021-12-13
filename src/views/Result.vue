@@ -222,6 +222,13 @@ padding: 2em;
   margin: 0 auto;
   border-radius: 25px;
 }
+
+.theBars{
+  height: 20em;
+  width: 35em;
+  background-color: black
+}
+
 .youAnswered{
   color:black;
   padding-top: 1em;
