@@ -29,7 +29,7 @@
 
     <div class="firstMenu" v-if="!wantInfo && !wantHelp">
 
-      <div class="create" v-if="!ready">
+      <div class="create" v-if="!ready && !start">
         <router-link v-bind:to="'/create/' + lang" tag="button">
           <button class="createButton">
             <h3>{{ uiLabels.createPoll }}</h3>
@@ -37,23 +37,34 @@
         </router-link>
       </div>
 
-      <div class="participate" v-if="!ready">
-        <button class="readyButton" v-on:click="ready = true">
+      <div class="participate" v-if="!ready && !start">
+        <button class="readyButton" v-on:click="isReady">
           <h3>{{ uiLabels.participatePoll }}</h3>
         </button>
       </div>
 
-      <div class="startExisting" v-if="!ready">
+      <button class="startExist" v-on:click="startPoll" v-if="!start && !isClicked">
+        <h4> {{uiLabels.startExistingPoll}}</h4>
+      </button>
+
+      <div class="startExisting" v-if="start">
+        <button class="back" v-on:click="isReady">
+          {{ uiLabels.backButton }}
+        </button>
+        <label id="pollName">
+          {{ uiLabels.pollName }}
+          <input type="text" v-model="id" />
+        </label>
           <router-link v-bind:to="'/result/' + pollId">
-            <button class="startExist">
-              <h4> {{uiLabels.startExistingPoll}}</h4>
+            <button class="go">
+            STARTA
             </button>
           </router-link>
         </div>
     </div>
 
     <div class="start" v-if="ready">
-      <button class="back" v-on:click="ready = false">
+      <button class="back" v-on:click="isReady">
         {{ uiLabels.backButton }}
       </button>
       <div>
@@ -64,7 +75,7 @@
       </div>
       <div>
         <router-link v-bind:to="'/poll/' + id" tag="button">
-          <button class="participateButton">
+          <button class="participateButton" v-on:click="isClicked = true">
             <h3>Start</h3>
           </button>
         </router-link>
@@ -174,6 +185,9 @@ export default {
       ready: false,
       wantInfo: false,
       wantHelp: false,
+      start:false,
+      isClicked: false,
+      pollId: "",
     };
   },
   created: function () {
@@ -194,6 +208,20 @@ export default {
       }
       socket.emit("switchLanguage", this.lang);
     },
+    startPoll: function(){
+      this.start=true;
+      this.isClicked=true;
+    },
+    isReady: function() {
+      if (this.ready==false && this.isClicked == false){
+   this.ready=true;
+   this.isClicked=true;
+ }
+ else{
+   this.ready=false;
+   this.isClicked=false;
+ }
+ },
   },
 };
 </script>
@@ -313,6 +341,16 @@ h3 {
 .firstMenu div {
   padding: 1em;
 }
+.startExisting {
+  display: grid;
+  grid-gap: 0.3em;
+  grid-template-columns: 50% 50%;
+}
+
+.startExisting div {
+  padding: 1em;
+}
+
 .create {
   height: 10em;
 }
@@ -437,6 +475,7 @@ button:hover {
 .start div {
   padding: 1em;
 }
+
 
 #pollName {
   font-size: 1.5em;
