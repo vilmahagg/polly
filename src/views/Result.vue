@@ -1,97 +1,103 @@
 
 <template>
   <header>
-    <h4 id="rubrikRext"> Result</h4><br>
+    <h4 id="rubrikRext">Result</h4>
+    <br />
     <div>
-    <!--  {{pollId}}-->
-    <h2 id="rubrikFråga">
-      <Question v-bind:question="question"
-                v-on:answer="submitAnswer"/>
-    {{question}}
-  </h2></div>
-  <main class="page">
-    <section class="showResult">
-    <div v-if="isClicked" class="theBars">
-    <div class="clicked" v-if= "isClicked">
+      <!--  {{pollId}}-->
+      <h2 id="rubrikFråga">
+        <Question v-bind:question="question" v-on:answer="submitAnswer" />
+        {{ question }}
+      </h2>
     </div>
-    <Bars v-bind:data="data"/>
-    <!-- <Circle v-bind:data="data"/> -->
-    </div>
+    <main class="page">
+      <section class="showResult">
+        <div v-if="isClicked" class="theBars">
+          <div class="clicked" v-if="isClicked"></div>
+          <Bars v-if="result == 'bars'" v-bind:data="data" />
+          <Circle v-if="result == 'pie'" v-bind:data="data" />
+        </div>
 
+        <div v-if="!isClicked" class="waitingDiv">
+          <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
 
-    <div v-if= "!isClicked" class="waitingDiv">
-      <div class="lds-ring">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+          <h3 class="youAnswered">
+            Answers submitted <br /><br />
+            <h1 class="answers">{{ numberOfAnswers }}</h1>
+          </h3>
 
-      <h3 class = "youAnswered">
-      Answers submitted <br><br> <h1 class ="answers"> {{numberOfAnswers}}
-      </h1>
-    </h3>
-
-      <h2></h2>
-    </div>
-    <div class="knapppanel">
-      <div class="knappIResult">
-
-      <!--  <router-link v-bind:to="'/poll/' + pollId">next Question</router-link>-->
-      <button class="prevButton" v-on:click="prevQuestion">Previous Question</button>
-      <button class="nextButton" v-on:click="runQuestion">Next Question</button>
-      <button class ="revanswer" v-on:click="clicked"> Reveal Answer</button>
-    <br><br><br><br>{{isClicked}} <br>(för förtydl. atm)fråga nummer: {{questionNumber}} (bara för tydlighet atm)
-      </div>
-
-    </div>
-  </section>
-
-{{questions}}{{questions.length}}
-  </main>
-</header>
+          <h2></h2>
+        </div>
+        <div class="knapppanel">
+          <div class="knappIResult">
+            <!--  <router-link v-bind:to="'/poll/' + pollId">next Question</router-link>-->
+            <button class="prevButton" v-on:click="prevQuestion">
+              Previous Question
+            </button>
+            <button class="nextButton" v-on:click="runQuestion">
+              Next Question
+            </button>
+            <button class="revanswer" v-on:click="clicked">
+              Reveal Answer
+            </button>
+            <br /><br /><br /><br />{{ isClicked }} <br />(för förtydl.
+            atm)fråga nummer: {{ questionNumber }} (bara för tydlighet atm)
+          </div>
+           <p>antal frågor: {{ questions.length }}</p>
+        </div>
+      </section>
+    </main>
+   
+  </header>
 </template>
 <script>
 // @ is an alias to /src
-import Bars from '@/components/Bars.vue';
-// import Circle from '@/components/Circle.vue';
-import io from 'socket.io-client';
+import Bars from "@/components/Bars.vue";
+import Circle from "@/components/Circle.vue";
+import io from "socket.io-client";
 const socket = io();
 export default {
-  name: 'Result',
+  name: "Result",
   components: {
     Bars,
-    // Circle,
+    Circle,
   },
   data: function () {
     return {
       question: "",
-      questionNumber:0,
+      questionNumber: 0,
       questions: 0,
       isClicked: false,
-      data: {
-      }
-    }
+      data: {},
+    };
   },
   computed: {
     numberOfAnswers: function () {
       let tot = 0;
-      for (let a of Object.keys(this.data))
-        tot += this.data[a];
+      for (let a of Object.keys(this.data)) tot += this.data[a];
       return tot;
-    }
+    },
   },
   created: function () {
-    this.pollId = this.$route.params.id
-    socket.emit('joinPoll', this.pollId)
+    this.pollId = this.$route.params.id;
+    socket.emit("joinPoll", this.pollId);
     socket.on("dataUpdate", (update) => {
       this.data = update.a;
       this.question = update.q;
     });
-    socket.on("newQuestion", update => {
+    socket.on("newQuestion", (update) => {
       this.question = update.q;
       this.data = {};
-    })
+      this.result = update.result;
+    });
+    socket.on("allQuestions", (questions) => {
+      this.questions = questions;
+    });
   },
   methods: {
     switchLanguage: function () {
@@ -107,36 +113,43 @@ export default {
       socket.emit("switchLanguage", this.lang);
     },
     runQuestion: function () {
-      this.isClicked=false;
-      this.questionNumber +=1;
+      console.log(this.questions.length);
+      if (this.questionNumber >= this.questions.length - 1) {
+        return;
+      }
+      this.isClicked = false;
+      this.questionNumber += 1;
       socket.emit("runQuestion", {
         pollId: this.pollId,
         questionNumber: this.questionNumber,
-      })
+      });
       /*hitta max antal numebr för att få avslutande bild
       if this.questionNumber > */
     },
-    prevQuestion: function (){
-      this.questionNumber -=1;
-      this.isClicked=false;
+    prevQuestion: function () {
+      if (this.questionNumber <= 0) {
+        return;
+      }
+      this.questionNumber -= 1;
+      this.isClicked = false;
       socket.emit("runQuestion", {
         pollId: this.pollId,
         questionNumber: this.questionNumber,
-      })
+      });
     },
-    clicked: function(){
-      this.isClicked=true;
-    }
-  /*  nextQuestion: function (){
+    clicked: function () {
+      this.isClicked = true;
+    },
+    /*  nextQuestion: function (){
       this.questionNumber +=1;
     },*/
   },
-}
+};
 </script>
 <style>
 header h4 {
- margin: 0;
-  padding-left:1.3em;
+  margin: 0;
+  padding-left: 1.3em;
   font-family: "Lucida Console", "Monaco", monospace;
   text-align: center;
   color: rgb(224, 100, 187);
@@ -146,8 +159,8 @@ header h4 {
   padding-top: 20px;
 }
 header h2 {
- margin: 0;
-  padding-left:1.3em;
+  margin: 0;
+  padding-left: 1.3em;
   font-size: 3em;
   font-family: "Lucida Console", "Monaco", monospace;
   text-align: center;
@@ -156,13 +169,13 @@ header h2 {
   overflow: hidden;
   position: relative;
 }
-h4{
+h4 {
   font-size: 1em;
 }
-.page{
-/*  padding: 2em;*/
+.page {
+  /*  padding: 2em;*/
 }
-.theBars{
+.theBars {
   position: relative;
   font-family: "Lucida Console", "Monaco", monospace;
   padding-bottom: 2em;
@@ -171,47 +184,44 @@ h4{
   margin: 0 auto;
   border-radius: 25px;
 }
-.showResult{
-background-color: wheat;
-padding: 2em;
+.showResult {
+  background-color: wheat;
+  padding: 2em;
 }
-.showResult section{
+.showResult section {
   padding: 1em;
 }
-.knapppanel{
+.knapppanel {
   padding-bottom: 4em;
 }
-.nextButton{
+.nextButton {
   background-color: #e6f0ff;
   width: 80px;
   height: 40px;
   position: relative;
-  box-shadow: 0 -0.2em 0 -0.35em
-  rgba(0, 0, 0, 0.17);
+  box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
   /*color:#ff6666*/
   font-family: "Lucida Console", "Monaco", monospace;
 }
-.prevButton{
+.prevButton {
   background-color: #e6f0ff;
   width: 80px;
   height: 40px;
   position: relative;
-  box-shadow: 0 -0.2em 0 -0.35em
-  rgba(0, 0, 0, 0.17);
+  box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
   /*color:#ff6666*/
   font-family: "Lucida Console", "Monaco", monospace;
 }
-.revanswer{
+.revanswer {
   background-color: #e6f0ff;
   width: 80px;
   height: 40px;
   position: relative;
-  box-shadow: 0 -0.2em 0 -0.35em
-  rgba(0, 0, 0, 0.17);
+  box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
   /*color:#ff6666*/
   font-family: "Lucida Console", "Monaco", monospace;
 }
-.hideResult{
+.hideResult {
 }
 .waitingDiv {
   position: relative;
@@ -223,16 +233,16 @@ padding: 2em;
   border-radius: 25px;
 }
 
-.theBars{
+.theBars {
   height: 20em;
   width: 35em;
 }
 
-.youAnswered{
-  color:black;
+.youAnswered {
+  color: black;
   padding-top: 1em;
 }
-.answers{
+.answers {
   colour: purple;
 }
 </style>

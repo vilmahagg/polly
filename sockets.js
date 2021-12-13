@@ -52,6 +52,7 @@ function sockets(io, socket, data) {
     socket.join(pollId);
     socket.emit('newQuestion', data.getQuestion(pollId))
     socket.emit('dataUpdate', data.getAnswers(pollId));
+    socket.emit("allQuestions", data.getAllQuestions(pollId));
   });
 
   socket.on('runQuestion', function(d) {
