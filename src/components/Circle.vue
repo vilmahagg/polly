@@ -14,8 +14,7 @@ circle
       <div v-bind:style="{ height: item + '7px', width: item + '7px' }">
         <span> {{ item }} </span>
       </div>
-
-    </div>
+	  </div>
         {{ key }}
 	</div>
   </div> -->
