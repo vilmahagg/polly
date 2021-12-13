@@ -226,7 +226,6 @@ padding: 2em;
 .theBars{
   height: 20em;
   width: 35em;
-  background-color: black
 }
 
 .youAnswered{
