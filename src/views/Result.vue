@@ -15,7 +15,7 @@
     <div class="clicked" v-if= "isClicked">
     </div>
     <Bars v-bind:data="data"/>
-    <!-- <Circle v-bind:data="data"/>-->
+    <!--<Circle v-bind:data="data"/>-->
     </div>
 
 
@@ -47,21 +47,21 @@
     </div>
   </section>
 
-{{questions}}{{questions.length}}
+{{questions}}{{questions.length}}{{slide}}
   </main>
 </header>
 </template>
 <script>
 // @ is an alias to /src
 import Bars from '@/components/Bars.vue';
-// import Circle from '@/components/Circle.vue';
+//import Circle from '@/components/Circle.vue';
 import io from 'socket.io-client';
 const socket = io();
 export default {
   name: 'Result',
   components: {
     Bars,
-    // Circle,
+    //Circle,
   },
   data: function () {
     return {
@@ -79,7 +79,12 @@ export default {
       for (let a of Object.keys(this.data))
         tot += this.data[a];
       return tot;
-    }
+    },
+
+
+    /*slide: function() {
+      return this.data.questions.length;
+    }*/
   },
   created: function () {
     this.pollId = this.$route.params.id
@@ -202,6 +207,7 @@ padding: 2em;
   /*color:#ff6666*/
   font-family: "Lucida Console", "Monaco", monospace;
 }
+
 .revanswer{
   background-color: #e6f0ff;
   width: 80px;
