@@ -210,7 +210,7 @@
       </div>
 <br>
       <div class="finishedSide" v-if="isFinished">
-        <h2>YOU SUCCESSFULLY CREATED YOUR POLL!!</h2>
+        <h2 id="rubrik2">YOU SUCCESSFULLY CREATED YOUR POLL!!</h2>
         <div class="msg-icn"  >
           Note: This code is also used to edit the poll later on!
         </div>
@@ -931,7 +931,7 @@ header {
   margin-left:900px;
   margin-right:80px;
   font-weight: bold;
-  font-family: "American Typewriter";
+  font-family: AppleMyungjo;
   box-shadow: 10px 5px 5px grey;
   color: #2a2727;
 
@@ -995,6 +995,10 @@ header {
 
 .all {
   font-size: 16px;
+}
+
+#rubrik2 {
+  font-family: "Lucida Console", "Monaco", monospace
 }
 
 @media only screen and (max-width: 700px) {
