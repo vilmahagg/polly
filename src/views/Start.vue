@@ -393,7 +393,7 @@ h3 {
 }
 
 .startExistButton{
-  width: 70%;
+  width: 50%;
   height: 100%;
   background-size: 300% 100%;
   border-radius: 25px;
