@@ -11,12 +11,12 @@
   </h2></div>
   <main class="page">
     <section class="showResult">
-  <div v-if="isClicked" class="theBars">
+    <div v-if="isClicked" class="theBars">
     <div class="clicked" v-if= "isClicked">
     </div>
     <Bars v-bind:data="data"/>
-    <!-- <Circle v-bind:data="data"/>-->
-    </div> 
+    <!-- <Circle v-bind:data="data"/> -->
+    </div>
 
 
     <div v-if= "!isClicked" class="waitingDiv">
@@ -116,7 +116,6 @@ export default {
       /*hitta max antal numebr för att få avslutande bild
       if this.questionNumber > */
     },
-
     prevQuestion: function (){
       this.questionNumber -=1;
       this.isClicked=false;
@@ -166,7 +165,7 @@ h4{
 .theBars{
   position: relative;
   font-family: "Lucida Console", "Monaco", monospace;
-  height: 20em;
+  padding-bottom: 2em;
   width: 35em;
   background-color: wheat;
   margin: 0 auto;
@@ -174,7 +173,6 @@ h4{
 }
 .showResult{
 background-color: wheat;
-height: 30em;
 padding: 2em;
 }
 .showResult section{
@@ -215,7 +213,6 @@ padding: 2em;
 }
 .hideResult{
 }
-
 .waitingDiv {
   position: relative;
   font-family: "Lucida Console", "Monaco", monospace;
@@ -225,6 +222,12 @@ padding: 2em;
   margin: 0 auto;
   border-radius: 25px;
 }
+
+.theBars{
+  height: 20em;
+  width: 35em;
+}
+
 .youAnswered{
   color:black;
   padding-top: 1em;
