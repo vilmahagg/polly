@@ -44,25 +44,32 @@
         </button>
       </div>
 
+    <div class="buttonDiv">
       <button class="startExistButton" v-on:click="startPoll" v-if="!start && !isClicked">
         <h4> {{uiLabels.startExistingPoll}} </h4>
           <h4>Start existing poll </h4>
       </button>
+    </div>
+    </div>
 
-      <div class="startExisting" v-if="start && !ready">
-        <button class="back" v-on:click="isReady">
-          {{ uiLabels.backButton }}
-        </button>
-        <label id="pollName">
-          {{ uiLabels.pollName }}
-          <input type="text" v-model="pollId" />
-        </label>
-          <router-link v-bind:to="'/result/' + pollId" tag="button">
-            <button class="participateButton" v-on:click="runQuestion">
-            STARTA
-            </button>
-          </router-link>
-        </div>
+    <div class="start" v-if="start && !ready">
+      <button class="back" v-on:click="isReady">
+        {{ uiLabels.backButton }}
+      </button>
+      <div>
+      <label id="pollName">
+        {{ uiLabels.pollName }}
+        <input type="text" v-model="pollId" />
+      </label>
+    </div>
+
+    <div>
+        <router-link v-bind:to="'/result/' + pollId" tag="button">
+          <button class="participateButton" v-on:click="runQuestion">
+          <h3>STARTA</h3>
+          </button>
+        </router-link>
+      </div>
     </div>
 
     <div class="start" v-if="ready">
@@ -83,7 +90,6 @@
           </button>
         </router-link>
       </div>
-
     </div>
 
     <div class="help" v-if="wantHelp">
@@ -394,6 +400,7 @@ h3 {
   background-size: 300% 100%;
   border-radius: 25px;
   text-transform: uppercase;
+  grid-template-columns: 50% 50%;
 
   background-image: linear-gradient(
     to right,
