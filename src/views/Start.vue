@@ -26,7 +26,6 @@
       </button>
     </header>
 
-
     <div class="firstMenu" v-if="!wantInfo && !wantHelp">
 
       <div class="create" v-if="!ready && !start">
@@ -43,20 +42,21 @@
         </button>
       </div>
 
-      <button class="startExist" v-on:click="startPoll" v-if="!start && !isClicked">
-        <h4> {{uiLabels.startExistingPoll}}</h4>
+      <button class="startExistButton" v-on:click="startPoll" v-if="!start && !isClicked">
+        <h4> {{uiLabels.startExistingPoll}} </h4>
+          <h4>Start existing poll </h4>
       </button>
 
-      <div class="startExisting" v-if="start">
+      <div class="startExisting" v-if="start && !ready">
         <button class="back" v-on:click="isReady">
           {{ uiLabels.backButton }}
         </button>
         <label id="pollName">
           {{ uiLabels.pollName }}
-          <input type="text" v-model="id" />
+          <input type="text" v-model="pollId" />
         </label>
-          <router-link v-bind:to="'/result/' + pollId">
-            <button class="go">
+          <router-link v-bind:to="'/result/' + pollId" tag="button">
+            <button class="participateButton">
             STARTA
             </button>
           </router-link>
@@ -73,6 +73,7 @@
           <input type="text" v-model="id" />
         </label>
       </div>
+
       <div>
         <router-link v-bind:to="'/poll/' + id" tag="button">
           <button class="participateButton" v-on:click="isClicked = true">
@@ -80,6 +81,7 @@
           </button>
         </router-link>
       </div>
+
     </div>
 
     <div class="help" v-if="wantHelp">
@@ -221,6 +223,7 @@ export default {
    this.ready=false;
    this.isClicked=false;
  }
+ this.start=false;
  },
   },
 };
@@ -376,7 +379,7 @@ h3 {
   background-position: 100% 0;
 }
 
-.startExist{
+.startExistButton{
   width: 70%;
   height: 100%;
   background-size: 300% 100%;
@@ -393,7 +396,7 @@ h3 {
   box-shadow: 7px 7px 15px 0 rgba(199, 23, 190, 0.75);
 }
 
-.startExist:hover{
+.startExistButton:hover{
   background-position: 100% 0;
 }
 
