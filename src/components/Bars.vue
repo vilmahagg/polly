@@ -50,6 +50,18 @@ font-family: "Lucida Console", "Monaco", monospace;
 .bar:nth-child(5) div:nth-child(1) {
   background-color:yellow;
 }
+.bar:nth-child(6) div:nth-child(1) {
+  background-color:rgb(68, 179, 123);
+}
+.bar:nth-child(7) div:nth-child(1) {
+  background-color:rgb(1, 136, 12);
+}
+.bar:nth-child(8) div:nth-child(1) {
+  background-color:rgb(230, 182, 78);
+}
+.bar:nth-child(9) div:nth-child(1) {
+  background-color:rgb(255, 153, 122);
+}
 .wrapper {
 padding:3em;
   word-wrap: break-word;

@@ -1,4 +1,5 @@
 <template>
+  <div class="all">
   <div id="nav">
     <header>
       <h1 id="header">EasyPoll</h1>
@@ -146,6 +147,7 @@
       </div>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
@@ -192,7 +194,8 @@ header {
   background-image: url("https://data.whicdn.com/images/334251300/original.gif");
   height: 12em;
   margin: 0;
-  border-radius: 25px;
+  margin-bottom:0.5em;
+  /* border-radius: 25px; */
 }
 
 header h1 {
@@ -367,6 +370,8 @@ h3 {
   font-weight: bold;
   width: 4em;
   height: 2em;
+  border:none;
+  background-color: rgba(0, 0, 0, 0);
 }
 .languageButton img {
  
@@ -409,5 +414,17 @@ button:hover {
 #pollName input {
   height: 1.5em;
   width: 12em;
+}
+
+
+@media only screen and (max-width: 500px) {
+  .all {
+    font-size: 12px;
+  }
+
+  h3{
+    font-size:1em;
+  }
+
 }
 </style>

@@ -24,7 +24,7 @@
         <div></div>
         <div></div>
       </div>
-
+      <br>
       <h1 class = "youAnswered">
         You answered:
         <h1 class="waitingAnswer">{{question.a[selectedAnswer]}}</h1>
@@ -67,7 +67,7 @@ export default {
 .question {
   background-color: rgb(186, 226, 176);
   height: 30em;
-  overflow: hidden;
+  overflow-y:auto;
 }
 
 .answers {
@@ -196,4 +196,35 @@ fritt att ändra/radera hur man vill */
   position: relative;
 }
 /* Här tar knapplekandet slut */
+
+@media only screen and (max-width: 500px) {
+  .all {
+    font-size: 8px;
+  }
+
+  .waitingDiv {
+  text-align: center;
+  position: relative;
+  font-family: "Lucida Console", "Monaco", monospace;
+  height: 20em;
+  width: 100%;
+  background-color: rgb(223, 158, 228);
+  top: 10em;
+  margin: 0 auto;
+  border-radius: 25px;
+  }
+
+  .lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  border: 8px solid #fdd;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fdd transparent transparent transparent;
+ 
+  }
+}
 </style>

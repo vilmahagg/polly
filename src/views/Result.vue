@@ -11,11 +11,11 @@
   </h2></div>
   <main class="page">
     <section class="showResult">
-  <div v-if="isClicked" class="theBars">
+    <div v-if="isClicked" class="theBars">
     <div class="clicked" v-if= "isClicked">
     </div>
     <Bars v-bind:data="data"/>
-    <!--<Circle v-bind:data="data"/>-->
+    <!-- <Circle v-bind:data="data"/> -->
     </div>
 
 
@@ -47,21 +47,21 @@
     </div>
   </section>
 
-{{questions}}{{questions.length}}{{slide}}
+{{questions}}{{questions.length}}
   </main>
 </header>
 </template>
 <script>
 // @ is an alias to /src
 import Bars from '@/components/Bars.vue';
-//import Circle from '@/components/Circle.vue';
+// import Circle from '@/components/Circle.vue';
 import io from 'socket.io-client';
 const socket = io();
 export default {
   name: 'Result',
   components: {
     Bars,
-    //Circle,
+    // Circle,
   },
   data: function () {
     return {
@@ -79,12 +79,7 @@ export default {
       for (let a of Object.keys(this.data))
         tot += this.data[a];
       return tot;
-    },
-
-
-    /*slide: function() {
-      return this.data.questions.length;
-    }*/
+    }
   },
   created: function () {
     this.pollId = this.$route.params.id
@@ -170,7 +165,7 @@ h4{
 .theBars{
   position: relative;
   font-family: "Lucida Console", "Monaco", monospace;
-  height: 20em;
+  padding-bottom: 2em;
   width: 35em;
   background-color: wheat;
   margin: 0 auto;
@@ -178,7 +173,6 @@ h4{
 }
 .showResult{
 background-color: wheat;
-height: 30em;
 padding: 2em;
 }
 .showResult section{
@@ -207,7 +201,6 @@ padding: 2em;
   /*color:#ff6666*/
   font-family: "Lucida Console", "Monaco", monospace;
 }
-
 .revanswer{
   background-color: #e6f0ff;
   width: 80px;
