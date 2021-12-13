@@ -33,6 +33,9 @@
 
           <h2></h2>
         </div>
+        <div v-if="showFinish" class="showFinish">
+          WHOPWHOP
+      </div>
         <div class="knapppanel">
           <div class="knappIResult">
             <!--  <router-link v-bind:to="'/poll/' + pollId">next Question</router-link>-->
@@ -52,7 +55,7 @@
         </div>
       </section>
     </main>
-   
+
   </header>
 </template>
 <script>
@@ -73,6 +76,7 @@ export default {
       questionNumber: 0,
       questions: 0,
       isClicked: false,
+      showFinish: false,
       data: {},
     };
   },
@@ -114,7 +118,7 @@ export default {
     },
     runQuestion: function () {
       console.log(this.questions.length);
-      if (this.questionNumber >= this.questions.length - 1) {
+      if (this.questionNumber < this.questions.length - 1) {
         return;
       }
       this.isClicked = false;
@@ -123,8 +127,10 @@ export default {
         pollId: this.pollId,
         questionNumber: this.questionNumber,
       });
-      /*hitta max antal numebr för att få avslutande bild
-      if this.questionNumber > */
+      //hitta max antal numebr för att få avslutande bild
+    /*  if (this.questionNumber >  questions.length)  {
+        showFinish=true;
+      }*/
     },
     prevQuestion: function () {
       if (this.questionNumber <= 0) {
@@ -138,7 +144,12 @@ export default {
       });
     },
     clicked: function () {
+      if (this.isClicked==false){
       this.isClicked = true;
+    }
+    else {
+      this.isClicked=false;
+    }
     },
     /*  nextQuestion: function (){
       this.questionNumber +=1;
