@@ -32,7 +32,6 @@
         <router-link v-bind:to="'/create/' + lang" tag="button">
           <button class="createButton">
             <h3>{{ uiLabels.createPoll }}</h3>
-            <h5> or edit existing one </h5>
             <h5>{{ uiLabels.existing }}</h5>
           </button>
         </router-link>
@@ -47,7 +46,6 @@
     <div class="buttonDiv">
       <button class="startExistButton" v-on:click="startPoll" v-if="!start && !isClicked">
         <h4> {{uiLabels.startExistingPoll}} </h4>
-          <h4>Start existing poll </h4>
       </button>
     </div>
     </div>
