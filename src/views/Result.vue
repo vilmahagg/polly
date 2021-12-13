@@ -5,10 +5,13 @@
     <br />
     <div>
       <!--  {{pollId}}-->
-      <h2 id="rubrikFråga">
-        <Question v-bind:question="question" v-on:answer="submitAnswer" />
+      <h2 id="rubrikFråga"  v-if="!end">
+        <Question v-bind:question="question" v-on:answer="submitAnswer"/>
         {{ question }}
       </h2>
+      <div v-if ="end">
+        <br><br><br><br>
+      </div>
     </div>
     <main class="page">
       <section class="showResult">
@@ -18,7 +21,7 @@
           <Circle v-if="result == 'pie'" v-bind:data="data" />
         </div>
 
-        <div v-if="!isClicked" class="waitingDiv">
+        <div v-if="!isClicked && !end" class="waitingDiv">
           <div class="lds-ring">
             <div></div>
             <div></div>
@@ -33,10 +36,23 @@
 
           <h2></h2>
         </div>
-        <div v-if="showFinish" class="showFinish">
-          WHOPWHOP
-      </div>
-        <div class="knapppanel">
+
+        <div class="endDiv" v-if="end">
+          <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+
+          <h3>
+            Poll done! <br /><br/>
+          </h3>
+
+          <h2></h2>
+        </div>
+
+        <div class="knapppanel" v-if="!end">
           <div class="knappIResult">
             <!--  <router-link v-bind:to="'/poll/' + pollId">next Question</router-link>-->
             <button class="prevButton" v-on:click="prevQuestion">
@@ -76,7 +92,7 @@ export default {
       questionNumber: 0,
       questions: 0,
       isClicked: false,
-      showFinish: false,
+      end: false,
       data: {},
     };
   },
@@ -121,6 +137,9 @@ export default {
       if (this.questionNumber >= this.questions.length - 1) {
         return;
       }
+    /*  else{
+        this.end=true;
+      }*/
       this.isClicked = false;
       this.questionNumber += 1;
       socket.emit("runQuestion", {
@@ -243,7 +262,16 @@ h4 {
   margin: 0 auto;
   border-radius: 25px;
 }
-
+.endDiv{
+  position: relative;
+  font-family: "Lucida Console", "Monaco", monospace;
+  height: 20em;
+  width: 35em;
+  background-color: rgb(223, 158, 228);
+  margin: 0 auto;
+  border-radius: 25px;
+  padding-top: 50px;
+}
 .theBars {
   height: 20em;
   width: 35em;

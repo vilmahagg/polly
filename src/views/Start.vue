@@ -64,7 +64,7 @@
     <div>
         <router-link v-bind:to="'/result/' + pollId" tag="button">
           <button class="participateButton" v-on:click="runQuestion">
-          <h3>STARTA</h3>
+          <h3>START</h3>
           </button>
         </router-link>
       </div>
