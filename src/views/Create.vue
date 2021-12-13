@@ -45,7 +45,7 @@
       <div class="pollCreation" v-if="isShown">
         <div class="storedQuestions">
           <p>QUESTIONS</p>
-          {{save}}
+          <!-- {{save}} -->
           <div
               class="slides"
               v-for="(question, index, slide) in data.questions"
@@ -102,7 +102,7 @@
           <div v-if="start">
             {{index +1}}
             <input
-                class="questionInput"
+                id="questionInput"
                 type="text"
                 v-model="question"
                 :placeholder="uiLabels.question"
@@ -113,7 +113,7 @@
                 v-bind:key="'answer' + i"
             >
               <input
-                  class="answersInput"
+                  id="answersInput"
                   v-model="answers[i]"
                   :placeholder="uiLabels.answer"
               />
@@ -355,7 +355,7 @@ export default {
       this.showQuestion(question,i+1);
     },
     addAnswer: function () {
-      if (this.answers.length >= 12) {
+      if (this.answers.length >= 9) {
         alert("That's a bit many answer options for a poll don't you think?")
         return;
       }
@@ -397,7 +397,8 @@ export default {
 /* createview = hela bakgrunden i allt*/
 .createView {
   height: 100vh;
-  background-color: #DF9EE4;
+  background-color: #ffffff;
+  padding:1em;
 }
 .pollCreation {
   display: grid;
@@ -413,10 +414,18 @@ export default {
 /* "Slides" aka sparade frågor*/
 .storedQuestions {
   grid-area: a;
-  background-color: #df9ee4;
-  max-height: 80vh;
+  background-color: #df9ee480;
+  min-height: 80vh;
   overflow-y:auto;
+  border-radius: 0.3em;
 }
+
+.storedQuestions p, .resultDesign p{
+  font-size: 26px;
+  font-weight: bold;
+  color:#E23315;
+}
+
 .slides {
   width: 100%;
   display: inline-block;
@@ -432,16 +441,16 @@ export default {
   /* border:none; */
   /* border-radius: 0.5em; */
   transition: 0.3s;
-  height: 4em;
+  height: 5em;
   width: 60%;
-  border-radius: 0.3em;
+  border-radius: 0.0em;
   margin: 0.5em;
 }
 .thisSlide {
-  border:2px solid black;
+  border:2px solid #A074F0;
 }
 .slide:hover {
-  background-color: rgb(223, 223, 219);
+  background-color: rgb(247, 220, 242);
 }
 
 .changePlaceButtons {
@@ -475,7 +484,7 @@ export default {
   text-transform: uppercase;
   font-weight: 400;
   color: white;
-  background-color: #689265;
+  background-color: #ab87ee;
   box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
   text-align: center;
   position: relative;
@@ -486,14 +495,14 @@ export default {
   transform: translateY(0.1em);
 }
 
-#saveButton{
-  background-color: rgba(8, 252, 41, 0.575);
-  box-shadow: 0 5px 15px rgba(8, 252, 41, 0.575);
-}
+/* #saveButton{
+  box-shadow: 0 5px 15px #A074F0;
+} */
 /* Resultat */
 .resultDesign {
-  background-color: #DF9EE4;
+  background-color: #df9ee48e;
   grid-area: d;
+  border-radius: 0.3em;
 }
 .resultDisplay img {
   width: 50%;
@@ -515,7 +524,7 @@ export default {
   text-transform: uppercase;
   font-weight: 400;
   color: white;
-  background-color: #A074F0;
+  background-color: #ab87ee;
   box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
   text-align: center;
   position: relative;
@@ -528,6 +537,7 @@ export default {
 /* Skapa fråga */
 .displayHeader{
   grid-area:e;
+  color:#ab87ee;
 }
 .displayHeader p{
   margin:0.1em;
@@ -540,14 +550,13 @@ export default {
 }
 .display {
   position: relative;
-  background-color:#f1d6f3;
+  background-color:#df9ee47c;
   grid-area: b;
   min-height: 25em;
   padding-bottom: 2em;
-  /* border: solid 4px white; */
   border-radius:0.3em;
 }
-.questionInput {
+#questionInput {
   height: 3em;
   width: 80%;
   margin: 1em;
@@ -594,7 +603,7 @@ export default {
   border-style: solid;
   border-color: transparent transparent black transparent;
 }
-.answersInput {
+#answersInput {
   height: 4em;
   width: 10em;
   margin: 0.5em;
@@ -607,7 +616,7 @@ export default {
   transition: 0.3s;
 }
 .display input:hover {
-  background-color: rgb(209, 209, 209);
+  background-color: #ffe4fd;
 }
 .addAnswer {
   position: absolute;
@@ -664,7 +673,7 @@ export default {
 }
 /* Knapparna nedanför display*/
 .controlpanel {
-  background-color: #DF9EE4;
+  /* background-color: #DF9EE4; */
   grid-area: c;
   width:100%;
   padding-top:0.8em;
@@ -833,7 +842,7 @@ header {
   text-transform: uppercase;
   font-weight: 400;
   color: white;
-  background-color: #397194;
+  background-color: #E23315;
   box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
   text-align: center;
   position: relative;
@@ -940,10 +949,11 @@ header {
   .startDisplay{
     font-size: 2em;
   }
-  .answersInput {
+  #answersInput {
     height: 4em;
     width: 8em;
     margin: 0.5em;
+    background-color: #f0d4ee;
   }
   .resultDesign{
     padding:0.5em;
