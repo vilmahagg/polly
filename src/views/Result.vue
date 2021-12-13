@@ -15,7 +15,7 @@
         <div v-if="isClicked" class="theBars">
           <div class="clicked" v-if="isClicked"></div>
           <Bars v-if="result == 'bars'" v-bind:data="data" />
-          <Circle v-if="result == 'circle'" v-bind:data="data" />
+          <Circle v-if="result == 'pie'" v-bind:data="data" />
         </div>
 
         <div v-if="!isClicked" class="waitingDiv">
