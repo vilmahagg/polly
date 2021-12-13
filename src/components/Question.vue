@@ -24,12 +24,12 @@
         <div></div>
         <div></div>
       </div>
-      <br>
-      <h1 class = "youAnswered">
+      <br />
+      <h1 class="youAnswered">
         You answered:
-        <h1 class="waitingAnswer">{{question.a[selectedAnswer]}}</h1>
+        <h1 class="waitingAnswer">{{ question.a[selectedAnswer] }}</h1>
       </h1>
-      <h2>Get ready for the next question</h2>
+      <h2 class="getready">Get ready for the next question</h2>
     </div>
   </div>
 </template>
@@ -67,7 +67,7 @@ export default {
 .question {
   background-color: rgb(186, 226, 176);
   height: 30em;
-  overflow-y:auto;
+  overflow-y: auto;
 }
 
 .answers {
@@ -118,22 +118,22 @@ fritt att ändra/radera hur man vill */
 }
 
 .lds-ring {
-  display: inline-block;
+  margin: 0;
+  width: 70px;
+  height: 70px;
+  top: 10%;
   position: relative;
-  width: 80px;
-  height: 80px;
-  z-index: 999;
+  margin: 0 auto;
+ 
 }
 .lds-ring div {
   box-sizing: border-box;
   display: block;
   position: absolute;
-  width: 64px;
-  height: 64px;
-  margin: 8px;
-  margin-top: 12em;
-  margin-left: 13em;
-  border: 8px solid #fdd;
+  width: 70px;
+  height: 70px;
+  margin: 0px;
+  border: 9px solid #fdd;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   border-color: #fdd transparent transparent transparent;
@@ -157,7 +157,7 @@ fritt att ändra/radera hur man vill */
 }
 
 .waitingDiv {
-
+  display: inline-block;
   position: relative;
   font-family: "Lucida Console", "Monaco", monospace;
   height: 20em;
@@ -166,11 +166,9 @@ fritt att ändra/radera hur man vill */
   top: 10em;
   margin: 0 auto;
   border-radius: 25px;
- 
 }
 
-.waitingDiv h1{
-  
+.waitingDiv h1 {
   display: inline;
 }
 .waitingAnswer {
@@ -179,11 +177,15 @@ fritt att ändra/radera hur man vill */
   padding: 0em;
 }
 
-.youAnswered{
-   color: rgb(160, 116, 240);
+.youAnswered {
+  color: rgb(160, 116, 240);
   font-size: 2em;
-  padding:0em;
-  
+  padding: 0em;
+  top: 8%;
+}
+
+.getready {
+  margin-top: 8%;
 }
 
 .theQuestion {
@@ -195,7 +197,6 @@ fritt att ändra/radera hur man vill */
   overflow: hidden;
   position: relative;
 }
-/* Här tar knapplekandet slut */
 
 @media only screen and (max-width: 500px) {
   .all {
@@ -203,28 +204,27 @@ fritt att ändra/radera hur man vill */
   }
 
   .waitingDiv {
-  text-align: center;
-  position: relative;
-  font-family: "Lucida Console", "Monaco", monospace;
-  height: 20em;
-  width: 100%;
-  background-color: rgb(223, 158, 228);
-  top: 10em;
-  margin: 0 auto;
-  border-radius: 25px;
+    text-align: center;
+    position: relative;
+    font-family: "Lucida Console", "Monaco", monospace;
+    height: 20em;
+    width: 100%;
+    background-color: rgb(223, 158, 228);
+    top: 10em;
+    margin: 0 auto;
+    border-radius: 25px;
   }
 
   .lds-ring div {
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
-  width: 64px;
-  height: 64px;
-  border: 8px solid #fdd;
-  border-radius: 50%;
-  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #fdd transparent transparent transparent;
- 
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    border: 8px solid #fdd;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fdd transparent transparent transparent;
   }
 }
 </style>
