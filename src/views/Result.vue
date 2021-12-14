@@ -46,8 +46,16 @@
           </div>
 
           <h3>
-            Poll done! <br/><br/>
-      
+            Poll done! <br/><br/><br/><br/><br/>
+
+        <router-link v-bind:to="'//'" tag="button">
+              <button class="tillbakaTillStart">
+       Tillbaka till main
+
+      </button>
+      </router-link>
+
+
 
           </h3>
 
@@ -288,5 +296,10 @@ h4 {
 }
 .answers {
   colour: purple;
+}
+.tillbakaTillStart{
+  width: 70px;
+  length: 20px;
+
 }
 </style>
