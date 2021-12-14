@@ -154,10 +154,14 @@
                 />
           </div>
           <div class="resultOptions">
-            <button class="bars" v-on:click="resultType = 'bars'">
+            <button class="bars" 
+            :class="{chosenResult: resultType =='bars'}"
+            v-on:click="resultType = 'bars'">
               Bar Chart
             </button>
-            <button class="circle" v-on:click="resultType = 'circle'">
+            <button class="circle" 
+            :class="{chosenResult: resultType =='circle'}"
+            v-on:click="resultType = 'circle'">
               Circle Chart
             </button>
           </div>
@@ -553,7 +557,7 @@ export default {
   padding-top: 1em;
   padding-bottom: 1em;
 }
-.resultOptions button {
+.bars, .circle {
   width: 80%;
   display: inline-block;
   padding: 0.7em 1.4em;
@@ -570,6 +574,9 @@ export default {
   text-align: center;
   position: relative;
   border: none;
+}
+.chosenResult{
+  border:2px solid black;
 }
 .resultDesign button:active {
   box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
