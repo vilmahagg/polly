@@ -5,9 +5,7 @@
         <h1>EasyPoll</h1>
       </router-link>
 
-      <p v-if="!error">
-        The name of this poll is <span class="pollName">{{ pollId }}</span>
-      </p>
+     
     </header>
 
     <div class="createView">
@@ -21,6 +19,7 @@
         <h3>Choose a name for your poll!</h3>
 
         <div class="createInput">
+          <div class="error" v-if="error">Please choose a name before continuing</div>
           <input type="text" v-model="pollId" />
           <button class="createPollButton" v-on:click="createPoll">
             {{ uiLabels.createPoll }}
@@ -46,7 +45,7 @@
       <div class="pollCreation" v-if="isShown">
         <div class="storedQuestions">
           <p>QUESTIONS</p>
-          {{slide}}
+          <!-- {{save}} -->
           <div
               class="slides"
               v-for="(question, index, slide) in data.questions"
@@ -84,14 +83,18 @@
 
           <div class="slideButtons">
             <button v-if="!save" v-on:click="addSlide">Add new slide</button>
-            <button v-if="save" v-on:click="editQuestion">Save Question</button>
+            <button id="saveButton" v-if="save" v-on:click="editQuestion">Save Question</button>
             <div class="error" v-if="error">
               Please fill all fields before saving question
             </div>
 
           </div>
         </div>
-
+        <div class="displayHeader">
+        <p v-if="!error">
+        The name of this poll is <span class="pollName">{{ pollId }}</span>
+      </p>
+        </div>
         <div class="display">
           <div class="startDisplay" v-if="!start">
             <h2>Choose Slide to Start Editing</h2>
@@ -99,7 +102,7 @@
           <div v-if="start">
             {{index +1}}
             <input
-                class="questionInput"
+                id="questionInput"
                 type="text"
                 v-model="question"
                 :placeholder="uiLabels.question"
@@ -110,7 +113,7 @@
                 v-bind:key="'answer' + i"
             >
               <input
-                  class="answersInput"
+                  id="answersInput"
                   v-model="answers[i]"
                   :placeholder="uiLabels.answer"
               />
@@ -134,24 +137,28 @@
         </div>
 
         <div class="resultDesign">
-          <h4>RESULT (elr annan titel)</h4>
-          <h5>Choose how you want the result of your poll to be presented:</h5>
+          <div class="explainRes">
+            <img src="..\..\public\img\question-mark-round-line.png">
+            <div class="tooltipResult">Choose how each question's result should be presented</div>
+          </div>
+          <p>EDIT RESULT</p>
+          
           <div class="resultDisplay">
             <img
-                v-if="resultType == 'bars'"
-                src="https://www.pngrepo.com/png/326909/512/bar-chart-sharp.png"
-            />
-            <img
-                v-if="resultType == 'pie'"
-                src="https://static.thenounproject.com/png/32976-200.png"
-            />
+             v-if="resultType =='bars'"
+                    src=..\..\public\img\bars.png
+                />
+             <img
+             v-if="resultType =='circle'"
+                    src=..\..\public\img\circle.png
+                />
           </div>
           <div class="resultOptions">
             <button class="bars" v-on:click="resultType = 'bars'">
               Bar Chart
             </button>
-            <button class="pie" v-on:click="resultType = 'pie'">
-              Pie Chart
+            <button class="circle" v-on:click="resultType = 'circle'">
+              Circle Chart
             </button>
           </div>
         </div>
@@ -353,7 +360,8 @@ export default {
       this.showQuestion(question,i+1);
     },
     addAnswer: function () {
-      if (this.answers.length >= 12) {
+      if (this.answers.length >= 9) {
+        alert("That's a bit many answer options for a poll don't you think?")
         return;
       }
       this.answers.push("");
@@ -371,6 +379,7 @@ export default {
       });
     },
     showQuestion: function (question, index) {
+
       this.question = question.q;
       this.answers = question.a;
       this.index = index;
@@ -378,6 +387,7 @@ export default {
       this.start = true;
       this.save = true;
       this.selectedSlide = index;
+
     },
     finishPresentation: function () {
       socket.emit("finishPresentation", {});
@@ -388,17 +398,19 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 /* createview = hela bakgrunden i allt*/
 .createView {
   height: 100vh;
-  background-color: white;
+  background-color: #ffffff;
+  padding:1em;
 }
 .pollCreation {
   display: grid;
-  grid-gap: 1%;
+  grid-gap: 0.5%;
   grid-auto-columns: minmax(0, 1fr);
   grid-template-areas:
+    "a e e e d"
     "a b b b d"
     "a b b b d"
     "a b b b d"
@@ -407,51 +419,64 @@ export default {
 /* "Slides" aka sparade frågor*/
 .storedQuestions {
   grid-area: a;
-  background-color: rgba(111, 168, 128, 0.507);
-  max-height: 80vh;
-  overflow-y:auto;
+  background-color: #df9ee480;
+  min-height: 80vh;
+  max-height:80vh;
+  overflow-y:scroll;
+  border-radius: 0.3em;
 }
+
+.storedQuestions p, .resultDesign p{
+  font-size:1.2em;
+  font-weight: bold;
+  color:#E23315;
+  margin-top:0.5em;
+}
+
 .slides {
   width: 100%;
   display: inline-block;
 }
 .slideDelete {
   display: inline-block;
-  width: 15%;
+  width:10%;
 }
-.changePlaceButtons {
-  display: inline-block;
-  vertical-align: middle;
-  width: 15%;
-}
-.changePlaceButtons img {
-  height: 1em;
-}
-.changePlaceButtons button {
-  height: 2em;
-  width: 2em;
-  display: block;
-  border-radius: 1em;
-  border: none;
-  background-color: rgba(255, 255, 255, 0);
-}
+
 .slide {
   background-color: white;
   border: 0.1em solid rgb(177, 177, 177);
   /* border:none; */
   /* border-radius: 0.5em; */
   transition: 0.3s;
-  height: 4em;
+  height: 5em;
   width: 60%;
-  border-radius: 0.3em;
+  border-radius: 0.0em;
   margin: 0.5em;
+  overflow:hidden;
 }
 .thisSlide {
-  border:2px solid black;
+  border:2px solid #A074F0;
 }
 .slide:hover {
-  background-color: rgb(223, 223, 219);
+  background-color: rgb(247, 220, 242);
 }
+
+.changePlaceButtons {
+  display: inline-block;
+  vertical-align: middle;
+  width: 10%;
+}
+.changePlaceButtons img {
+  width:80%;
+}
+.changePlaceButtons button {
+  display: block;
+  border-radius: 1em;
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+  padding:0;
+}
+
 .slideButtons{
   width:100%;
 }
@@ -467,7 +492,7 @@ export default {
   text-transform: uppercase;
   font-weight: 400;
   color: white;
-  background-color: #e765d6;
+  background-color: #ab87ee;
   box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
   text-align: center;
   position: relative;
@@ -477,20 +502,58 @@ export default {
   box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
   transform: translateY(0.1em);
 }
+
+/* #saveButton{
+  box-shadow: 0 5px 15px #A074F0;
+} */
 /* Resultat */
 .resultDesign {
-  background-color: lightgoldenrodyellow;
+  background-color: #df9ee48e;
   grid-area: d;
+  border-radius: 0.3em;
 }
+.explainRes{
+  float: right;
+  border-radius: 50%;
+  margin:0.5em;
+  position:relative;
+  background-color: #ab87ee00;
+  border:none;
+  /* width:1.5em;
+  height:1.5em; */
+}
+.explainRes img{
+  height:1.5em;
+  vertical-align: middle;
+}
+.tooltipResult{
+  visibility: hidden;
+  font-family: arial;
+  padding: 1em;
+  width:5em;
+  background-color: rgba(97, 95, 95, 0.87);
+  color: white;
+  text-align: center;
+  border-radius: 0.5em;
+  position:absolute;
+  margin:1em 0 0 -5em;
+}
+
+.explainRes:hover .tooltipResult {
+  visibility: visible;
+  z-index: 1;
+}
+
 .resultDisplay img {
-  width: 50%;
+  width: 70%;
   margin: auto;
+  margin: 4em 0 1em 0;
 }
 .resultOptions {
   padding-top: 1em;
   padding-bottom: 1em;
 }
-.resultDesign button {
+.resultOptions button {
   width: 80%;
   display: inline-block;
   padding: 0.7em 1.4em;
@@ -502,7 +565,7 @@ export default {
   text-transform: uppercase;
   font-weight: 400;
   color: white;
-  background-color: #e765d6;
+  background-color: #ab87ee;
   box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
   text-align: center;
   position: relative;
@@ -513,20 +576,28 @@ export default {
   transform: translateY(0.1em);
 }
 /* Skapa fråga */
+.displayHeader{
+  grid-area:e;
+  color:#ab87ee;
+}
+.displayHeader p{
+  margin:0.1em;
+}
 .startDisplay {
-  height: 15em;
+  /* height: 15em; */
   padding-bottom: 2em;
   padding: 5rem;
   color: rgb(161, 161, 161);
 }
 .display {
   position: relative;
-  background-color: wheat;
+  background-color:#df9ee47c;
   grid-area: b;
   min-height: 25em;
   padding-bottom: 2em;
+  border-radius:0.3em;
 }
-.questionInput {
+#questionInput {
   height: 3em;
   width: 80%;
   margin: 1em;
@@ -573,7 +644,7 @@ export default {
   border-style: solid;
   border-color: transparent transparent black transparent;
 }
-.answersInput {
+#answersInput {
   height: 4em;
   width: 10em;
   margin: 0.5em;
@@ -586,7 +657,7 @@ export default {
   transition: 0.3s;
 }
 .display input:hover {
-  background-color: rgb(209, 209, 209);
+  background-color: #ffe4fd;
 }
 .addAnswer {
   position: absolute;
@@ -643,9 +714,10 @@ export default {
 }
 /* Knapparna nedanför display*/
 .controlpanel {
-  margin: 1em;
+  /* background-color: #DF9EE4; */
   grid-area: c;
   width:100%;
+  padding-top:0.8em;
 }
 /* CSS för att anpassa header */
 header {
@@ -811,7 +883,7 @@ header {
   text-transform: uppercase;
   font-weight: 400;
   color: white;
-  background-color: #397194;
+  background-color: #E23315;
   box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
   text-align: center;
   position: relative;
@@ -893,11 +965,15 @@ header {
   .all {
     font-size: 8px;
   }
+  /* .createView{
+    height:100vh;
+  } */
   .pollCreation {
     display: grid;
     grid-gap: 1%;
     grid-auto-columns: minmax(0, 1fr);
     grid-template-areas:
+    "e e e e e"
     "b b b b b"
     "b b b b b"
     "b b b b b"
@@ -907,7 +983,6 @@ header {
   }
   .display {
     position: relative;
-    background-color: wheat;
     grid-area: b;
     min-height: 40em;
     padding-bottom: 2em;
@@ -915,10 +990,11 @@ header {
   .startDisplay{
     font-size: 2em;
   }
-  .answersInput {
+  #answersInput {
     height: 4em;
     width: 8em;
     margin: 0.5em;
+    background-color: #f0d4ee;
   }
   .resultDesign{
     padding:0.5em;
@@ -929,8 +1005,50 @@ header {
     padding:0;
     font-size: 10px;
   }
+  .storedQuestions{
+    max-height:25vh;
+  }
   .slide{
     height:3em;
   }
+
+
+
+.pollTitle {
+  width:90%;
+  margin:auto;
+  padding:2em;
+}
+
+.pollTitle h3{
+  margin:32px 0;
+  font-size:28px;
+}
+.pollTitle img {
+  height: 3em;
+}
+.error{
+  font-size:12px;
+  margin:0;
+}
+.tip {
+  width: 100%;
+  margin: auto;
+  padding:0;
+  list-style-type: none;
+  text-align: left;
+  font-size: 16px;
+}
+
+
+.createInput {
+  display: inline-block;
+  width:100%;
+}
+.createInput input {
+  height: 2.6em;
+  width: 40%;
+  margin: 2em;
+}
 }
 </style>

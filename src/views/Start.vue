@@ -15,45 +15,63 @@
           <div class="hoverLang">Change Language</div>
         </button>
       </div>
-      <button class="aboutUs" v-on:click="wantInfo = true && !wantHelp">
+      <button class="aboutUs" v-on:click="showInfo">
         {{ uiLabels.aboutUs }}
       </button>
 
       <!--<button class="aboutUs">{{ uiLabels.aboutUs }}</button>-->
       <!--<button class="service">{{ uiLabels.service }}</button>-->
-      <button class="service" v-on:click="wantHelp = true && !wantInfo">
+      <button class="service" v-on:click="showHelp">
         {{ uiLabels.service }}
       </button>
     </header>
 
-
     <div class="firstMenu" v-if="!wantInfo && !wantHelp">
 
-      <div class="create" v-if="!ready">
+      <div class="create" v-if="!ready && !start">
         <router-link v-bind:to="'/create/' + lang" tag="button">
           <button class="createButton">
             <h3>{{ uiLabels.createPoll }}</h3>
+            <h5>{{ uiLabels.existing }}</h5>
           </button>
         </router-link>
       </div>
 
-      <div class="participate" v-if="!ready">
-        <button class="readyButton" v-on:click="ready = true">
+      <div class="participate" v-if="!ready && !start">
+        <button class="readyButton" v-on:click="isReady">
           <h3>{{ uiLabels.participatePoll }}</h3>
         </button>
       </div>
 
-      <div class="startExisting" v-if="!ready">
-          <router-link v-bind:to="'/result/' + pollId">
-            <button class="startExist">
-              <h4> {{uiLabels.startExistingPoll}}</h4>
-            </button>
-          </router-link>
-        </div>
+    <div class="buttonDiv">
+      <button class="startExistButton" v-on:click="startPoll" v-if="!start && !isClicked">
+        <h4> {{uiLabels.startExistingPoll}} </h4>
+      </button>
+    </div>
+    </div>
+
+    <div class="start" v-if="start && !ready">
+      <button class="back" v-on:click="isReady">
+        {{ uiLabels.backButton }}
+      </button>
+      <div>
+      <label id="pollName">
+        {{ uiLabels.pollName }}
+        <input type="text" v-model="pollId" />
+      </label>
+    </div>
+
+    <div>
+        <router-link v-bind:to="'/result/' + pollId" tag="button">
+          <button class="participateButton" v-on:click="runQuestion">
+          <h3>START</h3>
+          </button>
+        </router-link>
+      </div>
     </div>
 
     <div class="start" v-if="ready">
-      <button class="back" v-on:click="ready = false">
+      <button class="back" v-on:click="isReady">
         {{ uiLabels.backButton }}
       </button>
       <div>
@@ -62,9 +80,10 @@
           <input type="text" v-model="id" />
         </label>
       </div>
+
       <div>
         <router-link v-bind:to="'/poll/' + id" tag="button">
-          <button class="participateButton">
+          <button class="participateButton" v-on:click="isClicked = true">
             <h3>Start</h3>
           </button>
         </router-link>
@@ -174,6 +193,10 @@ export default {
       ready: false,
       wantInfo: false,
       wantHelp: false,
+      start:false,
+      isClicked: false,
+      pollId: "",
+      questionNumber: 0,
     };
   },
   created: function () {
@@ -194,6 +217,36 @@ export default {
       }
       socket.emit("switchLanguage", this.lang);
     },
+    startPoll: function(){
+      this.start=true;
+      this.isClicked=true;
+    },
+    isReady: function() {
+      if (this.ready==false && this.isClicked == false){
+   this.ready=true;
+   this.isClicked=true;
+ }
+ else{
+   this.ready=false;
+   this.isClicked=false;
+ }
+ this.start=false;
+ },
+
+ showInfo: function(){
+   this.wantInfo = true;
+   this.wantHelp = false;
+ },
+ showHelp: function(){
+   this.wantInfo = false;
+   this.wantHelp = true;
+ }
+/* runQuestion: function () {
+   socket.emit("runQuestion", {
+     pollId: this.pollId,
+     questionNumber: this.questionNumber,
+   });
+ },*/
   },
 };
 </script>
@@ -313,6 +366,16 @@ h3 {
 .firstMenu div {
   padding: 1em;
 }
+.startExisting {
+  display: grid;
+  grid-gap: 0.3em;
+  grid-template-columns: 50% 50%;
+}
+
+.startExisting div {
+  padding: 1em;
+}
+
 .create {
   height: 10em;
 }
@@ -338,12 +401,13 @@ h3 {
   background-position: 100% 0;
 }
 
-.startExist{
-  width: 70%;
+.startExistButton{
+  width: 50%;
   height: 100%;
   background-size: 300% 100%;
   border-radius: 25px;
   text-transform: uppercase;
+  grid-template-columns: 50% 50%;
 
   background-image: linear-gradient(
     to right,
@@ -355,7 +419,7 @@ h3 {
   box-shadow: 7px 7px 15px 0 rgba(199, 23, 190, 0.75);
 }
 
-.startExist:hover{
+.startExistButton:hover{
   background-position: 100% 0;
 }
 
@@ -437,6 +501,7 @@ button:hover {
 .start div {
   padding: 1em;
 }
+
 
 #pollName {
   font-size: 1.5em;

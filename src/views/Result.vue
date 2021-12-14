@@ -5,20 +5,23 @@
     <br />
     <div>
       <!--  {{pollId}}-->
-      <h2 id="rubrikFråga">
-        <Question v-bind:question="question" v-on:answer="submitAnswer" />
+      <h2 id="rubrikFråga"  v-if="!end">
+        <Question v-bind:question="question" v-on:answer="submitAnswer"/>
         {{ question }}
       </h2>
+      <div v-if ="end">
+        <br><br><br><br>
+      </div>
     </div>
     <main class="page">
       <section class="showResult">
-        <div v-if="isClicked" class="theBars">
+        <div v-if="isClicked && !end" class="theBars">
           <div class="clicked" v-if="isClicked"></div>
           <Bars v-if="result == 'bars'" v-bind:data="data" />
-          <Circle v-if="result == 'circle'" v-bind:data="data" />
+          <Circle v-if="result == 'pie'" v-bind:data="data" />
         </div>
 
-        <div v-if="!isClicked" class="waitingDiv">
+        <div v-if="!isClicked && !end" class="waitingDiv">
           <div class="lds-ring">
             <div></div>
             <div></div>
@@ -33,10 +36,33 @@
 
           <h2></h2>
         </div>
-        <div v-if="showFinish" class="showFinish">
-          WHOPWHOP
-      </div>
-        <div class="knapppanel">
+
+        <div class="endDiv" v-if="end">
+          <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+
+          <h3>
+            Poll done! <br/><br/><br/><br/><br/>
+
+        <router-link v-bind:to="'//'" tag="button">
+              <button class="tillbakaTillStart">
+       Tillbaka till main
+
+      </button>
+      </router-link>
+
+
+
+          </h3>
+
+          <h2></h2>
+        </div>
+
+        <div class="knapppanel" v-if="!end">
           <div class="knappIResult">
             <!--  <router-link v-bind:to="'/poll/' + pollId">next Question</router-link>-->
             <button class="prevButton" v-on:click="prevQuestion">
@@ -63,6 +89,7 @@
 import Bars from "@/components/Bars.vue";
 import Circle from "@/components/Circle.vue";
 import io from "socket.io-client";
+import party from "party-js";
 const socket = io();
 export default {
   name: "Result",
@@ -76,7 +103,7 @@ export default {
       questionNumber: 0,
       questions: 0,
       isClicked: false,
-      showFinish: false,
+      end: false,
       data: {},
     };
   },
@@ -119,8 +146,13 @@ export default {
     runQuestion: function () {
       console.log(this.questions.length);
       if (this.questionNumber >= this.questions.length - 1) {
+        this.end=true;
+        party.setting.debug=true;
         return;
       }
+    /*  else{
+        this.end=true;
+      }*/
       this.isClicked = false;
       this.questionNumber += 1;
       socket.emit("runQuestion", {
@@ -243,7 +275,16 @@ h4 {
   margin: 0 auto;
   border-radius: 25px;
 }
-
+.endDiv{
+  position: relative;
+  font-family: "Lucida Console", "Monaco", monospace;
+  height: 20em;
+  width: 35em;
+  background-color: rgb(223, 158, 228);
+  margin: 0 auto;
+  border-radius: 25px;
+  padding-top: 50px;
+}
 .theBars {
   height: 20em;
   width: 35em;
@@ -255,5 +296,10 @@ h4 {
 }
 .answers {
   colour: purple;
+}
+.tillbakaTillStart{
+  width: 70px;
+  length: 20px;
+
 }
 </style>

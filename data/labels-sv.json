@@ -3,7 +3,7 @@
 	"invite": "Bjud in deltagare med den här länken:",
 	"createPoll": "Skapa röstning",
 	"participatePoll": "Delta i röstning",
-	"startExistingPoll": "Starta existerande poll",
+	"startExistingPoll": "Starta din poll",
 	"question": "Skriv fråga här",
 	"changeLanguage": "Change to English",
 	"backButton": "Tillbaka",
@@ -14,4 +14,6 @@
 	"aboutUs": "Om oss",
 	"service": "Kundservice",
 	"welcome":"Välkommen",
-	"choose": "Välj om du vill gå med i en omröstning eller skapa en egen"}
+	"choose": "Välj om du vill gå med i en omröstning eller skapa en egen",
+  "existing":"/eller redigera en redan existerande"
+}
