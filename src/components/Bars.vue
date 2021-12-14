@@ -2,7 +2,7 @@
 <template>
 <div class="wrapper">
   <div class="bar" v-for="(item, key) in data" v-bind:key="key">
-    <div v-bind:style="{height: item + '5px'}">
+    <div class="items" v-bind:style="{height: item + '5px'}">
       <span> {{item}} </span>
     </div>
     <div class="text">
@@ -24,6 +24,10 @@ export default {
 .text{
 color: black;
 font-family: "Lucida Console", "Monaco", monospace;
+word-wrap: break-word;
+}
+.items{
+  position: relative;
 }
 .bar {
   display: inline-block;
@@ -64,6 +68,5 @@ font-family: "Lucida Console", "Monaco", monospace;
 }
 .wrapper {
 padding:3em;
-  word-wrap: break-word;
 }
 </style>

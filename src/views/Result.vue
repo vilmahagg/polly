@@ -224,6 +224,7 @@ h4 {
 }
 .showResult section {
   padding: 1em;
+
 }
 .knapppanel {
   padding-bottom: 4em;
