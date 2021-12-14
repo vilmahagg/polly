@@ -15,13 +15,13 @@
           <div class="hoverLang">Change Language</div>
         </button>
       </div>
-      <button class="aboutUs" v-on:click="wantInfo = true && !wantHelp">
+      <button class="aboutUs" v-on:click="showInfo">
         {{ uiLabels.aboutUs }}
       </button>
 
       <!--<button class="aboutUs">{{ uiLabels.aboutUs }}</button>-->
       <!--<button class="service">{{ uiLabels.service }}</button>-->
-      <button class="service" v-on:click="wantHelp = true && !wantInfo">
+      <button class="service" v-on:click="showHelp">
         {{ uiLabels.service }}
       </button>
     </header>
@@ -232,6 +232,15 @@ export default {
  }
  this.start=false;
  },
+
+ showInfo: function(){
+   this.wantInfo = true;
+   this.wantHelp = false;
+ },
+ showHelp: function(){
+   this.wantInfo = false;
+   this.wantHelp = true;
+ }
 /* runQuestion: function () {
    socket.emit("runQuestion", {
      pollId: this.pollId,
