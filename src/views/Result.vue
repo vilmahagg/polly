@@ -89,7 +89,7 @@
 import Bars from "@/components/Bars.vue";
 import Circle from "@/components/Circle.vue";
 import io from "socket.io-client";
-import party from "party-js";
+//import party from "party-js";
 const socket = io();
 export default {
   name: "Result",
@@ -147,7 +147,7 @@ export default {
       console.log(this.questions.length);
       if (this.questionNumber >= this.questions.length - 1) {
         this.end=true;
-        party.setting.debug=true;
+       // party.setting.debug=true;
         return;
       }
     /*  else{
