@@ -398,7 +398,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 /* createview = hela bakgrunden i allt*/
 .createView {
   height: 100vh;
@@ -407,7 +407,7 @@ export default {
 }
 .pollCreation {
   display: grid;
-  grid-gap: 1%;
+  grid-gap: 0.5%;
   grid-auto-columns: minmax(0, 1fr);
   grid-template-areas:
     "a e e e d"
@@ -421,15 +421,16 @@ export default {
   grid-area: a;
   background-color: #df9ee480;
   min-height: 80vh;
-  overflow-y:auto;
+  max-height:80vh;
+  overflow-y:scroll;
   border-radius: 0.3em;
 }
 
 .storedQuestions p, .resultDesign p{
-  font-size: 26px;
+  font-size:1.2em;
   font-weight: bold;
   color:#E23315;
-  margin:0.5em;
+  margin-top:0.5em;
 }
 
 .slides {
@@ -451,6 +452,7 @@ export default {
   width: 60%;
   border-radius: 0.0em;
   margin: 0.5em;
+  overflow:hidden;
 }
 .thisSlide {
   border:2px solid #A074F0;
