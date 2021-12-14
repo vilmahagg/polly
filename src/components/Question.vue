@@ -1,6 +1,11 @@
 <template>
+ <button v-on:click="theme">Dark theme</button>
+
+ <div v-if="!dark">
   <div class="question" v-if="selectedAnswer == null || answered == false">
+   
     <p class="theQuestion">{{ question.q }}</p>
+    
     <div class="answers">
       <button
         class="answerOption"
@@ -12,10 +17,32 @@
         <h2>{{ a }}</h2>
       </button>
     </div>
+    </div>
   </div>
-  <div v-if="answered">
+
+  
+
+ <div v-if="dark">
+<div class="questionDark" v-if="selectedAnswer == null || answered == false">
+ 
+    <p class="theQuestionDark" >{{ question.q }}</p>
+    <div class="answers">
+      <button
+        class="answerOption"
+        :class="{ selectedAnswer: selectedAnswer == index }"
+        v-for="(a, index) in question.a"
+        v-on:click="answer(a, index)"
+        v-bind:key="a"
+      >
+        <h2>{{ a }}</h2>
+      </button>
+    </div>
+    </div>
+  </div>
+  
+  <div class="waitingBackground" v-if="answered && !dark">
     <div
-      class="waitingDiv"
+      class="waitingDiv" v-if="!dark"
       :class="{ selectedAnswer: selectedAnswer == index }"
     >
       <div class="lds-ring">
@@ -31,7 +58,29 @@
       </h1>
       <h2 class="getready">Get ready for the next question</h2>
     </div>
+    </div>
+
+    <div class="waitingBackgroundDark" v-if="answered && dark">
+    <div
+      class="waitingDivDark" v-if="dark"
+      :class="{ selectedAnswer: selectedAnswer == index }"
+    >
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <br />
+      <h1 class="youAnswered">
+        You answered:
+        <h1 class="waitingAnswer">{{ question.a[selectedAnswer] }}</h1>
+      </h1>
+      <h2 class="getreadyDark" >Get ready for the next question</h2>
+     
+    </div>
   </div>
+ 
 </template>
 
 <script>
@@ -49,6 +98,7 @@ export default {
     return {
       selectedAnswer: null,
       answered: false,
+      dark:false,
     };
   },
 
@@ -58,17 +108,37 @@ export default {
       this.selectedAnswer = index;
       this.answered = true;
     },
+    theme: function(){
+      
+
+      if(this.dark==true){
+        this.dark=false;
+      }
+      else{
+        this.dark=true;
+      }
+
+    }
   },
 };
 </script>
 
 
 <style scoped>
+
+
 .question {
-  background-color: rgb(186, 226, 176);
+  background-color: rgb(226, 201, 238);
   height: 30em;
   overflow-y: auto;
 }
+
+.questionDark{
+  background-color: rgb(46, 48, 46);
+  height: 30em;
+  overflow-y: auto;
+}
+
 
 .answers {
   padding: 1em;
@@ -93,11 +163,12 @@ fritt att ändra/radera hur man vill */
   text-align: center;
   background-size: 300% 100%;
   border-radius: 0.5em;
+  width: auto;
+  height: auto;
+  padding-left: 1.2em;
+  padding-right: 1.2em;
 
-  /* moz-transition: all .4s ease-in-out;
-    -o-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out; */
+
 
   background-image: linear-gradient(
     to right,
@@ -111,10 +182,7 @@ fritt att ändra/radera hur man vill */
 
 .answerOption:hover {
   background-position: 100% 0;
-  /* moz-transition: all .4s ease-in-out;
-    -o-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out; */
+ 
 }
 
 .lds-ring {
@@ -168,6 +236,26 @@ fritt att ändra/radera hur man vill */
   border-radius: 25px;
 }
 
+.waitingBackground{
+  background-color: rgb(226, 201, 238);
+  height: 60em;
+}
+.waitingBackgroundDark{
+  background-color:  rgb(44, 42, 44);
+  height: 60em;
+}
+.waitingDivDark {
+  display: inline-block;
+  position: relative;
+  font-family: "Lucida Console", "Monaco", monospace;
+  height: 20em;
+  width: 35em;
+  background-color: rgb(44, 42, 44);
+  top: 10em;
+  margin: 0 auto;
+  border-radius: 25px;
+}
+
 .waitingDiv h1 {
   display: inline;
 }
@@ -187,12 +275,25 @@ fritt att ändra/radera hur man vill */
 .getready {
   margin-top: 8%;
 }
+.getreadyDark {
+  margin-top: 8%;
+  color: #fff;
+}
 
 .theQuestion {
   font-size: 2.5em;
   font-family: "Lucida Console", "Monaco", monospace;
   text-align: center;
   color: rgb(224, 100, 187);
+  text-transform: uppercase;
+  overflow: hidden;
+  position: relative;
+}
+.theQuestionDark {
+  font-size: 2.5em;
+  font-family: "Lucida Console", "Monaco", monospace;
+  text-align: center;
+  color: rgb(250, 250, 250);
   text-transform: uppercase;
   overflow: hidden;
   position: relative;
