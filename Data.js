@@ -46,6 +46,14 @@ Data.prototype.addQuestion = function(pollId, q) {
   }
 }
 
+Data.prototype.addSlide = function(pollId, q) {
+  const poll = this.polls[pollId];
+  console.log("add slide");
+  if (typeof poll !== 'undefined') {
+    poll.questions[q.slide]=q;
+  }
+}
+
 Data.prototype.deleteQuestion = function(pollId,index) {
   const poll = this.polls[pollId];
   console.log("delete: ", poll.questions[index]);
@@ -56,15 +64,35 @@ Data.prototype.deleteQuestion = function(pollId,index) {
   return []
 }
 
-Data.prototype.editQuestion = function(pollId, index, newQuestion) {
+Data.prototype.editQuestion = function(pollId, newQuestion, index) {
   const poll = this.polls[pollId];
   if (typeof poll !== 'undefined') {
     poll.questions[index] = newQuestion;
-  //  Vue.set(poll.questions, index, newQuestion);
   }
   console.log("question ", index, " in poll: ", pollId, " updated to:", newQuestion)
 }  //skicka med datan för den editade frågan i newQuestion
 
+Data.prototype.moveUp = function(pollId, index){
+  const poll = this.polls[pollId];
+  if (typeof poll !== 'undefined') {
+    let temp = poll.questions[index];
+    let temp2 = poll.questions[index-1]
+    poll.questions[index] = temp2;
+    poll.questions[index-1] = temp;
+  }
+}
+
+Data.prototype.moveDown = function(pollId, index){
+  const poll = this.polls[pollId];
+  if (typeof poll !== 'undefined') {
+    if (typeof poll.questions[index + 1] !== 'undefined') {
+      let temp = poll.questions[index];
+      let temp2 = poll.questions[index+1]
+      poll.questions[index] = temp2;
+      poll.questions[index+1] = temp;
+    }
+  }
+}  
 
 Data.prototype.getQuestion = function(pollId, qId=null) {
   const poll = this.polls[pollId];
@@ -79,9 +107,8 @@ Data.prototype.getQuestion = function(pollId, qId=null) {
 }
 
 Data.prototype.getAllQuestions = function(pollId) {
-
   const poll = this.polls[pollId];
-  console.log("get all questions: ", poll.questions);
+  console.log("get all questions");
   if (typeof poll !== 'undefined') {
     return poll.questions
   }
