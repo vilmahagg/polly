@@ -24,10 +24,10 @@ Data.prototype.getUILabels = function (lang = "en") {
 Data.prototype.createPoll = function(pollId, lang="en") {
   if (typeof this.polls[pollId] === "undefined") {
     let poll = {};
-    poll.lang = lang;  
+    poll.lang = lang;
     poll.questions = [];
     poll.answers = [];
-    poll.currentQuestion = 0;              
+    poll.currentQuestion = 0;
     this.polls[pollId] = poll;
     console.log("poll created", pollId, poll);
   }
@@ -46,18 +46,9 @@ Data.prototype.addQuestion = function(pollId, q) {
   }
 }
 
-Data.prototype.addSlide = function(pollId, q) {
-  const poll = this.polls[pollId];
-  console.log("add slide");
-  
-  if (typeof poll !== 'undefined') {
-    poll.questions[q.slide]=q;
-  }
-}
-
 Data.prototype.deleteQuestion = function(pollId,index) {
   const poll = this.polls[pollId];
-  console.log("delete: ",index, poll.questions[index]);
+  console.log("delete: ", poll.questions[index]);
   if (typeof poll !== 'undefined') {
     poll.questions.splice(index,1);
     return poll.questions
@@ -65,35 +56,15 @@ Data.prototype.deleteQuestion = function(pollId,index) {
   return []
 }
 
-Data.prototype.editQuestion = function(pollId, newQuestion, index) {
+Data.prototype.editQuestion = function(pollId, index, newQuestion) {
   const poll = this.polls[pollId];
   if (typeof poll !== 'undefined') {
     poll.questions[index] = newQuestion;
+  //  Vue.set(poll.questions, index, newQuestion);
   }
   console.log("question ", index, " in poll: ", pollId, " updated to:", newQuestion)
 }  //skicka med datan för den editade frågan i newQuestion
 
-Data.prototype.moveUp = function(pollId, index){
-  const poll = this.polls[pollId];
-  if (typeof poll !== 'undefined') {
-    let temp = poll.questions[index];
-    let temp2 = poll.questions[index-1]
-    poll.questions[index] = temp2;
-    poll.questions[index-1] = temp;
-  }
-}
-
-Data.prototype.moveDown = function(pollId, index){
-  const poll = this.polls[pollId];
-  if (typeof poll !== 'undefined') {
-    if (typeof poll.questions[index + 1] !== 'undefined') {
-      let temp = poll.questions[index];
-      let temp2 = poll.questions[index+1]
-      poll.questions[index] = temp2;
-      poll.questions[index+1] = temp;
-    }
-  }
-}
 
 Data.prototype.getQuestion = function(pollId, qId=null) {
   const poll = this.polls[pollId];
@@ -108,9 +79,9 @@ Data.prototype.getQuestion = function(pollId, qId=null) {
 }
 
 Data.prototype.getAllQuestions = function(pollId) {
-  
+
   const poll = this.polls[pollId];
-  console.log("get all questions");
+  console.log("get all questions: ", poll.questions);
   if (typeof poll !== 'undefined') {
     return poll.questions
   }
@@ -146,6 +117,3 @@ Data.prototype.getAnswers = function(pollId) {
   return {}
 }
 module.exports = Data;
-
-
-

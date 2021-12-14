@@ -2,7 +2,7 @@
 <template>
   <header>
     <h4 id="rubrikRext">Result</h4>
-    <br />
+    <br/>
     <div>
       <!--  {{pollId}}-->
       <h2 id="rubrikFråga"  v-if="!end">
@@ -37,31 +37,6 @@
           <h2></h2>
         </div>
 
-        <div class="endDiv" v-if="end">
-          <div class="lds-ring">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-
-          <h3>
-            Poll done! <br/><br/><br/><br/><br/>
-
-        <router-link v-bind:to="'//'" tag="button">
-              <button class="tillbakaTillStart">
-       Tillbaka till main
-
-      </button>
-      </router-link>
-
-
-
-          </h3>
-
-          <h2></h2>
-        </div>
-
         <div class="knapppanel" v-if="!end">
           <div class="knappIResult">
             <!--  <router-link v-bind:to="'/poll/' + pollId">next Question</router-link>-->
@@ -80,6 +55,22 @@
            <p>antal frågor: {{ questions.length }}</p>
         </div>
       </section>
+
+<div class="endDivBack">
+      <div class="endDiv" v-if="end">
+          <div><h3>Poll done!</h3></div>
+          <div></div>
+          <div></div>
+          <div><br/><br/><br/><br/><br/>
+            <router-link v-bind:to="'//'" tag="button">
+                  <button class="tillbakaTillStart">
+            Tillbaka till main
+            </button>
+            </router-link>
+          </div>
+      </div>
+    </div>
+
     </main>
 
   </header>
@@ -275,8 +266,10 @@ h4 {
   margin: 0 auto;
   border-radius: 25px;
 }
-.endDiv{
-  position: relative;
+
+.endDiv {
+
+position: relative;
   font-family: "Lucida Console", "Monaco", monospace;
   height: 20em;
   width: 35em;
@@ -285,6 +278,7 @@ h4 {
   border-radius: 25px;
   padding-top: 50px;
 }
+
 .theBars {
   height: 20em;
   width: 35em;
