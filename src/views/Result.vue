@@ -15,7 +15,7 @@
     </div>
     <main class="page">
       <section class="showResult">
-        <div v-if="isClicked" class="theBars">
+        <div v-if="isClicked && !end" class="theBars">
           <div class="clicked" v-if="isClicked"></div>
           <Bars v-if="result == 'bars'" v-bind:data="data" />
           <Circle v-if="result == 'pie'" v-bind:data="data" />
@@ -46,7 +46,9 @@
           </div>
 
           <h3>
-            Poll done! <br /><br/>
+            Poll done! <br/><br/>
+      
+
           </h3>
 
           <h2></h2>
@@ -79,6 +81,7 @@
 import Bars from "@/components/Bars.vue";
 import Circle from "@/components/Circle.vue";
 import io from "socket.io-client";
+import party from "party-js";
 const socket = io();
 export default {
   name: "Result",
@@ -135,6 +138,8 @@ export default {
     runQuestion: function () {
       console.log(this.questions.length);
       if (this.questionNumber >= this.questions.length - 1) {
+        this.end=true;
+        party.setting.debug=true;
         return;
       }
     /*  else{
