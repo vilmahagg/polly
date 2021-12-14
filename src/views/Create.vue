@@ -137,8 +137,12 @@
         </div>
 
         <div class="resultDesign">
-          <p> EDIT POLL RESULT</p>
-          <h5>Choose how you want the result of your poll to be presented:</h5>
+          <div class="explainRes">
+            <img src="..\..\public\img\question-mark-round-line.png">
+            <div class="tooltipResult">Choose how each question's result should be presented</div>
+          </div>
+          <p>EDIT RESULT</p>
+          
           <div class="resultDisplay">
             <img
              v-if="resultType =='bars'"
@@ -317,6 +321,7 @@ export default {
         slide: this.slide,
         index: this.index,
       });
+
     },
     deleteSlide: function (i) {
       if (this.slide <= 1) {
@@ -424,6 +429,7 @@ export default {
   font-size: 26px;
   font-weight: bold;
   color:#E23315;
+  margin:0.5em;
 }
 
 .slides {
@@ -504,15 +510,48 @@ export default {
   grid-area: d;
   border-radius: 0.3em;
 }
+.explainRes{
+  float: right;
+  border-radius: 50%;
+  margin:0.5em;
+  position:relative;
+  background-color: #ab87ee00;
+  border:none;
+  /* width:1.5em;
+  height:1.5em; */
+}
+.explainRes img{
+  height:1.5em;
+  vertical-align: middle;
+}
+.tooltipResult{
+  visibility: hidden;
+  font-family: arial;
+  padding: 1em;
+  width:5em;
+  background-color: rgba(97, 95, 95, 0.87);
+  color: white;
+  text-align: center;
+  border-radius: 0.5em;
+  position:absolute;
+  margin:1em 0 0 -5em;
+}
+
+.explainRes:hover .tooltipResult {
+  visibility: visible;
+  z-index: 1;
+}
+
 .resultDisplay img {
-  width: 50%;
+  width: 70%;
   margin: auto;
+  margin: 4em 0 1em 0;
 }
 .resultOptions {
   padding-top: 1em;
   padding-bottom: 1em;
 }
-.resultDesign button {
+.resultOptions button {
   width: 80%;
   display: inline-block;
   padding: 0.7em 1.4em;
