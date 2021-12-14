@@ -1,20 +1,13 @@
 circle
 
 <template>
-  <div class="app" style="padding-left: 100px">
-    <h1>This is a pie chart</h1>
-    <pie-chart style="width: 400px; height: 400px" />
-  </div>
-
   <!-- Vilmas cirklar -->
   <div class="wrapper">
     <div class="circles" v-for="(item, key) in data" v-bind:key="key">
-      <div class="circle">
-        <div v-bind:style="{ height: item + '7px', width: item + '7px' }">
+      <div class="circle" v-bind:style="{ height: item + '9px', width: item + '9px' }">
           <span> {{ item }} </span>
-        </div>
       </div>
-      {{ key }}
+      <p>{{ key }}</p>
     </div>
   </div>
 </template>
@@ -63,16 +56,20 @@ export default {
 /* Vilmas cirklar */
 .wrapper {
   display: inline-block;
+  word-wrap: break-word;
 }
 .circles {
   display: inline-block;
-  vertical-align: middle;
   height: 100%;
+  text-align: center;
+  max-width:100px;
+  margin:1.5em;
+  vertical-align: middle;
 }
 .circle {
   border-radius: 50%;
-  padding: 20px;
-  margin: 40px;
+  padding: 1em;
+  margin: 2em;
 }
 .circles:nth-child(1) div:nth-child(1) {
   background-color: #809fff;
