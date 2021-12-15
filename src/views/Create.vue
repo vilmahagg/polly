@@ -13,20 +13,16 @@
         <router-link v-bind:to="'/'" tag="button">
           <button class="back">
             {{ uiLabels.backButton }}
-            back
           </button>
         </router-link>
 
-        <h3>Choose a name for your poll!
-          {{ uiLabels.chooseName }}
-        </h3>
+        <h3>Choose a name for your poll!</h3>
 
         <div class="createInput">
           <div class="error" v-if="error">Please choose a name before continuing</div>
           <input type="text" v-model="pollId" />
           <button class="createPollButton" v-on:click="createPoll">
             {{ uiLabels.createPoll }}
-            skapa poll
           </button>
         </div>
         <ul class="tip">
@@ -35,7 +31,6 @@
                 src=..\..\public\img\light-bulb-color.png
             />
             Remember the name to access the poll later
-            {{ uiLabels.accessLater }}
           </li>
           <li>
             <img
@@ -43,15 +38,13 @@
             />
             Want to edit an existing poll? Enter the name of the poll above to
             continue where you left off!
-            {{ uiLabels.editExisting }}
           </li>
         </ul>
       </div>
 
       <div class="pollCreation" v-if="isShown">
         <div class="storedQuestions">
-          <p>QUESTIONS
-          {{ uiLabels.questions }}</p>
+          <p>QUESTIONS</p>
           <!-- {{save}} -->
           <div
               class="slides"
@@ -83,35 +76,28 @@
                 <img
                     src=..\..\public\img\red-x.png
                 />
-                <div class="tooltipDelAns">Delete Slide
-                {{ uiLabels.deleteSlide }}</div>
+                <div class="tooltipDelAns">Delete Slide</div>
               </button>
             </div>
           </div>
 
           <div class="slideButtons">
-            <button v-if="!save" v-on:click="addSlide">{{ uiLabels.addSlide }}add slide</button>
+            <button v-if="!save" v-on:click="addSlide">Add new slide</button>
             <button id="saveButton" v-if="save" v-on:click="editQuestion">Save Question</button>
             <div class="error" v-if="error">
               Please fill all fields before saving question
-              {{ uiLabels.please }}
             </div>
 
           </div>
         </div>
         <div class="displayHeader">
         <p v-if="!error">
-      The name of this poll is
-        {{ uiLabels.namePoll }}
-        <span class="pollName">{{ pollId }}</span>
+        The name of this poll is <span class="pollName">{{ pollId }}</span>
       </p>
         </div>
         <div class="display">
           <div class="startDisplay" v-if="!start">
-            <h2>Choose Slide to Start Editing
-              {{ uiLabels.chooseSlide }}
-          </h2>
-
+            <h2>Choose Slide to Start Editing</h2>
           </div>
           <div v-if="start">
             {{index +1}}
@@ -155,7 +141,7 @@
             <img src="..\..\public\img\question-mark-round-line.png">
             <div class="tooltipResult">Choose how each question's result should be presented</div>
           </div>
-          <p>{{ uiLabels.editResult }}</p>
+          <p>EDIT RESULT</p>
 
           <div class="resultDisplay">
             <img
@@ -168,17 +154,11 @@
                 />
           </div>
           <div class="resultOptions">
-            <button class="bars"
-            :class="{chosenResult: resultType =='bars'}"
-            v-on:click="resultType = 'bars'">
-              {{ uiLabels.bar }}
-              bar
+            <button class="bars" v-on:click="resultType = 'bars'">
+              Bar Chart
             </button>
-            <button class="circle"
-            :class="{chosenResult: resultType =='circle'}"
-            v-on:click="resultType = 'circle'">
-              {{ uiLabels.circle }}
-              circle
+            <button class="circle" v-on:click="resultType = 'circle'">
+              Circle Chart
             </button>
           </div>
         </div>
@@ -191,19 +171,17 @@
 
         <div class="controlpanel">
           <button class="finishButton" v-on:click="finishPresentation">
+            Finish Presentation
             {{ uiLabels.finishPresentation }}
-            finish presentation
           </button>
         </div>
 
       </div>
       <br>
       <div class="finishedSide" v-if="isFinished">
-        <h2>YOU SUCCESSFULLY CREATED YOUR POLL!!
-        {{ uiLabels.successfullyCreated }}</h2>
+        <h2>YOU SUCCESSFULLY CREATED YOUR POLL!!</h2>
         <div class="msg-icn"  >
           Note: This code is also used to edit the poll later on!
-          {{ uiLabels.note }}
         </div>
 
 
@@ -211,7 +189,6 @@
         <div class="wrapper">
           <div class="pollCode2">
             THIS IS YOUR POLL-CODE, SAVE AND SHARE IT WITH YOUR PARTICIPANTS :
-            {{ uiLabels.pollCode }}
           </div>
           <div >
             <span class="pollCode"> {{ pollId }}</span>
@@ -232,7 +209,6 @@
             <router-link to="/">
               <button v-on:click="waitUntilLater" class="waitButton">
                 Wait until later
-                {{ uiLabels.wait }}
               </button>
             </router-link>
 
@@ -422,7 +398,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* createview = hela bakgrunden i allt*/
 .createView {
   height: 100vh;
@@ -431,7 +407,7 @@ export default {
 }
 .pollCreation {
   display: grid;
-  grid-gap: 0.5%;
+  grid-gap: 1%;
   grid-auto-columns: minmax(0, 1fr);
   grid-template-areas:
     "a e e e d"
@@ -445,16 +421,15 @@ export default {
   grid-area: a;
   background-color: #df9ee480;
   min-height: 80vh;
-  max-height:80vh;
-  overflow-y:scroll;
+  overflow-y:auto;
   border-radius: 0.3em;
 }
 
 .storedQuestions p, .resultDesign p{
-  font-size:1.2em;
+  font-size: 26px;
   font-weight: bold;
   color:#E23315;
-  margin-top:0.5em;
+  margin:0.5em;
 }
 
 .slides {
@@ -476,7 +451,6 @@ export default {
   width: 60%;
   border-radius: 0.0em;
   margin: 0.5em;
-  overflow:hidden;
 }
 .thisSlide {
   border:2px solid #A074F0;
@@ -577,7 +551,7 @@ export default {
   padding-top: 1em;
   padding-bottom: 1em;
 }
-.bars, .circle {
+.resultOptions button {
   width: 80%;
   display: inline-block;
   padding: 0.7em 1.4em;
@@ -594,9 +568,6 @@ export default {
   text-align: center;
   position: relative;
   border: none;
-}
-.chosenResult{
-  border:2px solid black;
 }
 .resultDesign button:active {
   box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
