@@ -5,7 +5,7 @@
         <h1>EasyPoll</h1>
       </router-link>
 
-     
+
     </header>
 
     <div class="createView">
@@ -16,7 +16,9 @@
           </button>
         </router-link>
 
-        <h3>Choose a name for your poll!</h3>
+        <h3><!--Choose a name for your poll!-->
+          {{ uiLabels.chooseName }}
+        </h3>
 
         <div class="createInput">
           <div class="error" v-if="error">Please choose a name before continuing</div>
@@ -30,21 +32,24 @@
             <img
                 src=..\..\public\img\light-bulb-color.png
             />
-            Remember the name to access the poll later
+            <!--Remember the name to access the poll later-->
+            {{ uiLabels.accessLater }}
           </li>
           <li>
             <img
                 src=..\..\public\img\light-bulb-color.png
             />
-            Want to edit an existing poll? Enter the name of the poll above to
-            continue where you left off!
+            <!--Want to edit an existing poll? Enter the name of the poll above to
+            continue where you left off!-->
+            {{ uiLabels.editExisting }}
           </li>
         </ul>
       </div>
 
       <div class="pollCreation" v-if="isShown">
         <div class="storedQuestions">
-          <p>QUESTIONS</p>
+          <p><!--QUESTIONS-->
+          {{ uiLabels.questions }}</p>
           <!-- {{save}} -->
           <div
               class="slides"
@@ -76,28 +81,35 @@
                 <img
                     src=..\..\public\img\red-x.png
                 />
-                <div class="tooltipDelAns">Delete Slide</div>
+                <div class="tooltipDelAns"><!--Delete Slide-->
+                {{ uiLabels.deleteSlide }}</div>
               </button>
             </div>
           </div>
 
           <div class="slideButtons">
-            <button v-if="!save" v-on:click="addSlide">Add new slide</button>
+            <button v-if="!save" v-on:click="addSlide">{{ uiLabels.addSlide }}</button>
             <button id="saveButton" v-if="save" v-on:click="editQuestion">Save Question</button>
             <div class="error" v-if="error">
-              Please fill all fields before saving question
+              <!--Please fill all fields before saving question-->
+              {{ uiLabels.please }}
             </div>
 
           </div>
         </div>
         <div class="displayHeader">
         <p v-if="!error">
-        The name of this poll is <span class="pollName">{{ pollId }}</span>
+      <!--  The name of this poll is -->
+        {{ uiLabels.namePoll }}
+        <span class="pollName">{{ pollId }}</span>
       </p>
         </div>
         <div class="display">
           <div class="startDisplay" v-if="!start">
-            <h2>Choose Slide to Start Editing</h2>
+            <h2><!--Choose Slide to Start Editing-->
+              {{ uiLabels.chooseSlide }}
+          </h2>
+
           </div>
           <div v-if="start">
             {{index +1}}
@@ -141,8 +153,8 @@
             <img src="..\..\public\img\question-mark-round-line.png">
             <div class="tooltipResult">Choose how each question's result should be presented</div>
           </div>
-          <p>EDIT RESULT</p>
-          
+          <p>{{ uiLabels.editResult }}</p>
+
           <div class="resultDisplay">
             <img
              v-if="resultType =='bars'"
@@ -154,15 +166,15 @@
                 />
           </div>
           <div class="resultOptions">
-            <button class="bars" 
+            <button class="bars"
             :class="{chosenResult: resultType =='bars'}"
             v-on:click="resultType = 'bars'">
-              Bar Chart
+              {{ uiLabels.bar }}
             </button>
-            <button class="circle" 
+            <button class="circle"
             :class="{chosenResult: resultType =='circle'}"
             v-on:click="resultType = 'circle'">
-              Circle Chart
+              {{ uiLabels.circle }}
             </button>
           </div>
         </div>
@@ -175,7 +187,6 @@
 
         <div class="controlpanel">
           <button class="finishButton" v-on:click="finishPresentation">
-            Finish Presentation
             {{ uiLabels.finishPresentation }}
           </button>
         </div>
@@ -183,16 +194,19 @@
       </div>
       <br>
       <div class="finishedSide" v-if="isFinished">
-        <h2>YOU SUCCESSFULLY CREATED YOUR POLL!!</h2>
+        <h2><!--YOU SUCCESSFULLY CREATED YOUR POLL!!-->
+        {{ uiLabels.successfullyCreated }}</h2>
         <div class="msg-icn"  >
-          Note: This code is also used to edit the poll later on!
+        <!--  Note: This code is also used to edit the poll later on!-->
+          {{ uiLabels.note }}
         </div>
 
 
 
         <div class="wrapper">
           <div class="pollCode2">
-            THIS IS YOUR POLL-CODE, SAVE AND SHARE IT WITH YOUR PARTICIPANTS :
+            <!--THIS IS YOUR POLL-CODE, SAVE AND SHARE IT WITH YOUR PARTICIPANTS :-->
+            {{ uiLabels.pollCode }}
           </div>
           <div >
             <span class="pollCode"> {{ pollId }}</span>
@@ -212,7 +226,8 @@
           <div class="wtButton">
             <router-link to="/">
               <button v-on:click="waitUntilLater" class="waitButton">
-                Wait until later
+                <!--Wait until later-->
+                {{ uiLabels.wait }}
               </button>
             </router-link>
 

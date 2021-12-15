@@ -15,5 +15,24 @@
 	"service": "Customer Service",
 	"welcome": "Welcome to our poll application EasyPoll!",
 	"choose": "Choose if you want to create or participate in a poll",
-	"existing":"/or edit previous poll"
+	"existing":"or edit previous poll",
+	"addSlide": "Add new slide",
+	"editResult": "EDIT RESULT",
+	"bar": "BAR CHART",
+	"circle": "CIRCLE CHART",
+	"finishPresentation": "Finish presentation",
+	"successfullyCreated ": "YOU SUCCESSFULLY CREATED YOUR POLL!",
+	"note": "Note: This code is also used to edit the poll later on!",
+	"pollCode": "THIS IS YOUR POLL-CODE, SAVE AND SHARE IT WITH YOUR PARTICIPANTS :",
+	"wait": "Wait until later",
+	"chooseSlide": "Choose Slide to Start Editing",
+	"questions": "QUESTIONS",
+	"namePoll": "The name of this poll is",
+	"please": "Please fill all fields before saving question",
+	"deleteSlide": "Delete slide",
+	"editExisting": "Want to edit an existing poll? Enter the name of the poll above to
+	continue where you left off!",
+	"accessLater": "Remember the name to access the poll later",
+	"chooseName": "Choose a name for you poll!",
+
 }
