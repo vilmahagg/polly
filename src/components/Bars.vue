@@ -1,6 +1,6 @@
 
 <template>
-<div class="wrapper">
+<div class="wrapperBars">
   <div class="bar" v-for="(item, key) in data" v-bind:key="key">
     <div class="items" v-bind:style="{height: item + '5px'}">
       <span> {{item}} </span>
@@ -66,7 +66,18 @@ word-wrap: break-word;
 .bar:nth-child(9) div:nth-child(1) {
   background-color:rgb(255, 153, 122);
 }
-.wrapper {
-padding:3em;
+.wrapperBars {
+padding-top:3em;
+}
+
+
+
+@media only screen and (max-width: 500px) {
+  .bar{
+    width:35px;
+    padding:0.8em;
+  }
+
+
 }
 </style>

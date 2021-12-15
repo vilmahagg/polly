@@ -98,4 +98,21 @@ export default {
 .circle:nth-child(9) div:nth-child(1) {
   background-color: rgb(255, 153, 122);
 }
+
+
+@media only screen and (max-width: 500px) {
+  .circles {
+  display: inline-block;
+  height: 100%;
+  text-align: center;
+  max-width:100px;
+  margin:1.5em;
+  vertical-align: middle;
+}
+.circle {
+  border-radius: 50%;
+  margin:0;
+}
+
+}
 </style>

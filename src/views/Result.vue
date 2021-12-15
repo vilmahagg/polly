@@ -52,8 +52,8 @@
             <button class="revanswer" v-on:click="clicked">
               Reveal Answer
             </button>
-            <br /><br /><br /><br />{{ isClicked }} <br />(för förtydl.
-            atm)fråga nummer: {{ questionNumber }} (bara för tydlighet atm)
+            <!-- <br /><br /><br /><br />{{ isClicked }} <br />(för förtydl.
+            atm)fråga nummer: {{ questionNumber }} (bara för tydlighet atm) -->
           </div>
         </div>
       </section>
@@ -206,29 +206,31 @@ header h2 {
 h4 {
   font-size: 1em;
 }
-.page {
-  /*  padding: 2em;*/
-}
+
 .theBars {
   position: relative;
   font-family: "Lucida Console", "Monaco", monospace;
+  width:100%;
+  height:50%;
   padding-bottom: 2em;
-  width: 35em;
-  background-color: wheat;
+  background-color: rgb(241, 221, 181);
   margin: 0 auto;
   border-radius: 25px;
+  overflow-y:auto;
+  overflow-x:hidden;
 }
 .showResult {
   background-color: wheat;
   padding: 2em;
+  height:100vh;
 }
 .showResult section {
   padding: 1em;
 
 }
-.knapppanel {
+/* .knapppanel {
   padding-bottom: 4em;
-}
+} */
 
 .knapppanel button{
   display: inline-block;
@@ -288,8 +290,8 @@ h4 {
 .waitingDiv {
   position: relative;
   font-family: "Lucida Console", "Monaco", monospace;
-  height: 20em;
-  width: 35em;
+  height: 50%;
+  width: 60%;
   background-color: rgb(223, 158, 228);
   margin: 0 auto;
   border-radius: 25px;
@@ -298,8 +300,8 @@ h4 {
 .endDiv {
   position: relative;
   font-family: "Lucida Console", "Monaco", monospace;
-  height: 20em;
-  width: 35em;
+  height: 100vh;
+  width: 100%;
   background-color: rgb(223, 158, 228);
   margin: 0 auto;
   border-radius: 25px;
@@ -307,11 +309,6 @@ h4 {
 }
 .endDivBack{
   background-color: rgb(223, 158, 228) ;
-}
-
-.theBars {
-  height: 20em;
-  width: 35em;
 }
 
 .youAnswered {
@@ -337,5 +334,22 @@ h4 {
   text-align: center;
   position: relative;
   border: none;
+}
+
+
+@media only screen and (max-width: 500px) {
+  .showResult{
+    padding:1em 1em 0 1em;
+  }
+  .waitingDiv{
+    width:100%;
+  }
+
+  .theBars{
+    margin:0;
+    width:100%;
+  }
+
+
 }
 </style>
