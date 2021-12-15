@@ -3,7 +3,7 @@
 	"invite": "Invite participants with this link:",
 	"createPoll": "Create poll",
 	"participatePoll": "Participate in poll",
-	"startExistingPoll": "Start your poll",
+	"startExistingPoll": "Start existing poll",
 	"question": "Enter question here",
 	"changeLanguage": "Byt till svenska",
 	"backButton": "Back",
@@ -15,5 +15,5 @@
 	"service": "Customer Service",
 	"welcome": "Welcome to our poll application EasyPoll!",
 	"choose": "Choose if you want to create or participate in a poll",
-	"existing":"/or edit previous poll"
+	"existing":"or edit existing poll"
 }

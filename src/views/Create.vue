@@ -5,7 +5,7 @@
         <h1>EasyPoll</h1>
       </router-link>
 
-     
+
     </header>
 
     <div class="createView">
@@ -142,7 +142,7 @@
             <div class="tooltipResult">Choose how each question's result should be presented</div>
           </div>
           <p>EDIT RESULT</p>
-          
+
           <div class="resultDisplay">
             <img
              v-if="resultType =='bars'"
@@ -154,14 +154,10 @@
                 />
           </div>
           <div class="resultOptions">
-            <button class="bars" 
-            :class="{chosenResult: resultType =='bars'}"
-            v-on:click="resultType = 'bars'">
+            <button class="bars" v-on:click="resultType = 'bars'">
               Bar Chart
             </button>
-            <button class="circle" 
-            :class="{chosenResult: resultType =='circle'}"
-            v-on:click="resultType = 'circle'">
+            <button class="circle" v-on:click="resultType = 'circle'">
               Circle Chart
             </button>
           </div>
@@ -402,7 +398,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* createview = hela bakgrunden i allt*/
 .createView {
   height: 100vh;
@@ -411,7 +407,7 @@ export default {
 }
 .pollCreation {
   display: grid;
-  grid-gap: 0.5%;
+  grid-gap: 1%;
   grid-auto-columns: minmax(0, 1fr);
   grid-template-areas:
     "a e e e d"
@@ -425,16 +421,15 @@ export default {
   grid-area: a;
   background-color: #df9ee480;
   min-height: 80vh;
-  max-height:80vh;
-  overflow-y:scroll;
+  overflow-y:auto;
   border-radius: 0.3em;
 }
 
 .storedQuestions p, .resultDesign p{
-  font-size:1.2em;
+  font-size: 26px;
   font-weight: bold;
   color:#E23315;
-  margin-top:0.5em;
+  margin:0.5em;
 }
 
 .slides {
@@ -456,7 +451,6 @@ export default {
   width: 60%;
   border-radius: 0.0em;
   margin: 0.5em;
-  overflow:hidden;
 }
 .thisSlide {
   border:2px solid #A074F0;
@@ -557,7 +551,7 @@ export default {
   padding-top: 1em;
   padding-bottom: 1em;
 }
-.bars, .circle {
+.resultOptions button {
   width: 80%;
   display: inline-block;
   padding: 0.7em 1.4em;
@@ -574,9 +568,6 @@ export default {
   text-align: center;
   position: relative;
   border: none;
-}
-.chosenResult{
-  border:2px solid black;
 }
 .resultDesign button:active {
   box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
