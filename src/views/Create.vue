@@ -44,8 +44,7 @@
 
       <div class="pollCreation" v-if="isShown">
         <div class="storedQuestions">
-          <p>QUESTIONS</p>
-          <!-- {{save}} -->
+          <p>SLIDES</p>
           <div
               class="slides"
               v-for="(question, index, slide) in data.questions"
@@ -82,12 +81,19 @@
           </div>
 
           <div class="slideButtons">
-            <button v-if="!save" v-on:click="addSlide">Add new slide</button>
-            <button id="saveButton" v-if="save" v-on:click="editQuestion">Save Question</button>
+            <div v-if="slideStatus!='canSave'">
+            <button v-on:click="addSlide">Add new slide</button>
+            <div class="error" v-if="error">
+              Please save question before adding new slide
+            </div>
+            </div>
+            
+            <div v-if="slideStatus =='canSave'">
+            <button id="saveButton"  v-on:click="editQuestion">Save Question</button>
             <div class="error" v-if="error">
               Please fill all fields before saving question
             </div>
-
+            </div>
           </div>
         </div>
         <div class="displayHeader">
@@ -247,7 +253,7 @@ export default {
       selectedSlide: null,
       error: false,
       start: false,
-      save: false,
+      slideStatus: "addSlide",
       resultType: "bars", //försök till att kunna skicka med vilken typ av resultat det ska vara. ej klart.
       isFinished: false,
     };
@@ -309,10 +315,14 @@ export default {
           index: this.index,
           slide: this.slide,
         });
-        this.save = false;
+        this.slideStatus = 'addSlide';
       }
     },
     addSlide: function () {
+      if(this.slideStatus=='notSaved'){
+        this.error = true;
+        return
+      }
       socket.emit("addSlide", {
         pollId: this.pollId,
         q: "",
@@ -321,7 +331,7 @@ export default {
         slide: this.slide,
         index: this.index,
       });
-
+      this.slideStatus='notSaved';
     },
     deleteSlide: function (i) {
       if (this.slide <= 1) {
@@ -333,7 +343,7 @@ export default {
         a: this.answers,
         index: i,
       });
-      this.save = false;
+      this.slideStatus = 'addSlide';
       this.start = false;
     },
     moveUp: function (question, i) {
@@ -385,8 +395,9 @@ export default {
       this.index = index;
       this.resultType = question.result;
       this.start = true;
-      this.save = true;
+      this.slideStatus = 'canSave';
       this.selectedSlide = index;
+      this.error = false;
 
     },
     finishPresentation: function () {
@@ -403,7 +414,7 @@ export default {
 .createView {
   height: 100vh;
   background-color: #ffffff;
-  padding:1em;
+  padding:0 1em 1em 1em;
 }
 .pollCreation {
   display: grid;
@@ -549,7 +560,7 @@ export default {
 }
 .resultOptions {
   padding-top: 1em;
-  padding-bottom: 1em;
+  /* padding-bottom: 1em; */
 }
 .resultOptions button {
   width: 80%;
@@ -979,6 +990,9 @@ header {
     "d d a a a"
     "c c c c c";
   }
+  .displayHeader p{
+    font-size:12px;
+  }
   .display {
     position: relative;
     grid-area: b;
@@ -992,10 +1006,11 @@ header {
     height: 4em;
     width: 8em;
     margin: 0.5em;
-    background-color: #f0d4ee;
+    background-color: #ffffff;
   }
   .resultDesign{
-    padding:0.5em;
+    min-height:30em;
+    max-height:25vh;
   }
   .resultDesign button {
     width: 80%;
@@ -1004,8 +1019,12 @@ header {
     font-size: 10px;
   }
   .storedQuestions{
+    min-height:30em;
     max-height:25vh;
   }
+  .storedQuestions p, .resultDesign p{
+  font-size: 16px;
+}
   .slide{
     height:3em;
   }
@@ -1014,16 +1033,13 @@ header {
 
 .pollTitle {
   width:90%;
-  margin:auto;
-  padding:2em;
+  /* margin:auto;
+  padding:2em; */
 }
 
 .pollTitle h3{
   margin:32px 0;
   font-size:28px;
-}
-.pollTitle img {
-  height: 3em;
 }
 .error{
   font-size:12px;
@@ -1038,15 +1054,5 @@ header {
   font-size: 16px;
 }
 
-
-.createInput {
-  display: inline-block;
-  width:100%;
-}
-.createInput input {
-  height: 2.6em;
-  width: 40%;
-  margin: 2em;
-}
 }
 </style>
