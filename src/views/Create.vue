@@ -345,6 +345,7 @@ export default {
       });
       this.slideStatus = 'addSlide';
       this.start = false;
+      this.error=false;
     },
     moveUp: function (question, i) {
       if (i <= 0) {
