@@ -8,6 +8,10 @@
               v-on:answer="submitAnswer"/>
   </div>
   </header>
+
+  <div class ="finishDiv" v-if="isFinished">
+    <p>Poll completed</p>
+  </div>
   
 </template>
 
@@ -26,8 +30,9 @@ export default {
     return {
       question: {
         q: "",
-        a: []
+        a: [], 
       },
+      isFinished:false,
       pollId: "inactive poll"
     }
   },
@@ -37,13 +42,34 @@ export default {
     socket.on("newQuestion", q =>
       this.question = q
     )
+    socket.on("allQuestions", (questions) => {
+      this.questions = questions;
+    });
   },
+  
   methods: {
     submitAnswer: function (answer) {
       socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
+         if (this.question.slide == this.questions.length){
+        this.isFinished = true; 
+      }
+      console.log("detta är meddelandet" + this.isFinished);
     }, 
-  
-  
+
   }
 }
 </script>
+
+<style>
+.finishDiv {
+  display: inline-block;
+  position: relative;
+  font-family: "Lucida Console", "Monaco", monospace;
+  height: 20em;
+  width: 35em;
+  background-color: rgb(223, 158, 228);
+  top: 5em;
+  margin: 0 auto;
+  border-radius: 25px;
+}
+</style>
