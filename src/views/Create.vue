@@ -44,7 +44,11 @@
 
       <div class="pollCreation" v-if="isShown">
         <div class="storedQuestions">
-          <p>SLIDES</p>
+          <div class="explain">
+            <img src="..\..\public\img\question-mark-round-line.png">
+            <div class="tooltipExplain">Each slide contains one question. To add a slide, click add new slide, type in your question and then click save question.</div>
+          </div>
+          <p>SLIDES</p> 
           <div
               class="slides"
               v-for="(question, index, slide) in data.questions"
@@ -103,7 +107,7 @@
         </div>
         <div class="display">
           <div class="startDisplay" v-if="!start">
-            <h2>Choose Slide to Start Editing</h2>
+            <h2>&larr; Add Slide to Start Editing</h2>
           </div>
           <div v-if="start">
             {{index +1}}
@@ -143,9 +147,9 @@
         </div>
 
         <div class="resultDesign">
-          <div class="explainRes">
+          <div class="explain">
             <img src="..\..\public\img\question-mark-round-line.png">
-            <div class="tooltipResult">Choose how each question's result should be presented</div>
+            <div class="tooltipExplain">Choose how each question's result should be presented</div>
           </div>
           <p>EDIT RESULT</p>
 
@@ -402,9 +406,12 @@ export default {
 
     },
     finishPresentation: function () {
-      socket.emit("finishPresentation", {});
-      this.isFinished = true;
-      this.isShown = false;
+      if(confirm("Have you saved all questions?")){
+        socket.emit("finishPresentation", {});
+        this.isFinished = true;
+        this.isShown = false;
+      }
+     
     },
   },
 };
@@ -438,7 +445,7 @@ export default {
 }
 
 .storedQuestions p, .resultDesign p{
-  font-size: 26px;
+  font-size: 20px;
   font-weight: bold;
   color:#E23315;
   margin:0.5em;
@@ -522,7 +529,7 @@ export default {
   grid-area: d;
   border-radius: 0.3em;
 }
-.explainRes{
+.explain{
   float: right;
   border-radius: 50%;
   margin:0.5em;
@@ -532,11 +539,11 @@ export default {
   /* width:1.5em;
   height:1.5em; */
 }
-.explainRes img{
+.explain img{
   height:1.5em;
   vertical-align: middle;
 }
-.tooltipResult{
+.tooltipExplain{
   visibility: hidden;
   font-family: arial;
   padding: 1em;
@@ -549,7 +556,7 @@ export default {
   margin:1em 0 0 -5em;
 }
 
-.explainRes:hover .tooltipResult {
+.explain:hover .tooltipExplain {
   visibility: visible;
   z-index: 1;
 }
