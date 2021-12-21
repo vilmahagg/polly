@@ -4,11 +4,37 @@
       <router-link v-bind:to="'/'" tag="h1">
         <h1>EasyPoll</h1>
       </router-link>
-
+      <button class="helpButton" v-if="isShown" v-on:click="help = !help">
+        <img src="..\..\public\img\question-mark-round-line.png">
+            <div class="tooltipExplain">Show/Hide instructions</div>
+      </button>
 
     </header>
 
+   
+
     <div class="createView">
+       <div class="helpViewBackground" v-show="help">
+          <div class="helpView" v-if="help">
+            <h4>How it works:</h4>
+            <ol>
+            <li>Add a new slide with the <span style="font-style:italic">ADD SLIDE</span> button.
+              <ol>
+                <li>Choose the slide you want to edit
+                and fill in your question.</li>
+                <li>Choose how the result of each question should be displayed
+                </li>
+                
+              </ol>
+            </li>
+            <li>Save your question with the <span style="font-style:italic">SAVE QUESTION</span> button.</li>
+            <li>Repeat until you have as many questions as you like. You can edit, remove and change the order of the questions</li>
+            <li>When done, click <span style="font-style:italic">FINISH PRESENTATION</span> to either run the poll or come back another time</li>
+            </ol>
+            
+          </div> 
+    </div>
+
       <div class="pollTitle" v-if="!isShown && !isFinished">
         <router-link v-bind:to="'/'" tag="button">
           <button class="back">
@@ -44,10 +70,10 @@
 
       <div class="pollCreation" v-if="isShown">
         <div class="storedQuestions">
-          <div class="explain">
+          <!-- <div class="explain">
             <img src="..\..\public\img\question-mark-round-line.png">
             <div class="tooltipExplain">Each slide contains one question. To add a slide, click add new slide, type in your question and then click save question.</div>
-          </div>
+          </div> -->
           <p>SLIDES</p> 
           <div
               class="slides"
@@ -101,15 +127,16 @@
           </div>
         </div>
         <div class="displayHeader">
-        <p v-if="!error">
+        <p>
         The name of this poll is <span class="pollName">{{ pollId }}</span>
       </p>
         </div>
         <div class="display">
-          <div class="startDisplay" v-if="!start">
-            <h2>&larr; Add Slide to Start Editing</h2>
+          <div class="startDisplay" v-if="!start && !help">
+            <h2> Add Slide to Start Editing</h2>
           </div>
-          <div v-if="start">
+         
+          <div v-if="start && !help">
             {{index +1}}
             <input
                 id="questionInput"
@@ -147,10 +174,10 @@
         </div>
 
         <div class="resultDesign">
-          <div class="explain">
+          <!-- <div class="explain">
             <img src="..\..\public\img\question-mark-round-line.png">
             <div class="tooltipExplain">Choose how each question's result should be presented</div>
-          </div>
+          </div> -->
           <p>EDIT RESULT</p>
 
           <div class="resultDisplay">
@@ -194,8 +221,6 @@
           Note: This code is also used to edit the poll later on!
         </div>
 
-
-
         <div class="wrapper">
           <div class="pollCode2">
             THIS IS YOUR POLL-CODE, SAVE AND SHARE IT WITH YOUR PARTICIPANTS :
@@ -203,26 +228,21 @@
           <div >
             <span class="pollCode"> {{ pollId }}</span>
           </div>
-
-
         </div>
 
-        <section class="waitandstartButton">
+        <div class="waitandstartButton">
           <router-link v-bind:to="'/result/' + pollId">
-            <div>
-              <button class="next-button" type="button">Start poll now!</button><div class="next-point"></div>
-            </div>
+              <button class="next-button" type="button">
+                Start poll now!
+                </button>
+                <div class="next-point"></div>
           </router-link>
 
-          <br />
-          <div class="wtButton">
-            <router-link to="/">
+          <router-link to="/">
               <button v-on:click="waitUntilLater" class="waitButton">
                 Wait until later
               </button>
-            </router-link>
-
-          </div>
+          </router-link>
 
           <!--<div class="stButton">
                       <router-link v-bind:to="'/result/' + pollId">
@@ -231,7 +251,7 @@
                     </div>
                     -->
 
-        </section>
+        </div>
       </div>
     </div>
   </div>
@@ -260,6 +280,7 @@ export default {
       slideStatus: "addSlide",
       resultType: "bars", //försök till att kunna skicka med vilken typ av resultat det ska vara. ej klart.
       isFinished: false,
+      help:false,
     };
   },
   computed: {
@@ -406,7 +427,7 @@ export default {
 
     },
     finishPresentation: function () {
-      if(confirm("Have you saved all questions?")){
+      if(confirm("Are you sure you are done?")){
         socket.emit("finishPresentation", {});
         this.isFinished = true;
         this.isShown = false;
@@ -418,6 +439,23 @@ export default {
 </script>
 
 <style scoped>
+.helpViewBackground {
+  position:absolute;
+  top:7em;
+  left:0px;
+  /* background-color: rgba(241, 238, 238, 0.493); */
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-image: url("../../public/img/transparent.png");
+  background-repeat: repeat;
+
+}
+.helpView{
+  margin:2em 25% 0 25%;
+  text-align: left;
+  color: #10080e;
+}
 /* createview = hela bakgrunden i allt*/
 .createView {
   height: 100vh;
@@ -529,7 +567,7 @@ export default {
   grid-area: d;
   border-radius: 0.3em;
 }
-.explain{
+.helpButton{
   float: right;
   border-radius: 50%;
   margin:0.5em;
@@ -539,7 +577,7 @@ export default {
   /* width:1.5em;
   height:1.5em; */
 }
-.explain img{
+.helpButton img{
   height:1.5em;
   vertical-align: middle;
 }
@@ -556,9 +594,9 @@ export default {
   margin:1em 0 0 -5em;
 }
 
-.explain:hover .tooltipExplain {
+.helpButton:hover .tooltipExplain {
   visibility: visible;
-  z-index: 1;
+  z-index: 2;
 }
 
 .resultDisplay img {
@@ -847,25 +885,7 @@ header {
   position: relative;
   border: none;
 }
-.waitButton {
-  width: 12em;
-  height: 6em;
-  display: inline-block;
-  padding: 0.7em 1.4em;
-  margin: 0 0.3em 0.3em 0;
-  border-radius: 0.15em;
-  box-sizing: border-box;
-  text-decoration: none;
-  font-family: "Roboto", sans-serif;
-  text-transform: uppercase;
-  font-weight: 400;
-  color: white;
-  background-color: #e765d6;
-  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
-  text-align: center;
-  position: relative;
-  border: none;
-}
+
 .stButton {
   width: available;
   height: available;
@@ -882,6 +902,7 @@ header {
   font-family: "Roboto", sans-serif;
   border: 5px solid;
   border-color: #e16c76;
+  padding:0.5em;
 }
 .pollCode2 {
   font-family: "Roboto", sans-serif;
@@ -907,9 +928,10 @@ header {
   border: none;
 }
 .waitandstartButton {
-  margin-top: 140px;
-  display: grid;
-  grid-template-columns: 60% 1% 2%;
+  margin:10em auto auto auto;
+  /* display: grid;
+  grid-template-columns: 50% 50%; */
+  width:70%;
 }
 .wrapper {
   display: grid;
@@ -939,6 +961,25 @@ header {
   border-left: 0;
   margin-left: -16.5px;
   margin-bottom: -33px;
+}
+.waitButton {
+  width: 12em;
+  height: 6em;
+  display: inline-block;
+  padding: 0.7em 1.4em;
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 0.15em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: white;
+  background-color: #e765d6;
+  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
+  text-align: center;
+  position: relative;
+  border: none;
 }
 .next-button {
   font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
@@ -972,12 +1013,12 @@ header {
 }
 .finishedSide{
   background-color: #f0e7f3;
-  margin-bottom: 200px;
+  height:100vh;
 }
 .all {
   font-size: 16px;
 }
-/* FÖR MOBIL */
+/* MOBILE */
 @media only screen and (max-width: 500px) {
   .all {
     font-size: 8px;
@@ -985,6 +1026,10 @@ header {
   /* .createView{
     height:100vh;
   } */
+  .helpView{
+    font-size: 16px;
+    margin:1em;
+  }
   .pollCreation {
     display: grid;
     grid-gap: 1%;
@@ -1060,6 +1105,15 @@ header {
   list-style-type: none;
   text-align: left;
   font-size: 16px;
+}
+
+
+/* Finish Page */
+.waitandstartButton {
+  width:100%;
+}
+.waitandstartButton a{
+  width:30%;
 }
 
 }
