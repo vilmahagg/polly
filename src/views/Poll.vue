@@ -1,18 +1,23 @@
 <template>
 <header>
-    
+
     <h1>EasyPoll</h1>
-    <div class="pollName">
+    <div class="pollName" v-if="startStudent">
     <p>PollId:{{pollId}}</p>
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
   </div>
   </header>
 
-  <div class ="finishDiv" v-if="isFinished">
+  <div class ="finishDiv" v-if="isFinished && startStudent">
     <p>Poll completed</p>
   </div>
-  
+
+  <div class = "ifNotStart" v-if="!startStudent">
+    wait till host starts the poll
+    {{startStudent}}
+  </div>
+
 </template>
 
 <script>
@@ -30,10 +35,12 @@ export default {
     return {
       question: {
         q: "",
-        a: [], 
+        a: [],
       },
       isFinished:false,
-      pollId: "inactive poll"
+      pollId: "inactive poll",
+      startStudent: true,
+      //ändra denna till false
     }
   },
   created: function () {
@@ -45,16 +52,21 @@ export default {
     socket.on("allQuestions", (questions) => {
       this.questions = questions;
     });
+    socket.on("startForStudents", (update) => {
+      this.startStudent = update.startStudent;
+    })
+
   },
-  
+
+
   methods: {
     submitAnswer: function (answer) {
       socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
          if (this.question.slide == this.questions.length){
-        this.isFinished = true; 
+        this.isFinished = true;
       }
       console.log("detta är meddelandet" + this.isFinished);
-    }, 
+    },
 
   }
 }

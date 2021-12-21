@@ -206,6 +206,7 @@ export default {
       isClicked: false,
       pollId: "",
       questionNumber: 0,
+      startStudent: false,
     };
   },
   created: function () {
@@ -229,6 +230,7 @@ export default {
     startPoll: function () {
       this.start = true;
       this.isClicked = true;
+      this.startStudent =true;
     },
     isReady: function () {
       if (this.ready == false && this.isClicked == false) {
@@ -249,12 +251,12 @@ export default {
       this.wantInfo = false;
       this.wantHelp = true;
     },
-    /* runQuestion: function () {
+    runQuestion: function () {
    socket.emit("runQuestion", {
      pollId: this.pollId,
      questionNumber: this.questionNumber,
    });
- },*/
+ },
   },
 };
 </script>
