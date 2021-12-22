@@ -44,7 +44,6 @@
         </div>
         <div class="knapppanel" v-if="!end">
           <div class="knappIResult">
-            <!--  <router-link v-bind:to="'/poll/' + pollId">next Question</router-link>-->
             <button class="prevButton" v-on:click="prevQuestion">
               Previous Question
             </button>
@@ -57,8 +56,6 @@
             <button class="revanswer" v-on:click="clicked">
               Reveal Answer
             </button>
-            <!-- <br /><br /><br /><br />{{ isClicked }} <br />(för förtydl.
-            atm)fråga nummer: {{ questionNumber }} (bara för tydlighet atm) -->
           </div>
         </div>
       </section>
@@ -84,7 +81,6 @@
 import Bars from "@/components/Bars.vue";
 import Circle from "@/components/Circle.vue";
 import io from "socket.io-client";
-// import party from "party-js";
 const socket = io();
 export default {
   name: "Result",
@@ -147,24 +143,15 @@ export default {
       socket.emit("switchLanguage", this.lang);
     },
     runQuestion: function () {
-      console.log(this.questions.length);
       if (this.questionNumber >= this.questions.length - 2) {
         this.lastQuestion = true;
-        // party.setting.debug=true;
       }
-      /*  else{
-        this.end=true;
-      }*/
       this.isClicked = false;
       this.questionNumber += 1;
       socket.emit("runQuestion", {
         pollId: this.pollId,
         questionNumber: this.questionNumber,
       });
-      //hitta max antal numebr för att få avslutande bild
-      /*  if (this.questionNumber >  questions.length)  {
-        showFinish=true;
-      }*/
     },
     prevQuestion: function () {
       this.lastQuestion=false;
@@ -185,9 +172,6 @@ export default {
         this.isClicked = false;
       }
     },
-    /*  nextQuestion: function (){
-      this.questionNumber +=1;
-    },*/
   },
 };
 </script>
