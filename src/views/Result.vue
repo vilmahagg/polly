@@ -2,17 +2,22 @@
 <template>
   <header>
     <h4 id="rubrikRext">Result</h4>
-    <br />
     <div>
       <!--  {{pollId}}-->
       <h2 id="rubrikFråga" v-if="!end">
         <Question v-bind:question="question" v-on:answer="submitAnswer" />
         {{ question }}
       </h2>
-      <div v-if="end"><br /><br /><br /><br /></div>
+      <div v-if="end"></div>
     </div>
     </header>
-    <main class="page">
+    <div v-if="emptyPoll">
+      <p>Error: This poll doesn't have any questions. Try going back and rewrite the poll name or edit the poll to add questions.</p>
+      <router-link v-bind:to="'//'" tag="button">
+        <button class="tillbakaTillStart">Tillbaka till main</button>
+      </router-link>
+    </div>
+    <main class="page" v-if="!emptyPoll">
       <section v-if="!end" class="showResult">
         <div v-if="isClicked && !end" class="theBars">
           <div class="clicked" v-if="isClicked"></div>
@@ -96,11 +101,15 @@ export default {
       lastQuestion: false,
       end:false,
       data: {},
+      emptyPoll:false,
     };
   },
   computed: {
     numberOfAnswers: function () {
       let tot = 0;
+      if (typeof this.data =='undefined'){
+        return;
+      }
       for (let a of Object.keys(this.data)) tot += this.data[a];
       return tot;
     },
@@ -119,6 +128,9 @@ export default {
     });
     socket.on("allQuestions", (questions) => {
       this.questions = questions;
+      if(this.questions.length==0){
+        this.emptyPoll = true;
+      }
     });
   },
   methods: {
