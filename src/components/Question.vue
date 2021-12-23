@@ -144,9 +144,6 @@ export default {
   padding: 1em;
 }
 
-/* Lekte med css för att göra coola knappar här nedan,
-fritt att ändra/radera hur man vill */
-
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -167,17 +164,14 @@ fritt att ändra/radera hur man vill */
   height: auto;
   padding-left: 1.2em;
   padding-right: 1.2em;
-
-
-
+  transition: 0.3s;
   background-image: linear-gradient(
     to right,
-    #25aae1,
-    #40e495,
-    #30dd8a,
-    #2bb673
+    #e89aeb,
+    #b67ee4,
+    #b9a0e9,
+    #dc3cf1
   );
-  box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
 }
 
 .answerOption:hover {
