@@ -4,6 +4,7 @@
       <router-link v-bind:to="'/'" tag="h1">
         <h1>EasyPoll</h1>
       </router-link>
+      <br>
       <button class="helpButton" v-if="isShown" v-on:click="help = !help">
         <img src="..\..\public\img\question-mark-round-line.png">
             <div class="tooltipExplain">Show/Hide instructions</div>
@@ -438,7 +439,8 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+
 .helpViewBackground {
   position:absolute;
   top:7em;
@@ -570,7 +572,7 @@ export default {
 .helpButton{
   float: right;
   border-radius: 50%;
-  margin:0.5em;
+  /* margin:0.5em; */
   position:relative;
   background-color: #ab87ee00;
   border:none;
@@ -578,7 +580,7 @@ export default {
   height:1.5em; */
 }
 .helpButton img{
-  height:1.5em;
+  height:2em;
   vertical-align: middle;
 }
 .tooltipExplain{
@@ -1030,6 +1032,11 @@ header {
     font-size: 16px;
     margin:1em;
   }
+
+  .helpButton img{
+  height:1.2em;
+  vertical-align: middle;
+}
   .pollCreation {
     display: grid;
     grid-gap: 1%;
