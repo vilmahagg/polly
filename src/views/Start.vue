@@ -19,9 +19,6 @@
           <button class="aboutUs" v-on:click="showInfo">
             {{ uiLabels.aboutUs }}
           </button>
-
-          <!--<button class="aboutUs">{{ uiLabels.aboutUs }}</button>-->
-          <!--<button class="service">{{ uiLabels.service }}</button>-->
           <button class="service" v-on:click="showHelp">
             {{ uiLabels.service }}
           </button>
@@ -262,14 +259,13 @@ export default {
 </script>
 
 <style>
+/* Header */
 header {
   background-image: url("https://data.whicdn.com/images/334251300/original.gif");
   height: 12em;
   margin: 0;
   margin-bottom: 0.5em;
-  /* border-radius: 25px; */
 }
-
 header h1 {
   text-align: center;
   margin: 0;
@@ -282,16 +278,15 @@ header h1 {
   position: relative;
   display: inline-block;
 }
-
 .welcomeMessage {
   margin-bottom: 2.3em;
 }
 
+/* About us and customer info */
 #nav {
   background: rgb(243, 220, 243);
   height: 100vh;
 }
-
 .aboutUs {
   padding-left: 3em;
   padding-right: 3em;
@@ -302,7 +297,6 @@ header h1 {
   text-decoration: underline;
   font-weight: bold;
 }
-
 .vilmaInfo {
   display: inline-block;
 }
@@ -363,6 +357,7 @@ header h1 {
 h3 {
   font-size: 2em;
 }
+/* Start page */
 .firstMenu {
   display: grid;
   grid-gap: 0.3em;
@@ -403,7 +398,6 @@ h3 {
     #b9a0e9,
     #dc3cf1
   );
-  /* box-shadow: 7px 7px 15px 0 rgba(199, 23, 190, 0.75); */
 }
 .firstMenu button:hover {
   background-position: 100% 0;
@@ -413,7 +407,6 @@ h3 {
   height: 10em;
 }
 
-/* PollId page to start or take poll */
 .start button {
   padding: 0.35em 0.7em;
   margin: 0 0.3em 0.3em 0;
@@ -430,10 +423,21 @@ h3 {
   border: none;
 }
 .back {
-  float: left;
-  width: 5em;
-  height: 2em;
-  background-color: #862877;
+  float:left;
+  background-color: #e765d6;
+  padding: 0.35em 0.7em;
+  margin: 0em 0.3em 0.3em 0em;
+  border-radius: 0.15em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: white;
+  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
+  text-align: center;
+  position: relative;
+  border: none;
 }
 
 .participateButton {
@@ -491,7 +495,7 @@ button:hover {
 }
 
 .start {
-  height: 30em;
+  height: 50em;
   background-color: rgb(243, 220, 243);
   padding: 2em;
 }
@@ -530,5 +534,6 @@ button:hover {
     padding-right:1em;
     font-size:10px;
   }
+
 }
 </style>
