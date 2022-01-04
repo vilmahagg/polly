@@ -386,6 +386,7 @@ export default {
       this.showQuestion(question,i-1);
     },
     moveDown: function (question, i) {
+      if(i!==this.slide-1){
       this.selectedSlide = i+1;
       socket.emit("moveDown", {
         pollId: this.pollId,
@@ -394,6 +395,8 @@ export default {
         index: i,
       });
       this.showQuestion(question,i+1);
+      }
+      
     },
     addAnswer: function () {
       if (this.answers.length >= 9) {
