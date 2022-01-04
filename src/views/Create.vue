@@ -17,7 +17,7 @@
     <div class="createView">
        <div class="helpViewBackground" v-show="help">
           <div class="helpView" v-if="help">
-            <h4>How it works:</h4>
+            <h4>How to create poll:</h4>
             <ol>
             <li>Add a new slide with the <span style="font-style:italic">ADD SLIDE</span> button.
               <ol>
@@ -30,9 +30,8 @@
             </li>
             <li>Save your question with the <span style="font-style:italic">SAVE QUESTION</span> button.</li>
             <li>Repeat until you have as many questions as you like. You can edit, remove and change the order of the questions</li>
-            <li>When done, click <span style="font-style:italic">FINISH PRESENTATION</span> to either run the poll or come back another time</li>
+            <li>When done, click <span style="font-style:italic">FINISH PRESENTATION</span> to run the poll immediately or save it for later to run or edit.</li>
             </ol>
-            
           </div> 
     </div>
 
@@ -134,7 +133,7 @@
         </div>
         <div class="display">
           <div class="startDisplay" v-if="!start && !help">
-            <h2> Add Slide to Start Editing</h2>
+            <h2> Add and Select Slide to Start Editing</h2>
           </div>
          
           <div v-if="start && !help">
