@@ -11,6 +11,7 @@
 
   <div class ="finishDiv" v-if="isFinished && startStudent">
     <p>Poll completed</p>
+    <p>You answered: {{getAnswers()}}</p>
   </div>
 
   <div class = "ifNotStart" v-if="!startStudent">
@@ -37,6 +38,8 @@ export default {
         q: "",
         a: [],
       },
+      result:"",
+      answers:[],
       isFinished:false,
       pollId: "inactive poll",
       startStudent: true,
@@ -61,12 +64,21 @@ export default {
 
   methods: {
     submitAnswer: function (answer) {
+      
       socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
          if (this.question.slide == this.questions.length){
         this.isFinished = true;
       }
-      console.log("detta är meddelandet" + this.isFinished);
+      this.answers.push(answer);
+      
     },
+
+    getAnswers: function () {
+      for(let i = 0; i < this.questions.length;i++) {
+        this.result += "Question " + (i+1) + ": " + this.answers[i] + " ";
+      }
+      return this.result;
+  }
 
   }
 }

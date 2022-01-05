@@ -1,5 +1,6 @@
 <template>
- <button v-on:click="theme">Dark theme</button>
+
+ <button class="themeButton" v-on:click="theme">Dark theme</button>
 
  <div v-if="!dark">
   <div class="question" v-if="selectedAnswer == null || answered == false">
@@ -126,16 +127,23 @@ export default {
 
 <style scoped>
 
+.themeButton{
+  margin-left:80em;
+  margin-top: 1em;
+  border-radius: 0.5em;
+  background-color: #e89aeb;
+
+}
 
 .question {
   background-color: rgb(226, 201, 238);
-  height: 30em;
+  height: 60em;
   overflow-y: auto;
 }
 
 .questionDark{
   background-color: rgb(46, 48, 46);
-  height: 30em;
+  height: 60em;
   overflow-y: auto;
 }
 
