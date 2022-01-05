@@ -70,7 +70,7 @@ Data.prototype.editQuestion = function(pollId, newQuestion, index) {
     poll.questions[index] = newQuestion;
   }
   console.log("question ", index, " in poll: ", pollId, " updated to:", newQuestion)
-}  //skicka med datan för den editade frågan i newQuestion
+} 
 
 Data.prototype.moveUp = function(pollId, index){
   const poll = this.polls[pollId];
@@ -117,7 +117,6 @@ Data.prototype.getAllQuestions = function(pollId) {
 
 Data.prototype.submitAnswer = function(pollId, answer) {
   const poll = this.polls[pollId];
-  console.log("answer submitted for ", pollId, answer);
   if (typeof poll !== 'undefined') {
     let answers = poll.answers[poll.currentQuestion];
     if (typeof answers !== 'object') {
@@ -142,5 +141,10 @@ Data.prototype.getAnswers = function(pollId) {
     }
   }
   return {}
+}
+
+Data.prototype.resetPoll = function(pollId) {
+  const poll = this.polls[pollId];
+  poll.answers = [];
 }
 module.exports = Data;

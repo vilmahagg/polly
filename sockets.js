@@ -65,6 +65,10 @@ function sockets(io, socket, data) {
     io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));
   });
 
+  socket.on('resetPoll', function(d){
+    data.resetPoll(d.pollId);
+  })
+
   socket.on('resetAll', () => {
     data = new Data();
     data.initializeData();
