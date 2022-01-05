@@ -65,6 +65,7 @@ export default {
   max-width:100px;
   margin:1.5em;
   vertical-align: middle;
+  vertical-align: top;
 }
 .circle {
   border-radius: 50%;

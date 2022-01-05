@@ -32,7 +32,7 @@ word-wrap: break-word;
 .bar {
   display: inline-block;
   width: 70px;
-  vertical-align: bottom;
+  vertical-align: top;
   padding: 20px;
 }
 .bar span {
@@ -69,15 +69,10 @@ word-wrap: break-word;
 .wrapperBars {
 padding-top:3em;
 }
-
-
-
 @media only screen and (max-width: 500px) {
   .bar{
     width:35px;
     padding:0.8em;
   }
-
-
 }
 </style>
