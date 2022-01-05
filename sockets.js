@@ -1,6 +1,6 @@
 function sockets(io, socket, data) {
   socket.emit('init', data.getUILabels());
-  
+
   socket.on('pageLoaded', function (lang) {
     socket.emit('init', data.getUILabels(lang));
   });
@@ -35,14 +35,14 @@ function sockets(io, socket, data) {
     data.editQuestion(d.pollId, {q: d.q, a: d.a, result: d.resultType, slide:d.slide}, d.index);
     // socket.emit('questionEdited', data.getAllQuestions(d.pollId));
     socket.emit('contentUpdate', data.getAllQuestions(d.pollId));
-    
+
   });
 
   socket.on('moveUp', function(d){
     data.moveUp(d.pollId,d.index);
     socket.emit('contentUpdate', data.getAllQuestions(d.pollId));
   });
-    
+
   socket.on('moveDown', function(d){
     data.moveDown(d.pollId,d.index);
     socket.emit('contentUpdate', data.getAllQuestions(d.pollId));
@@ -72,8 +72,11 @@ function sockets(io, socket, data) {
   socket.on('resetAll', () => {
     data = new Data();
     data.initializeData();
-  })
- 
+  });
+
+  socket.on ('startForStudents', (startStudent) =>{
+  });
+
 }
 
 module.exports = sockets;

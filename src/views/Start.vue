@@ -66,7 +66,7 @@
 
         <div>
           <router-link v-bind:to="'/result/' + pollId" tag="button">
-            <button class="participateButton" v-on:click="runQuestion">
+            <button class="participateButton" v-on:click="runQuestions">
               <h3>START</h3>
             </button>
           </router-link>
@@ -203,7 +203,7 @@ export default {
       isClicked: false,
       pollId: "",
       questionNumber: 0,
-      startStudent: false,
+      startStudent: true,
     };
   },
   created: function () {
@@ -227,7 +227,6 @@ export default {
     startPoll: function () {
       this.start = true;
       this.isClicked = true;
-      this.startStudent =true;
     },
     isReady: function () {
       if (this.ready == false && this.isClicked == false) {
@@ -248,12 +247,14 @@ export default {
       this.wantInfo = false;
       this.wantHelp = true;
     },
-    runQuestion: function () {
+    runQuestions: function () {
    socket.emit("runQuestion", {
      pollId: this.pollId,
      questionNumber: this.questionNumber,
    });
- },
+   this.startStudent=true;
+   socket.emit("startForStudents", this.startStudent)
+  },
   },
 };
 </script>

@@ -58,8 +58,8 @@ export default {
     socket.on("allQuestions", (questions) => {
       this.questions = questions;
     });
-    socket.on("startForStudents", (update) => {
-      this.startStudent = update.startStudent;
+    socket.on("startForStudents", (startStudent) => {
+      this.startStudent = startStudent;
     })
 
   },
@@ -67,16 +67,16 @@ export default {
 
   methods: {
     submitAnswer: function (answer) {
-      
+
       socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
          if (this.question.slide == this.questions.length){
         this.isFinished = true;
       }
       this.answers.push(answer);
-      
+
     },
 
-   
+
 
   }
 }
