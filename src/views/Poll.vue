@@ -15,6 +15,11 @@
     <p v-for="(answer,key) in answers" v-bind:key="answer">
       Question {{key+1}}:{{answer}}
       </p>
+      <div>
+       <router-link v-bind:to="'//'" tag="button">
+              <button class="startRouter">Tillbaka till startsidan</button>
+            </router-link>
+            </div>
   </div>
 
   <div class = "ifNotStart" v-if="!startStudent">
@@ -75,23 +80,39 @@ export default {
       this.answers.push(answer);
 
     },
-
-
-
   }
 }
 </script>
 
 <style>
+
 .finishDiv {
   display: inline-block;
   position: relative;
   font-family: "Lucida Console", "Monaco", monospace;
-  height: 20em;
-  width: 35em;
+  height: 50vh;
+  width: 100%;
   background-color: rgb(223, 158, 228);
   top: 5em;
   margin: 0 auto;
   border-radius: 25px;
 }
+.startRouter{
+  display: inline-block;
+  padding: 0.7em 1.4em;
+  margin: 1em 0.3em 0.3em 0;
+  border-radius: 0.15em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Lucida Console", "Monaco", monospace;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: white;
+  background-color: #ab87ee;
+  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
+  text-align: center;
+  position: relative;
+  border: none;
+}
+
 </style>

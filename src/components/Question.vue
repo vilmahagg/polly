@@ -128,7 +128,7 @@ export default {
 <style scoped>
 
 .themeButton{
-  margin-left:80em;
+  
   margin-top: 1em;
   border-radius: 0.5em;
   background-color: #e89aeb;
@@ -231,7 +231,7 @@ export default {
   position: relative;
   font-family: "Lucida Console", "Monaco", monospace;
   height: 20em;
-  width: 35em;
+  width: 50%;
   background-color: rgb(223, 158, 228);
   top: 10em;
   margin: 0 auto;
@@ -251,7 +251,7 @@ export default {
   position: relative;
   font-family: "Lucida Console", "Monaco", monospace;
   height: 20em;
-  width: 35em;
+  width: 50%;
   background-color: rgb(44, 42, 44);
   top: 10em;
   margin: 0 auto;
