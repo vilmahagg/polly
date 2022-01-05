@@ -10,8 +10,11 @@
   </header>
 
   <div class ="finishDiv" v-if="isFinished && startStudent">
-    <p>Poll completed</p>
-    <p>You answered: {{getAnswers()}}</p>
+    <h2>You completed the poll!</h2>
+    <p style ="font-weight:bold">You answered:</p>
+    <p v-for="(answer,key) in answers" v-bind:key="answer">
+      Question {{key+1}}:{{answer}}
+      </p>
   </div>
 
   <div class = "ifNotStart" v-if="!startStudent">
@@ -73,12 +76,7 @@ export default {
       
     },
 
-    getAnswers: function () {
-      for(let i = 0; i < this.questions.length;i++) {
-        this.result += "Question " + (i+1) + ": " + this.answers[i] + " ";
-      }
-      return this.result;
-  }
+   
 
   }
 }
