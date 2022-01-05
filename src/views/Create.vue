@@ -7,18 +7,18 @@
       <br />
       <button class="helpButton" v-if="isShown" v-on:click="help = !help">
         <img src="..\..\public\img\question-mark-round-line.png" />
-        <div class="tooltipExplain">Show/Hide instructions</div>
+        <div class="tooltipExplain">{{uiLabels.showHide}}</div>
       </button>
     </header>
 
     <div class="createView">
       <div class="helpViewBackground" v-show="help">
         <div class="helpView" v-if="help">
-          <h4>How to create poll:</h4>
+          <h4>{{uiLabels.howCreate}}</h4>
           <ol>
             <li>
-              Add a new slide with the
-              <span style="font-style: italic">ADD SLIDE</span> button.
+              {{uiLabels.instructionAdd1}}
+              <span style="font-style: italic">{{uiLabels.instructionAdd2}}</span> {{uiLabels.button}}.
               <ol>
                 <li>
                   Choose the slide you want to edit and fill in your question.
@@ -52,11 +52,11 @@
           </button>
         </router-link>
 
-        <h3>Choose a name for your poll!</h3>
+        <h3>{{uiLabels.chooseName}}</h3>
 
         <div class="createInput">
           <div class="error" v-if="error">
-            Please choose a name before continuing
+            {{uiLabels.pleaseName}}
           </div>
           <input type="text" v-model="pollId" />
           <button class="createPollButton" v-on:click="createPoll">
@@ -66,19 +66,18 @@
         <ul class="tip">
           <li>
             <img src="..\..\public\img\light-bulb-color.png" />
-            Remember the name to access the poll later
+            {{uiLabels.rememberName}}
           </li>
           <li>
             <img src="..\..\public\img\light-bulb-color.png" />
-            Want to edit an existing poll? Enter the name of the poll above to
-            continue where you left off!
+           {{uiLabels.editEx}}
           </li>
         </ul>
       </div>
 
       <div class="pollCreation" v-if="isShown">
         <div class="storedQuestions">
-          <p>SLIDES</p>
+          <p>{{uiLabels.yourSlides}}</p>
           <div
             class="slides"
             v-for="(question, index, slide) in data.questions"
@@ -114,25 +113,25 @@
 
           <div class="slideButtons">
             <div v-if="slideStatus != 'canSave'">
-              <button v-on:click="addSlide">Add new slide</button>
+              <button v-on:click="addSlide">{{uiLabels.addSlide}}</button>
               <div class="error" v-if="error">
-                Please save question before adding new slide
+                {{uiLabels.saveQuestion}}
               </div>
             </div>
 
             <div v-if="slideStatus == 'canSave'">
               <button id="saveButton" v-on:click="editQuestion">
-                Save Question
+               {{uiLabels.saveQuestionButton}}
               </button>
               <div class="error" v-if="error">
-                Please fill all fields before saving question
+                {{uiLabels.fillAll}}
               </div>
             </div>
           </div>
         </div>
         <div class="displayHeader">
           <p>
-            The name of this poll is <span class="pollName">{{ pollId }}</span>
+            {{uiLabels.nameOfPoll}} <span class="pollName">{{ pollId }}</span>
           </p>
         </div>
 
@@ -776,7 +775,7 @@ header {
 }
 .back {
   float: left;
-  width: 5em;
+  width: 6em;
   height: 2em;
   padding: 0.35em 0.7em;
   margin: 0 0.3em 0.3em 0;

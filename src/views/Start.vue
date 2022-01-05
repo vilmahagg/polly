@@ -56,7 +56,7 @@
         <button class="back" v-on:click="isReady">
           {{ uiLabels.backButton }}
         </button>
-        <h2>Host existing poll</h2>
+        <h2>{{uiLabels.hostEx}}</h2>
         <div>
           <label id="pollName">
             {{ uiLabels.pollName }}
@@ -77,7 +77,7 @@
         <button class="back" v-on:click="isReady">
           {{ uiLabels.backButton }}
         </button>
-        <h2>Participate in poll</h2>
+        <h2 class="participateText">{{uiLabels.participateInPoll}}</h2>
         <div>
           <label id="pollName">
             {{ uiLabels.pollName }}
@@ -99,10 +99,9 @@
           X
         </button>
 
-        <h3>Customer Information</h3>
+        <h3>{{uiLabels.cusInfo}}</h3>
         <p>
-          If you have any concerns regarding the website please call: 073-397 70
-          53
+          {{uiLabels.concern}}
         </p>
       </div>
 
@@ -111,14 +110,14 @@
           X
         </button>
 
-        <h3>General info and bussiness idea</h3>
+        <h3>{{uiLabels.generalInfo}}</h3>
 
         <p>
-          The best webapplication ever made, easy pollcreation 4 the win <br />
-          EasyPoll works best in a classroom so the result can be shown on a big
-          screen for the students
+          {{uiLabels.bestApp}} <br />
+          {{uiLabels.bestInClassroom}}
+         
         </p>
-        <h3>The creators</h3>
+        <h3>{{uiLabels.creators}}</h3>
         <div class="creatorInfo">
           <div class="vilmaInfo">
             <p>Vilma Hägg Edelönn</p>
@@ -281,6 +280,10 @@ header h1 {
 }
 .welcomeMessage {
   margin-bottom: 2.3em;
+}
+
+.participateText{
+  margin-top:2em;
 }
 
 /* About us and customer info */
