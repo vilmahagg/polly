@@ -6,6 +6,7 @@
       <span> {{item}} </span>
     </div>
     <div class="text">
+      <br>
       {{key}}
     </div>
   </div>
@@ -25,6 +26,7 @@ export default {
 color: black;
 font-family: "Lucida Console", "Monaco", monospace;
 word-wrap: break-word;
+vertical-align:bottom;
 }
 .items{
   position: relative;
@@ -32,7 +34,7 @@ word-wrap: break-word;
 .bar {
   display: inline-block;
   width: 70px;
-  vertical-align: top;
+  vertical-align: bottom;
   padding: 20px;
 }
 .bar span {
@@ -46,7 +48,7 @@ word-wrap: break-word;
   background-color:#ff80bf;
 }
 .bar:nth-child(3) div:nth-child(1) {
-  background-color:#80aaff;
+  background-color:#50c878;
 }
 .bar:nth-child(4) div:nth-child(1) {
   background-color:#c266ff;
