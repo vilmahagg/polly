@@ -171,12 +171,12 @@
 
       </div>
       <br>
+
       <div class="finishedSide" v-if="isFinished">
         <h2>YOU SUCCESSFULLY CREATED YOUR POLL!!</h2>
         <div class="msg-icn"  >
           Note: This code is also used to edit the poll later on!
         </div>
-
 
 
         <div class="wrapper">
@@ -206,6 +206,7 @@
             </router-link>
 
           </div>
+        </section>
 
           <!--<div class="stButton">
                       <router-link v-bind:to="'/result/' + pollId">
@@ -214,7 +215,6 @@
                     </div>
                     -->
 
-        </section>
       </div>
     </div>
   </div>
@@ -822,7 +822,8 @@ header {
   display: grid;
   grid-template-columns: 60% 1% 2%;
 }
-.wrapper {
+
+  .wrapper {
   display: grid;
   grid-template-columns: 50% 5% 30%;
 }
@@ -882,9 +883,11 @@ header {
   border-right: 40px solid transparent;
 }
 .finishedSide{
+  height: 30em;
   background-color: #f0e7f3;
   margin-bottom: 200px;
 }
+
 .all {
   font-size: 16px;
 }
@@ -932,5 +935,67 @@ header {
   .slide{
     height:3em;
   }
+
+  }
+@media only screen and (max-width: 500px){
+  .finishedSide{
+    height:400px;
+  }
+  .msg-icn{
+    margin-left: 235px;
+    margin-right: 20px;
+    margin-bottom: 40px;
+  }
+
+  .msg-icn:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 20px solid transparent;
+    border-top-color: #e16c76;
+    border-bottom: 0;
+    border-left: 0;
+    margin-left: -16.5px;
+    margin-bottom: -19px;
+  }
+
+  .pollCode2{
+    margin-left:20px;
+  }
+  .pollCode{
+    font-size: 18px;
+
+  }
+  .waitButton{
+    width: 8em;
+    height: 4em;
+
+  }
+  .waitButton{
+    text-align: center;
+    position: relative;
+
+
+
+  }
+  .next-button{
+    width: 8em;
+    height: 4em;
+    text-align: center;
+    position: relative;
+    font-siez: 1px;
+
+  }
+  .next-point{
+    border-top: 27px solid transparent;
+    border-bottom: 27px solid transparent;
+    border-left: 28px solid #60c265;
+    border-right: 28px solid transparent;
+
+  }
+
 }
 </style>
