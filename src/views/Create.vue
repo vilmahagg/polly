@@ -21,25 +21,24 @@
               <span style="font-style: italic">{{uiLabels.instructionAdd2}}</span> {{uiLabels.button}}.
               <ol>
                 <li>
-                  Choose the slide you want to edit and fill in your question.
+                  {{uiLabels.chooseSlide}}
                 </li>
                 <li>
-                  Choose how the result of the question should be displayed
+                  {{uiLabels.chooseHowResult}}
                 </li>
               </ol>
             </li>
             <li>
-              Save your question with the
-              <span style="font-style: italic">SAVE QUESTION</span> button.
+              {{uiLabels.saveYourQ1}}
+              <span style="font-style: italic">{{uiLabels.saveYourQ2}}</span> {{uiLabels.button}}.
             </li>
             <li>
-              Repeat until you have as many questions as you like. You can edit,
-              remove and change the order of the questions
+              {{uiLabels.instructionRepeat}}
             </li>
             <li>
-              When done, click
-              <span style="font-style: italic">FINISH PRESENTATION</span> to run
-              the poll immediately or save it for later to run or edit.
+                {{uiLabels.wellDone}}
+              <span style="font-style: italic">{{uiLabels.finish}}</span>
+                {{uiLabels.wellDone2}}
             </li>
           </ol>
         </div>
@@ -106,7 +105,7 @@
             <div class="slideDelete">
               <button class="deleteButton" v-on:click="deleteSlide(index)">
                 <img src="..\..\public\img\red-x.png" />
-                <div class="tooltipDelAns">Delete Slide</div>
+                <div class="tooltipDelAns">{{ uiLabels.deleteSlide }}</div>
               </button>
             </div>
           </div>
@@ -137,7 +136,7 @@
 
         <div class="display">
           <div class="startDisplay" v-if="!start && !help">
-            <h2>Add and Select Slide to Start Editing</h2>
+            <h2>{{uiLabels.addAndSelect}}</h2>
           </div>
 
           <div v-if="start && !help">
@@ -161,20 +160,20 @@
 
               <button class="deleteButton" v-on:click="deleteAnswer(i)">
                 <img src="..\..\public\img\red-x.png" />
-                <div class="tooltipDelAns">Delete Answer</div>
+                <div class="tooltipDelAns">{{uiLabels.deleteAnswers}}</div>
               </button>
             </div>
             <div class="addAnswer">
               <button v-on:click="addAnswer">
                 <img src="..\..\public\img\plus.png" />
-                <div class="tooltipAddAns">Add Answer Alternative</div>
+                <div class="tooltipAddAns">{{uiLabels.addAnswers}}</div>
               </button>
             </div>
           </div>
         </div>
 
         <div class="resultDesign">
-          <p>EDIT RESULT FOR EACH SLIDE</p>
+          <p>{{uiLabels.editResultForEach}}</p>
           <div v-if="start && !help">
             <div class="resultDisplay">
               <img
@@ -188,31 +187,30 @@
             </div>
             <div class="resultOptions">
               <button class="bars" v-on:click="resultType = 'bars'">
-                Bar Chart
+              {{uiLabels.bars}}
               </button>
               <button class="circle" v-on:click="resultType = 'circle'">
-                Circle Chart
+              {{uiLabels.circle}}
               </button>
             </div>
           </div>
         </div>
         <div class="controlpanel">
           <button class="finishButton" v-on:click="finishPresentation">
-            Finish Presentation
-            {{ uiLabels.finishPresentation }}
+            {{ uiLabels.finishPresentations }}
           </button>
         </div>
       </div>
       <br />
       <div class="finishedSide" v-if="isFinished">
-        <h2>YOU SUCCESSFULLY CREATED YOUR POLL!!</h2>
+        <h2>{{ uiLabels.successfullyCreated }}</h2>
         <div class="msg-icn">
-          Note: This code is also used to edit the poll later on!
+          {{ uiLabels.note }}
         </div>
 
         <div class="wrapper">
           <div class="pollCode2">
-            THIS IS YOUR POLL-CODE, SAVE AND SHARE IT WITH YOUR PARTICIPANTS :
+            {{ uiLabels.pollCode }}
           </div>
           <div>
             <span class="pollCode"> {{ pollId }}</span>
@@ -227,16 +225,10 @@
 
           <router-link to="/">
             <button v-on:click="waitUntilLater" class="waitButton">
-              Wait until later
+            {{ uiLabels.waitUntilLater }}
             </button>
           </router-link>
 
-          <!--<div class="stButton">
-                      <router-link v-bind:to="'/result/' + pollId">
-                        <button class="startButton">Start poll now!</button>
-                      </router-link>
-                    </div>
-                    -->
         </div>
       </div>
     </div>

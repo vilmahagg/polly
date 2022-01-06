@@ -32,13 +32,33 @@
 	"saveQuestion":"Spara frågan innan du lägger till en ny slide",
 	"saveQuestionButton":"Spara Frågan",
 	"fillAll":"Fyll alla tomma fält innan du går vidare",
-	"nameOfPoll":"Namnet på denna poll är", 
+	"nameOfPoll":"Namnet på denna poll är",
 	"yourSlides":"Dina slides",
 	"howCreate":"Hur du skapar en röstning:",
 	"showHide":"Visa/göm instruktioner",
 	"instructionAdd1":"Lägg till en ny fråga med",
 	"instructionAdd2":"LÄGG TILL SLIDE ",
-	"button":"Knappen"
+	"button":"Knappen",
+	"chooseSlide": "Välj sliden som du vill redigera och fyll i din fråga",
+	"chooseHowResult": "Välj hur resultatet av frågan ska visas",
+	"saveYourQ1": "Spara din fråga med",
+	"saveYourQ2":"SPARA FRÅGA",
+	"instructionRepeat": "upprepa till du har så många frågor som önskat, du kan redigera, ta bort eller ändra ordningen på frågorna.",
+	"wellDone": "Bra jobbat, klicka",
+	"finish": "AVSLUTA PRESENTATION",
+  "wellDone2": "för att starta pollen direkt eller spara den till senare för att starta eller redigera",
+	"deleteSlide": "Radera slide",
+	"addAndSelect": "Lägg till och välj slide för att redigera",
+	"deleteAnswers": "Ta bort svarsalternativ",
+	"addAnswers": "Lägg till svarsalternativ",
+	"editResultForEach": "REDIGERA RESULTATVYN FÖR VARJE SLIDE",
+	"bars": "Stapeldiagram ",
+	"circle": "Cirkeldiagram",
+	"finishPresentations": "Slutför Presenataion",
+	"successfullyCreated": "DIN POLL ÄR SKAPAD!!",
+	"note": "Kom ihåg: Denna kod används även för att redigera din poll",
+	"pollCode": "DETTA ÄR DIN POLL-KOD, SPARA OCH DELA DEN MED ALLA DELTAGARE",
+	"waitUntilLater": "Spara till senare tillfälle"
+
+
 }
-
-
