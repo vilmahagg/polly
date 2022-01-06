@@ -1,11 +1,12 @@
 
 <template>
-<div class="wrapper">
+<div class="wrapperBars">
   <div class="bar" v-for="(item, key) in data" v-bind:key="key">
-    <div v-bind:style="{height: item + '5px'}">
+    <div class="items" v-bind:style="{height: item + '5px'}">
       <span> {{item}} </span>
     </div>
     <div class="text">
+      <br>
       {{key}}
     </div>
   </div>
@@ -24,6 +25,11 @@ export default {
 .text{
 color: black;
 font-family: "Lucida Console", "Monaco", monospace;
+word-wrap: break-word;
+vertical-align:bottom;
+}
+.items{
+  position: relative;
 }
 .bar {
   display: inline-block;
@@ -42,7 +48,7 @@ font-family: "Lucida Console", "Monaco", monospace;
   background-color:#ff80bf;
 }
 .bar:nth-child(3) div:nth-child(1) {
-  background-color:#80aaff;
+  background-color:#50c878;
 }
 .bar:nth-child(4) div:nth-child(1) {
   background-color:#c266ff;
@@ -62,8 +68,13 @@ font-family: "Lucida Console", "Monaco", monospace;
 .bar:nth-child(9) div:nth-child(1) {
   background-color:rgb(255, 153, 122);
 }
-.wrapper {
-padding:3em;
-  word-wrap: break-word;
+.wrapperBars {
+padding-top:3em;
+}
+@media only screen and (max-width: 500px) {
+  .bar{
+    width:35px;
+    padding:0.8em;
+  }
 }
 </style>

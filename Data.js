@@ -24,10 +24,10 @@ Data.prototype.getUILabels = function (lang = "en") {
 Data.prototype.createPoll = function(pollId, lang="en") {
   if (typeof this.polls[pollId] === "undefined") {
     let poll = {};
-    poll.lang = lang;  
+    poll.lang = lang;
     poll.questions = [];
     poll.answers = [];
-    poll.currentQuestion = 0;              
+    poll.currentQuestion = 0;
     this.polls[pollId] = poll;
     console.log("poll created", pollId, poll);
   }
@@ -49,7 +49,6 @@ Data.prototype.addQuestion = function(pollId, q) {
 Data.prototype.addSlide = function(pollId, q) {
   const poll = this.polls[pollId];
   console.log("add slide");
-  
   if (typeof poll !== 'undefined') {
     poll.questions[q.slide]=q;
   }
@@ -57,7 +56,7 @@ Data.prototype.addSlide = function(pollId, q) {
 
 Data.prototype.deleteQuestion = function(pollId,index) {
   const poll = this.polls[pollId];
-  console.log("delete: ",index, poll.questions[index]);
+  console.log("delete: ", poll.questions[index]);
   if (typeof poll !== 'undefined') {
     poll.questions.splice(index,1);
     return poll.questions
@@ -71,7 +70,7 @@ Data.prototype.editQuestion = function(pollId, newQuestion, index) {
     poll.questions[index] = newQuestion;
   }
   console.log("question ", index, " in poll: ", pollId, " updated to:", newQuestion)
-}  //skicka med datan för den editade frågan i newQuestion
+} 
 
 Data.prototype.moveUp = function(pollId, index){
   const poll = this.polls[pollId];
@@ -93,7 +92,7 @@ Data.prototype.moveDown = function(pollId, index){
       poll.questions[index+1] = temp;
     }
   }
-}
+}  
 
 Data.prototype.getQuestion = function(pollId, qId=null) {
   const poll = this.polls[pollId];
@@ -108,7 +107,6 @@ Data.prototype.getQuestion = function(pollId, qId=null) {
 }
 
 Data.prototype.getAllQuestions = function(pollId) {
-  
   const poll = this.polls[pollId];
   console.log("get all questions");
   if (typeof poll !== 'undefined') {
@@ -119,7 +117,6 @@ Data.prototype.getAllQuestions = function(pollId) {
 
 Data.prototype.submitAnswer = function(pollId, answer) {
   const poll = this.polls[pollId];
-  console.log("answer submitted for ", pollId, answer);
   if (typeof poll !== 'undefined') {
     let answers = poll.answers[poll.currentQuestion];
     if (typeof answers !== 'object') {
@@ -145,7 +142,9 @@ Data.prototype.getAnswers = function(pollId) {
   }
   return {}
 }
+
+Data.prototype.resetPoll = function(pollId) {
+  const poll = this.polls[pollId];
+  poll.answers = [];
+}
 module.exports = Data;
-
-
-

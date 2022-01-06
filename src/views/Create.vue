@@ -4,13 +4,46 @@
       <router-link v-bind:to="'/'" tag="h1">
         <h1>EasyPoll</h1>
       </router-link>
-
-      <p v-if="!error">
-        The name of this poll is <span class="pollName">{{ pollId }}</span>
-      </p>
+      <br />
+      <button class="helpButton" v-if="isShown" v-on:click="help = !help">
+        <img src="..\..\public\img\question-mark-round-line.png" />
+        <div class="tooltipExplain">{{uiLabels.showHide}}</div>
+      </button>
     </header>
 
     <div class="createView">
+      <div class="helpViewBackground" v-show="help">
+        <div class="helpView" v-if="help">
+          <h4>{{uiLabels.howCreate}}</h4>
+          <ol>
+            <li>
+              {{uiLabels.instructionAdd1}}
+              <span style="font-style: italic">{{uiLabels.instructionAdd2}}</span> {{uiLabels.button}}.
+              <ol>
+                <li>
+                  {{uiLabels.chooseSlide}}
+                </li>
+                <li>
+                  {{uiLabels.chooseHowResult}}
+                </li>
+              </ol>
+            </li>
+            <li>
+              {{uiLabels.saveYourQ1}}
+              <span style="font-style: italic">{{uiLabels.saveYourQ2}}</span> {{uiLabels.button}}.
+            </li>
+            <li>
+              {{uiLabels.instructionRepeat}}
+            </li>
+            <li>
+                {{uiLabels.wellDone}}
+              <span style="font-style: italic">{{uiLabels.finish}}</span>
+                {{uiLabels.wellDone2}}
+            </li>
+          </ol>
+        </div>
+      </div>
+
       <div class="pollTitle" v-if="!isShown && !isFinished">
         <router-link v-bind:to="'/'" tag="button">
           <button class="back">
@@ -18,9 +51,12 @@
           </button>
         </router-link>
 
-        <h3>Choose a name for your poll!</h3>
+        <h3>{{uiLabels.chooseName}}</h3>
 
         <div class="createInput">
+          <div class="error" v-if="error">
+            {{uiLabels.pleaseName}}
+          </div>
           <input type="text" v-model="pollId" />
           <button class="createPollButton" v-on:click="createPoll">
             {{ uiLabels.createPoll }}
@@ -28,175 +64,175 @@
         </div>
         <ul class="tip">
           <li>
-            <img
-                src=..\..\public\img\light-bulb-color.png
-            />
-            Remember the name to access the poll later
+            <img src="..\..\public\img\light-bulb-color.png" />
+            {{uiLabels.rememberName}}
           </li>
           <li>
-            <img
-                src=..\..\public\img\light-bulb-color.png
-            />
-            Want to edit an existing poll? Enter the name of the poll above to
-            continue where you left off!
+            <img src="..\..\public\img\light-bulb-color.png" />
+           {{uiLabels.editEx}}
           </li>
         </ul>
       </div>
 
       <div class="pollCreation" v-if="isShown">
         <div class="storedQuestions">
-          <p>QUESTIONS</p>
-          {{slide}}
+          <p>{{uiLabels.yourSlides}}</p>
           <div
-              class="slides"
-              v-for="(question, index, slide) in data.questions"
-              v-bind:key="'question' + index + slide"
+            class="slides"
+            v-for="(question, index, slide) in data.questions"
+            v-bind:key="'question' + index + slide"
           >
             <div class="changePlaceButtons">
               <button v-on:click="moveUp(question, index)">
                 <img
-                    src="https://cdn-icons-png.flaticon.com/512/467/467293.png"
+                  src="https://cdn-icons-png.flaticon.com/512/467/467293.png"
                 />
               </button>
               <button v-on:click="moveDown(question, index)">
                 <img
-                    src="https://cdn-icons-png.flaticon.com/512/467/467264.png"
+                  src="https://cdn-icons-png.flaticon.com/512/467/467264.png"
                 />
               </button>
             </div>
 
             <button
-                class="slide"
-                :class="{thisSlide: selectedSlide == index}"
-                v-on:click="showQuestion(question, index)"
+              class="slide"
+              :class="{ thisSlide: selectedSlide == index }"
+              v-on:click="showQuestion(question, index)"
             >
-              {{ index+1 }}: {{ question.q }}
+              {{ index + 1 }}: {{ question.q }}
             </button>
             <div class="slideDelete">
               <button class="deleteButton" v-on:click="deleteSlide(index)">
-                <img
-                    src=..\..\public\img\red-x.png
-                />
-                <div class="tooltipDelAns">Delete Slide</div>
+                <img src="..\..\public\img\red-x.png" />
+                <div class="tooltipDelAns">{{ uiLabels.deleteSlide }}</div>
               </button>
             </div>
           </div>
 
           <div class="slideButtons">
-            <button v-if="!save" v-on:click="addSlide">Add new slide</button>
-            <button v-if="save" v-on:click="editQuestion">Save Question</button>
-            <div class="error" v-if="error">
-              Please fill all fields before saving question
+            <div v-if="slideStatus != 'canSave'">
+              <button v-on:click="addSlide">{{uiLabels.addSlide}}</button>
+              <div class="error" v-if="error">
+                {{uiLabels.saveQuestion}}
+              </div>
             </div>
 
+            <div v-if="slideStatus == 'canSave'">
+              <button id="saveButton" v-on:click="editQuestion">
+               {{uiLabels.saveQuestionButton}}
+              </button>
+              <div class="error" v-if="error">
+                {{uiLabels.fillAll}}
+              </div>
+            </div>
           </div>
+        </div>
+        <div class="displayHeader">
+          <p>
+            {{uiLabels.nameOfPoll}} <span class="pollName">{{ pollId }}</span>
+          </p>
         </div>
 
         <div class="display">
-          <div class="startDisplay" v-if="!start">
-            <h2>Choose Slide to Start Editing</h2>
+          <div class="startDisplay" v-if="!start && !help">
+            <h2>{{uiLabels.addAndSelect}}</h2>
           </div>
-          <div v-if="start">
-            {{index +1}}
+
+          <div v-if="start && !help">
+            {{ index + 1 }}
             <input
-                class="questionInput"
-                type="text"
-                v-model="question"
-                :placeholder="uiLabels.question"
+              id="questionInput"
+              type="text"
+              v-model="question"
+              :placeholder="uiLabels.question"
             />
             <div
-                class="answers"
-                v-for="(_, i) in answers"
-                v-bind:key="'answer' + i"
+              class="answers"
+              v-for="(_, i) in answers"
+              v-bind:key="'answer' + i"
             >
               <input
-                  class="answersInput"
-                  v-model="answers[i]"
-                  :placeholder="uiLabels.answer"
+                id="answersInput"
+                v-model="answers[i]"
+                :placeholder="uiLabels.answer"
               />
 
               <button class="deleteButton" v-on:click="deleteAnswer(i)">
-                <img
-                    src=..\..\public\img\red-x.png
-                />
-                <div class="tooltipDelAns">Delete Answer</div>
+                <img src="..\..\public\img\red-x.png" />
+                <div class="tooltipDelAns">{{uiLabels.deleteAnswers}}</div>
               </button>
             </div>
             <div class="addAnswer">
               <button v-on:click="addAnswer">
-                <img
-                    src=..\..\public\img\plus.png
-                />
-                <div class="tooltipAddAns">Add Answer Alternative</div>
+                <img src="..\..\public\img\plus.png" />
+                <div class="tooltipAddAns">{{uiLabels.addAnswers}}</div>
               </button>
             </div>
           </div>
         </div>
 
         <div class="resultDesign">
-          <h4>RESULT (elr annan titel)</h4>
-          <h5>Choose how you want the result of your poll to be presented:</h5>
-          <div class="resultDisplay">
-            <img
+          <p>{{uiLabels.editResultForEach}}</p>
+          <div v-if="start && !help">
+            <div class="resultDisplay">
+              <img
                 v-if="resultType == 'bars'"
-                src="https://www.pngrepo.com/png/326909/512/bar-chart-sharp.png"
-            />
-            <img
-                v-if="resultType == 'pie'"
-                src="https://static.thenounproject.com/png/32976-200.png"
-            />
-          </div>
-          <div class="resultOptions">
-            <button class="bars" v-on:click="resultType = 'bars'">
-              Bar Chart
-            </button>
-            <button class="pie" v-on:click="resultType = 'pie'">
-              Pie Chart
-            </button>
+                src="..\..\public\img\bars.png"
+              />
+              <img
+                v-if="resultType == 'circle'"
+                src="..\..\public\img\circle.png"
+              />
+            </div>
+            <div class="resultOptions">
+              <button class="bars" v-on:click="resultType = 'bars'">
+              {{uiLabels.bars}}
+              </button>
+              <button class="circle" v-on:click="resultType = 'circle'">
+              {{uiLabels.circle}}
+              </button>
+            </div>
           </div>
         </div>
-
-        <!--<div class="finishButton">
-        <router-link to="/finished">
-          <button v-on:click="finishPresentation">Finish Presentation</button>
-        </router-link>
-        </div>-->
-
         <div class="controlpanel">
           <button class="finishButton" v-on:click="finishPresentation">
-            Finish Presentation
-            {{ uiLabels.finishPresentation }}
+            {{ uiLabels.finishPresentations }}
           </button>
         </div>
-
       </div>
+<<<<<<< HEAD
       <br>
 
+=======
+      <br />
+>>>>>>> 9ec97c56cd4ac034ab599248329e1627557f7fc0
       <div class="finishedSide" v-if="isFinished">
-        <h2>YOU SUCCESSFULLY CREATED YOUR POLL!!</h2>
-        <div class="msg-icn"  >
-          Note: This code is also used to edit the poll later on!
+        <h2>{{ uiLabels.successfullyCreated }}</h2>
+        <div class="msg-icn">
+          {{ uiLabels.note }}
         </div>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9ec97c56cd4ac034ab599248329e1627557f7fc0
         <div class="wrapper">
           <div class="pollCode2">
-            THIS IS YOUR POLL-CODE, SAVE AND SHARE IT WITH YOUR PARTICIPANTS :
+            {{ uiLabels.pollCode }}
           </div>
-          <div >
+          <div>
             <span class="pollCode"> {{ pollId }}</span>
           </div>
-
-
         </div>
 
-        <section class="waitandstartButton">
+        <div class="waitandstartButton">
           <router-link v-bind:to="'/result/' + pollId">
-            <div>
-              <button class="next-button" type="button">Start poll now!</button><div class="next-point"></div>
-            </div>
+            <button class="next-button" type="button">Start poll now!</button>
+            <div class="next-point"></div>
           </router-link>
 
+<<<<<<< HEAD
           <br />
           <div class="wtButton">
             <router-link to="/">
@@ -215,6 +251,15 @@
                     </div>
                     -->
 
+=======
+          <router-link to="/">
+            <button v-on:click="waitUntilLater" class="waitButton">
+            {{ uiLabels.waitUntilLater }}
+            </button>
+          </router-link>
+
+        </div>
+>>>>>>> 9ec97c56cd4ac034ab599248329e1627557f7fc0
       </div>
     </div>
   </div>
@@ -240,15 +285,16 @@ export default {
       selectedSlide: null,
       error: false,
       start: false,
-      save: false,
-      resultType: "bars", //försök till att kunna skicka med vilken typ av resultat det ska vara. ej klart.
+      slideStatus: "addSlide",
+      resultType: "bars",
       isFinished: false,
+      help: false,
     };
   },
   computed: {
-    slide: function() {
+    slide: function () {
       return this.data.questions.length;
-    }
+    },
   },
   created: function () {
     this.lang = this.$route.params.lang;
@@ -258,10 +304,9 @@ export default {
     });
     socket.on("dataUpdate", (data) => (this.data = data));
     socket.on("pollCreated", (data) => (this.data = data));
-    // socket.on("questionEdited", (data) => this.data = data);
     socket.on(
-        "contentUpdate",
-        (questions) => (this.data.questions = questions)
+      "contentUpdate",
+      (questions) => (this.data.questions = questions)
     );
   },
   methods: {
@@ -278,11 +323,11 @@ export default {
       if (this.lang === "en") {
         this.lang = "sv";
         this.flag =
-            "https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png";
+          "https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png";
       } else {
         this.lang = "en";
         this.flag =
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Svensk_flagg_1815.svg/2560px-Svensk_flagg_1815.svg.png";
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Svensk_flagg_1815.svg/2560px-Svensk_flagg_1815.svg.png";
       }
       socket.emit("switchLanguage", this.lang);
     },
@@ -302,10 +347,14 @@ export default {
           index: this.index,
           slide: this.slide,
         });
-        this.save = false;
+        this.slideStatus = "addSlide";
       }
     },
     addSlide: function () {
+      if (this.slideStatus == "notSaved") {
+        this.error = true;
+        return;
+      }
       socket.emit("addSlide", {
         pollId: this.pollId,
         q: "",
@@ -314,7 +363,7 @@ export default {
         slide: this.slide,
         index: this.index,
       });
-
+      this.slideStatus = "notSaved";
     },
     deleteSlide: function (i) {
       if (this.slide <= 1) {
@@ -326,34 +375,38 @@ export default {
         a: this.answers,
         index: i,
       });
-      this.save = false;
+      this.slideStatus = "addSlide";
       this.start = false;
+      this.error = false;
     },
     moveUp: function (question, i) {
       if (i <= 0) {
         return;
       }
-      this.selectedSlide = i-1;
+      this.selectedSlide = i - 1;
       socket.emit("moveUp", {
         pollId: this.pollId,
         q: this.question,
         a: this.answers,
         index: i,
       });
-      this.showQuestion(question,i-1);
+      this.showQuestion(question, i - 1);
     },
     moveDown: function (question, i) {
-      this.selectedSlide = i+1;
-      socket.emit("moveDown", {
-        pollId: this.pollId,
-        q: this.question,
-        a: this.answers,
-        index: i,
-      });
-      this.showQuestion(question,i+1);
+      if (i !== this.slide - 1) {
+        this.selectedSlide = i + 1;
+        socket.emit("moveDown", {
+          pollId: this.pollId,
+          q: this.question,
+          a: this.answers,
+          index: i,
+        });
+        this.showQuestion(question, i + 1);
+      }
     },
     addAnswer: function () {
-      if (this.answers.length >= 12) {
+      if (this.answers.length >= 9) {
+        alert("That's a bit many answer options for a poll don't you think?");
         return;
       }
       this.answers.push("");
@@ -376,84 +429,117 @@ export default {
       this.index = index;
       this.resultType = question.result;
       this.start = true;
-      this.save = true;
+      this.slideStatus = "canSave";
       this.selectedSlide = index;
+      this.error = false;
     },
     finishPresentation: function () {
-      socket.emit("finishPresentation", {});
-      this.isFinished = true;
-      this.isShown = false;
+      if (
+        confirm(
+          "Did you save all questions? You can come back later to edit the poll but unsaved questions will be lost."
+        )
+      ) {
+        socket.emit("finishPresentation", {});
+        this.isFinished = true;
+        this.isShown = false;
+      }
     },
   },
 };
 </script>
 
-<style scoped>
-/* createview = hela bakgrunden i allt*/
+<style>
+.helpViewBackground {
+  position: absolute;
+  top: 7em;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-image: url("../../public/img/transparent.png");
+  background-repeat: repeat;
+}
+.helpView {
+  margin: 2em 25% 0 25%;
+  text-align: left;
+  color: #10080e;
+}
 .createView {
   height: 100vh;
-  background-color: white;
+  background-color: #ffffff;
+  padding: 0 1em 1em 1em;
 }
 .pollCreation {
   display: grid;
   grid-gap: 1%;
   grid-auto-columns: minmax(0, 1fr);
   grid-template-areas:
+    "a e e e d"
     "a b b b d"
     "a b b b d"
     "a b b b d"
     "a c c c d";
 }
-/* "Slides" aka sparade frågor*/
 .storedQuestions {
   grid-area: a;
-  background-color: rgba(111, 168, 128, 0.507);
-  max-height: 80vh;
-  overflow-y:auto;
+  background-color: #df9ee480;
+  min-height: 80vh;
+  overflow-y: auto;
+  border-radius: 0.3em;
 }
+
+.storedQuestions p,
+.resultDesign p {
+  font-size: 20px;
+  font-weight: bold;
+  color: #e23315;
+  margin: 0.5em;
+}
+
 .slides {
   width: 100%;
   display: inline-block;
 }
 .slideDelete {
   display: inline-block;
-  width: 15%;
+  width: 10%;
 }
+
+.slide {
+  background-color: white;
+  border: 0.1em solid rgb(177, 177, 177);
+  overflow: hidden;
+  transition: 0.3s;
+  height: 5em;
+  width: 60%;
+  border-radius: 0em;
+  margin: 0.5em;
+}
+.thisSlide {
+  border: 2px solid #a074f0;
+}
+.slide:hover {
+  background-color: rgb(226, 224, 224);
+}
+
 .changePlaceButtons {
   display: inline-block;
   vertical-align: middle;
-  width: 15%;
+  width: 10%;
 }
 .changePlaceButtons img {
-  height: 1em;
+  width: 80%;
 }
 .changePlaceButtons button {
-  height: 2em;
-  width: 2em;
   display: block;
   border-radius: 1em;
   border: none;
   background-color: rgba(255, 255, 255, 0);
+  padding: 0;
 }
-.slide {
-  background-color: white;
-  border: 0.1em solid rgb(177, 177, 177);
-  /* border:none; */
-  /* border-radius: 0.5em; */
-  transition: 0.3s;
-  height: 4em;
-  width: 60%;
-  border-radius: 0.3em;
-  margin: 0.5em;
-}
-.thisSlide {
-  border:2px solid black;
-}
-.slide:hover {
-  background-color: rgb(223, 223, 219);
-}
-.slideButtons{
-  width:100%;
+
+.slideButtons {
+  width: 100%;
 }
 .slideButtons button {
   width: 80%;
@@ -467,7 +553,7 @@ export default {
   text-transform: uppercase;
   font-weight: 400;
   color: white;
-  background-color: #e765d6;
+  background-color: #ab87ee;
   box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
   text-align: center;
   position: relative;
@@ -477,20 +563,50 @@ export default {
   box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
   transform: translateY(0.1em);
 }
-/* Resultat */
+
 .resultDesign {
-  background-color: lightgoldenrodyellow;
+  background-color: #df9ee48e;
   grid-area: d;
+  border-radius: 0.3em;
 }
+.helpButton {
+  float: right;
+  border-radius: 50%;
+  position: relative;
+  background-color: #ab87ee00;
+  border: none;
+}
+.helpButton img {
+  height: 2em;
+  vertical-align: middle;
+}
+.tooltipExplain {
+  visibility: hidden;
+  font-family: arial;
+  padding: 1em;
+  width: 5em;
+  background-color: rgba(97, 95, 95, 0.87);
+  color: white;
+  text-align: center;
+  border-radius: 0.5em;
+  position: absolute;
+  margin: 1em 0 0 -5em;
+}
+
+.helpButton:hover .tooltipExplain {
+  visibility: visible;
+  z-index: 2;
+}
+
 .resultDisplay img {
-  width: 50%;
+  width: 70%;
   margin: auto;
+  margin: 4em 0 1em 0;
 }
 .resultOptions {
   padding-top: 1em;
-  padding-bottom: 1em;
 }
-.resultDesign button {
+.resultOptions button {
   width: 80%;
   display: inline-block;
   padding: 0.7em 1.4em;
@@ -502,7 +618,7 @@ export default {
   text-transform: uppercase;
   font-weight: 400;
   color: white;
-  background-color: #e765d6;
+  background-color: #ab87ee;
   box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
   text-align: center;
   position: relative;
@@ -512,21 +628,28 @@ export default {
   box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
   transform: translateY(0.1em);
 }
-/* Skapa fråga */
+
+.displayHeader {
+  grid-area: e;
+  color: #ab87ee;
+}
+.displayHeader p {
+  margin: 0.1em;
+}
 .startDisplay {
-  height: 15em;
   padding-bottom: 2em;
   padding: 5rem;
   color: rgb(161, 161, 161);
 }
 .display {
   position: relative;
-  background-color: wheat;
+  background-color: #df9ee47c;
   grid-area: b;
   min-height: 25em;
   padding-bottom: 2em;
+  border-radius: 0.3em;
 }
-.questionInput {
+#questionInput {
   height: 3em;
   width: 80%;
   margin: 1em;
@@ -541,16 +664,16 @@ export default {
   height: 1.2rem;
   width: 1.2rem;
   vertical-align: middle;
-  padding:0;
+  padding: 0;
   background-color: rgb(255, 255, 255);
 }
-.deleteButton img{
-  height:1.2rem;
+.deleteButton img {
+  height: 1.2rem;
 }
 .tooltipDelAns {
   visibility: hidden;
   font-family: arial;
-  width:7em;
+  width: 7em;
   font-size: 0.8em;
   padding: 0.4em;
   background-color: black;
@@ -573,7 +696,7 @@ export default {
   border-style: solid;
   border-color: transparent transparent black transparent;
 }
-.answersInput {
+#answersInput {
   height: 4em;
   width: 10em;
   margin: 0.5em;
@@ -581,12 +704,11 @@ export default {
 .display input {
   border: none;
   text-align: center;
-  /* background-size: 300% 100%; */
   border-radius: 0.5em;
   transition: 0.3s;
 }
 .display input:hover {
-  background-color: rgb(209, 209, 209);
+  background-color: rgb(226, 224, 224);;
 }
 .addAnswer {
   position: absolute;
@@ -606,9 +728,8 @@ export default {
   text-align: center;
   position: relative;
   border: none;
-
 }
-.addAnswer button img{
+.addAnswer button img {
   height: 1.7em;
 }
 .addAnswer button:active {
@@ -641,13 +762,11 @@ export default {
   border-style: solid;
   border-color: transparent transparent black transparent;
 }
-/* Knapparna nedanför display*/
 .controlpanel {
-  margin: 1em;
   grid-area: c;
-  width:100%;
+  width: 100%;
+  padding-top: 0.8em;
 }
-/* CSS för att anpassa header */
 header {
   height: 6em;
 }
@@ -655,7 +774,6 @@ header {
   font-weight: bold;
   font-size: 1em;
 }
-/* CSS för pollId-sidan */
 .pollTitle {
   width: 65%;
   margin: auto;
@@ -679,7 +797,7 @@ header {
 }
 .back {
   float: left;
-  width: 5em;
+  width: 6em;
   height: 2em;
   padding: 0.35em 0.7em;
   margin: 0 0.3em 0.3em 0;
@@ -698,7 +816,7 @@ header {
 }
 .createInput {
   display: inline-block;
-  width:100%;
+  width: 100%;
 }
 .createInput input {
   height: 2.6em;
@@ -706,9 +824,6 @@ header {
   margin: 2em;
 }
 .createPollButton {
-  /* height: 3em;
-  width: 10em;
-  border-radius: 0.5em; */
   width: 40%;
   display: inline-block;
   padding: 0.7em 1.4em;
@@ -731,7 +846,7 @@ header {
   transform: translateY(0.1em);
 }
 .error {
-  margin:1em;
+  margin: 1em;
   display: inline-block;
   padding: 0.5em;
   color: red;
@@ -758,6 +873,79 @@ header {
   position: relative;
   border: none;
 }
+.stButton {
+  width: available;
+  height: available;
+  position: relative;
+  margin-left: 25%;
+}
+.pollCode {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 25px;
+  color: #10080e;
+  font-family: "Roboto", sans-serif;
+  border: 5px solid;
+  border-color: #e16c76;
+  padding: 0.5em;
+}
+.pollCode2 {
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  margin-left: 150px;
+}
+.finishButton {
+  height: 50px;
+  display: inline-block;
+  padding: 0.7em 1.4em;
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 0.15em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: white;
+  background-color: #e23315;
+  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
+  text-align: center;
+  position: relative;
+  border: none;
+}
+.waitandstartButton {
+  margin: 10em auto auto auto;
+  width: 70%;
+}
+
+  .wrapper {
+  display: grid;
+  grid-template-columns: 50% 5% 30%;
+}
+.msg-icn {
+  position: relative;
+  background: #e16c76;
+  border-radius: 0.4em;
+  margin-left: 900px;
+  margin-right: 80px;
+  font-weight: bold;
+  font-family: "American Typewriter";
+  box-shadow: 10px 5px 5px grey;
+  color: #2a2727;
+}
+.msg-icn:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 33px solid transparent;
+  border-top-color: #e16c76;
+  border-bottom: 0;
+  border-left: 0;
+  margin-left: -16.5px;
+  margin-bottom: -33px;
+}
 .waitButton {
   width: 12em;
   height: 6em;
@@ -777,83 +965,8 @@ header {
   position: relative;
   border: none;
 }
-.stButton {
-  width: available;
-  height: available;
-  position: relative;
-  margin-left: 25%;
-}
-/* .wtButton{
-} */
-.pollCode {
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 25px;
-  color: #10080e;
-  font-family: "Roboto", sans-serif;
-  border: 5px solid;
-  border-color: #e16c76;
-}
-.pollCode2 {
-  font-family: "Roboto", sans-serif;
-  font-weight: bold;
-  margin-left:150px;
-}
-.finishButton {
-  height: 50px;
-  display: inline-block;
-  padding: 0.7em 1.4em;
-  margin: 0 0.3em 0.3em 0;
-  border-radius: 0.15em;
-  box-sizing: border-box;
-  text-decoration: none;
-  font-family: "Roboto", sans-serif;
-  text-transform: uppercase;
-  font-weight: 400;
-  color: white;
-  background-color: #397194;
-  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
-  text-align: center;
-  position: relative;
-  border: none;
-}
-.waitandstartButton {
-  margin-top: 140px;
-  display: grid;
-  grid-template-columns: 60% 1% 2%;
-}
-
-  .wrapper {
-  display: grid;
-  grid-template-columns: 50% 5% 30%;
-}
-.msg-icn {
-  position: relative;
-  background: #e16c76;
-  border-radius: .4em;
-  margin-left:900px;
-  margin-right:80px;
-  font-weight: bold;
-  font-family: "American Typewriter";
-  box-shadow: 10px 5px 5px grey;
-  color: #2a2727;
-}
-.msg-icn:after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border: 33px solid transparent;
-  border-top-color: #e16c76;
-  border-bottom: 0;
-  border-left: 0;
-  margin-left: -16.5px;
-  margin-bottom: -33px;
-}
 .next-button {
-  font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+  font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
   text-decoration: none;
   color: #fff;
   text-align: center;
@@ -872,7 +985,7 @@ header {
   border: none;
   text-transform: uppercase;
 }
-.next-point{
+.next-point {
   vertical-align: top;
   width: 0;
   height: 0;
@@ -882,58 +995,110 @@ header {
   border-left: 40px solid #60c265;
   border-right: 40px solid transparent;
 }
+<<<<<<< HEAD
 .finishedSide{
   height: 30em;
+=======
+.finishedSide {
+>>>>>>> 9ec97c56cd4ac034ab599248329e1627557f7fc0
   background-color: #f0e7f3;
-  margin-bottom: 200px;
+  height: 100vh;
 }
 
 .all {
   font-size: 16px;
 }
-/* FÖR MOBIL */
+
 @media only screen and (max-width: 500px) {
   .all {
     font-size: 8px;
+  }
+  .helpView {
+    font-size: 16px;
+    margin: 1em;
+  }
+  .helpButton img {
+    height: 1.2em;
+    vertical-align: middle;
   }
   .pollCreation {
     display: grid;
     grid-gap: 1%;
     grid-auto-columns: minmax(0, 1fr);
     grid-template-areas:
-    "b b b b b"
-    "b b b b b"
-    "b b b b b"
-    "d d a a a"
-    "d d a a a"
-    "c c c c c";
+      "e e e e e"
+      "b b b b b"
+      "b b b b b"
+      "b b b b b"
+      "d d a a a"
+      "d d a a a"
+      "c c c c c";
+  }
+  .displayHeader p {
+    font-size: 12px;
   }
   .display {
     position: relative;
-    background-color: wheat;
     grid-area: b;
     min-height: 40em;
     padding-bottom: 2em;
   }
-  .startDisplay{
+  .startDisplay {
     font-size: 2em;
   }
-  .answersInput {
+  #answersInput {
     height: 4em;
     width: 8em;
     margin: 0.5em;
+    background-color: #ffffff;
   }
-  .resultDesign{
-    padding:0.5em;
+  .resultDesign {
+    min-height: 30em;
+    max-height: 25vh;
   }
   .resultDesign button {
     width: 80%;
     height: 4em;
-    padding:0;
+    padding: 0;
     font-size: 10px;
   }
-  .slide{
-    height:3em;
+  .storedQuestions {
+    min-height: 30em;
+    max-height: 25vh;
+  }
+  .storedQuestions p,
+  .resultDesign p {
+    font-size: 16px;
+  }
+  .slide {
+    height: 3em;
+  }
+
+  .pollTitle {
+    width: 90%;
+  }
+
+  .pollTitle h3 {
+    margin: 32px 0;
+    font-size: 28px;
+  }
+  .error {
+    font-size: 12px;
+    margin: 0;
+  }
+  .tip {
+    width: 100%;
+    margin: auto;
+    padding: 0;
+    list-style-type: none;
+    text-align: left;
+    font-size: 16px;
+  }
+  .waitandstartButton {
+    width: 100%;
+  }
+  .waitandstartButton a {
+    width: 30%;
   }
 
   }
