@@ -4,15 +4,22 @@
     <h4 id="rubrikRext">Result</h4>
     <br />
     <div>
-      <!--  {{pollId}}-->
       <h2 id="rubrikFråga" v-if="!end">
         <Question v-bind:question="question" v-on:answer="submitAnswer" />
         {{ question }}
       </h2>
+      <br>
+       <p> Poll-name: {{pollId}}</p>
       <div v-if="end"><br /><br /><br /><br /></div>
     </div>
     </header>
-    <main class="page">
+    <div v-if="emptyPoll">
+      <p>Error: This poll doesn't have any questions. Try going back and rewrite the poll name or edit the poll to add questions.</p>
+      <router-link v-bind:to="'//'" tag="button">
+        <button class="tillbakaTillStart">Tillbaka till main</button>
+      </router-link>
+    </div>
+    <main class="page" v-if="!emptyPoll">
       <section v-if="!end" class="showResult">
         <div v-if="isClicked && !end" class="theBars">
           <div class="clicked" v-if="isClicked"></div>
@@ -39,21 +46,18 @@
         </div>
         <div class="knapppanel" v-if="!end">
           <div class="knappIResult">
-            <!--  <router-link v-bind:to="'/poll/' + pollId">next Question</router-link>-->
             <button class="prevButton" v-on:click="prevQuestion">
               Previous Question
             </button>
             <button class="nextButton" v-if="!lastQuestion" v-on:click="runQuestion">
               Next Question
             </button>
-            <button id="endButton" v-if="lastQuestion" v-on:click="end = true">
+            <button id="endButton" v-if="lastQuestion" v-on:click="resetAnswers">
               Finish Poll
               </button>
             <button class="revanswer" v-on:click="clicked">
               Reveal Answer
             </button>
-            <!-- <br /><br /><br /><br />{{ isClicked }} <br />(för förtydl.
-            atm)fråga nummer: {{ questionNumber }} (bara för tydlighet atm) -->
           </div>
         </div>
       </section>
@@ -61,10 +65,7 @@
       <div class="endDivBack">
         <div class="endDiv" v-if="end">
           <div><h3>Poll done!</h3></div>
-          <div></div>
-          <div></div>
           <div>
-            <br /><br /><br /><br /><br />
             <router-link v-bind:to="'//'" tag="button">
               <button class="tillbakaTillStart">Tillbaka till main</button>
             </router-link>
@@ -79,7 +80,6 @@
 import Bars from "@/components/Bars.vue";
 import Circle from "@/components/Circle.vue";
 import io from "socket.io-client";
-// import party from "party-js";
 const socket = io();
 export default {
   name: "Result",
@@ -96,11 +96,15 @@ export default {
       lastQuestion: false,
       end:false,
       data: {},
+      emptyPoll:false,
     };
   },
   computed: {
     numberOfAnswers: function () {
       let tot = 0;
+      if (typeof this.data =='undefined'){
+        return;
+      }
       for (let a of Object.keys(this.data)) tot += this.data[a];
       return tot;
     },
@@ -119,6 +123,12 @@ export default {
     });
     socket.on("allQuestions", (questions) => {
       this.questions = questions;
+      if(this.questions.length==1){
+       this.lastQuestion=true;
+     }
+     if(this.questions.length==0){
+       this.emptyPoll = true;
+     }
     });
   },
   methods: {
@@ -135,24 +145,16 @@ export default {
       socket.emit("switchLanguage", this.lang);
     },
     runQuestion: function () {
-      console.log(this.questions.length);
       if (this.questionNumber >= this.questions.length - 2) {
         this.lastQuestion = true;
-        // party.setting.debug=true;
       }
-      /*  else{
-        this.end=true;
-      }*/
+
       this.isClicked = false;
       this.questionNumber += 1;
       socket.emit("runQuestion", {
         pollId: this.pollId,
         questionNumber: this.questionNumber,
       });
-      //hitta max antal numebr för att få avslutande bild
-      /*  if (this.questionNumber >  questions.length)  {
-        showFinish=true;
-      }*/
     },
     prevQuestion: function () {
       this.lastQuestion=false;
@@ -173,28 +175,29 @@ export default {
         this.isClicked = false;
       }
     },
-    /*  nextQuestion: function (){
-      this.questionNumber +=1;
-    },*/
+    resetAnswers: function() {
+    this.end = true;
+    if(confirm("To reset the answers for this poll press 'ok', otherwise they will be stored as answers")){
+      socket.emit("resetPoll", {
+        pollId: this.pollId
+      })
+      }
+    },
   },
 };
 </script>
 <style>
 
-header h4 {
+header {
   margin: 0;
-  /* padding-left: 1.3em; */
   font-family: "Lucida Console", "Monaco", monospace;
   text-align: center;
   color: rgb(224, 100, 187);
-  text-transform: uppercase;
   overflow: hidden;
   position: relative;
-  padding-top: 20px;
 }
 header h2 {
   margin: 0;
-  /* padding-left: 1.3em; */
   font-size: 3em;
   font-family: "Lucida Console", "Monaco", monospace;
   text-align: center;
@@ -226,11 +229,7 @@ h4 {
 }
 .showResult section {
   padding: 1em;
-
 }
-/* .knapppanel {
-  padding-bottom: 4em;
-} */
 
 .knapppanel button{
   display: inline-block;
@@ -257,35 +256,6 @@ h4 {
 
 #endButton{
   background-color: red;
-}
-/* .nextButton {
-  background-color: #e6f0ff;
-  width: 80px;
-  height: 40px;
-  position: relative;
-  box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
-  color:#ff6666
-  font-family: "Lucida Console", "Monaco", monospace;
-}
-.prevButton {
-  background-color: #e6f0ff;
-  width: 80px;
-  height: 40px;
-  position: relative;
-  box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
-  color:#ff6666
-  font-family: "Lucida Console", "Monaco", monospace;
-}
-.revanswer {
-  background-color: #e6f0ff;
-  width: 80px;
-  height: 40px;
-  position: relative;
-  box-shadow: 0 -0.2em 0 -0.35em rgba(0, 0, 0, 0.17);
-  color:#ff6666
-  font-family: "Lucida Console", "Monaco", monospace;
-} */
-.hideResult {
 }
 .waitingDiv {
   position: relative;
@@ -314,9 +284,6 @@ h4 {
 .youAnswered {
   color: black;
   padding-top: 1em;
-}
-.answers {
-  colour: purple;
 }
 .tillbakaTillStart {
   display: inline-block;
