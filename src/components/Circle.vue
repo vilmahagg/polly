@@ -1,7 +1,5 @@
-circle
 
 <template>
-  <!-- Vilmas cirklar -->
   <div class="wrapper">
     <div class="circles" v-for="(item, key) in data" v-bind:key="key">
       <div class="circle" v-bind:style="{ height: item + '9px', width: item + '9px' }">
@@ -13,47 +11,17 @@ circle
 </template>
 
 <script>
-// Vilmas cirklar
+
 export default {
   name: "Circle",
   props: {
     data: Object,
   },
 };
-// import VueCharts from 'vue-chartjs'
-// import { Bar, Line } from 'vue-chartjs'
-// vue.component('pie-chart', {
-// 	extends: VueChartJs.Pie,
-// 	data: function () {
-// 		return {
-// 			datacollection: {
-// 				labels: ['Pie 1', 'Pie 2', 'Pie 3', 'Pie 4', 'Pie 5'],
-// 				datasets: [
-// 					{
-// 						backgroundColor: [ '#1E9600', '#99C802', '#FFF200', '#F89403',	'#FF0000' ],
-// 						data: [1, 2, 3, 4, 5],
-// 					},
-// 				],
-// 			},
-// 			options: {
-// 				responsive: true,
-// 				legend: {
-// 					display: true,
-// 					position: 'right',
-// 				},
-//   	 },
-//    }
-//  },
-// 	mounted () {
-// 		// this.chartData is created in the mixin
-// 		this.renderChart(this.datacollection, this.options,
-//     this.options)
-//     	}
-//     })
+
 </script>
 
 <style scoped>
-/* Vilmas cirklar */
 .wrapper {
   display: inline-block;
   word-wrap: break-word;

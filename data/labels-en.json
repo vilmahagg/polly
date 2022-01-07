@@ -72,6 +72,8 @@
 	"revAns":"REVEAL ANSWER",
 	"pollDone": "Poll Done!",
 	"pollCompleted": "You completed the poll!",
-	"youAns": "You Answered"
+	"youAns": "You Answered",
+	"theme":"Dark mode",
+	"getReady":"Get ready for the next question"
 
 }

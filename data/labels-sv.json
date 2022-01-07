@@ -72,7 +72,9 @@
 	"revAns":"VISA SVAR",
 	"pollDone":"Poll Färdig!",
 	"pollCompleted":"Du är färdig med pollen!",
-	"youAns": "Du svarade"
+	"youAns": "Du svarade",
+	"theme": "Mörkt läge",
+	"getReady":"Gör dig redo för nästa fråga"
 
 
 }

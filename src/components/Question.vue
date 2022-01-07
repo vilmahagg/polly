@@ -1,6 +1,6 @@
 <template>
 
- <button class="themeButton" v-on:click="theme">Dark theme</button>
+ <button class="themeButton" v-on:click="theme">{{uiLabels.theme}}</button>
 
  <div v-if="!dark">
   <div class="question" v-if="selectedAnswer == null || answered == false">
@@ -52,12 +52,11 @@
         <div></div>
         <div></div>
       </div>
-      <br />
       <h1 class="youAnswered">
-        You answered:
+        {{uiLabels.youAns}}
         <h1 class="waitingAnswer">{{ question.a[selectedAnswer] }}</h1>
       </h1>
-      <h2 class="getready">Get ready for the next question</h2>
+      <h2 class="getready">{{uiLabels.getReady}}</h2>
     </div>
     </div>
 
@@ -72,12 +71,11 @@
         <div></div>
         <div></div>
       </div>
-      <br />
       <h1 class="youAnswered">
-        You answered:
+        {{uiLabels.youAns}}
         <h1 class="waitingAnswer">{{ question.a[selectedAnswer] }}</h1>
       </h1>
-      <h2 class="getreadyDark" >Get ready for the next question</h2>
+      <h2 class="getreadyDark" >{{uiLabels.getReady}}</h2>
      
     </div>
   </div>
@@ -85,6 +83,8 @@
 </template>
 
 <script>
+import io from 'socket.io-client';
+const socket = io();
 export default {
   name: "Question",
   props: {
@@ -100,7 +100,18 @@ export default {
       selectedAnswer: null,
       answered: false,
       dark:false,
+      lang:"",
+      uiLabels:{}
     };
+  },
+  created: function () {
+    this.lang = this.$route.params.lang;
+
+    socket.emit("pageLoaded", this.lang);
+    socket.on("init", (labels) => {
+      console.log(labels);
+      this.uiLabels = labels
+    })
   },
 
   methods: {
