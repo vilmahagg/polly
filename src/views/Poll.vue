@@ -8,6 +8,15 @@
               v-on:answer="submitAnswer"/>
   </div>
   </header>
+
+  <div v-if="emptyPoll">
+    <p>{{uiLabels.noQuestions}}</p>
+    <router-link v-bind:to="'//'" tag="button">
+      <button class="tillbakaTillStart">{{uiLabels.backToStart}}</button>
+    </router-link>
+  </div>
+
+<main v-if= "!emptyPoll">
   <div class ="finishDiv" v-if="isFinished">
     <h2>{{uiLabels.pollCompleted}}</h2>
     <p style ="font-weight:bold">{{uiLabels.youAns}}:</p>
@@ -20,6 +29,7 @@
             </router-link>
             </div>
   </div>
+</main>
 
 </template>
 
@@ -46,6 +56,7 @@ export default {
       answers:[],
       isFinished:false,
       pollId: "inactive poll",
+      emptyPoll:false,
     }
   },
   created: function () {
@@ -62,6 +73,9 @@ export default {
     )
     socket.on("allQuestions", (questions) => {
       this.questions = questions;
+      if(this.questions.length==0){
+        this.emptyPoll = true;
+      }
     });
   },
 
@@ -80,7 +94,15 @@ export default {
 </script>
 
 <style>
-
+header {
+  height:auto;
+  margin: 0;
+  font-family: "Lucida Console", "Monaco", monospace;
+  text-align: center;
+  color: rgb(224, 100, 187);
+  overflow: hidden;
+  position: relative;
+}
 .finishDiv {
   display: inline-block;
   position: relative;
@@ -109,5 +131,24 @@ export default {
   position: relative;
   border: none;
 }
-
+.tillbakaTillStart {
+  display: inline-block;
+  padding: 0.7em 1.4em;
+  margin: 1em 0.3em 0.3em 0;
+  border-radius: 0.15em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Lucida Console", "Monaco", monospace;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: white;
+  background-color: #ab87ee;
+  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
+  text-align: center;
+  position: relative;
+  border: none;
+}
+.pollIdtext{
+  color: #E064BB;
+}
 </style>

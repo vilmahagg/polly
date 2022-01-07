@@ -263,6 +263,12 @@ header {
   height: 12em;
   margin: 0;
   margin-bottom: 0.5em;
+  height:auto;
+  margin: 0;
+  font-family: "Lucida Console", "Monaco", monospace;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
 }
 header h1 {
   text-align: center;
