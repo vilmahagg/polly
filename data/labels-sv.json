@@ -33,7 +33,7 @@
 	"saveQuestionButton":"Spara Frågan",
 	"fillAll":"Fyll alla tomma fält innan du går vidare",
 	"nameOfPoll":"Namnet på denna poll är",
-	"yourSlides":"Dina slides",
+	"yourSlides":"DINA SLIDES",
 	"howCreate":"Hur du skapar en röstning:",
 	"showHide":"Visa/göm instruktioner",
 	"instructionAdd1":"Lägg till en ny fråga med",
@@ -54,11 +54,23 @@
 	"editResultForEach": "REDIGERA RESULTATVYN FÖR VARJE SLIDE",
 	"bars": "Stapeldiagram ",
 	"circle": "Cirkeldiagram",
-	"finishPresentations": "Slutför Presenataion",
+	"finishPresentations": "Slutför Presentation",
 	"successfullyCreated": "DIN POLL ÄR SKAPAD!!",
 	"note": "Kom ihåg: Denna kod används även för att redigera din poll",
 	"pollCode": "DETTA ÄR DIN POLL-KOD, SPARA OCH DELA DEN MED ALLA DELTAGARE",
-	"waitUntilLater": "Spara till senare tillfälle"
+	"waitUntilLater": "Spara till senare tillfälle",
+	"result": "Resultat",
+	"pollId": "Poll-namn",
+	"noQuestions": "Fel: Denna poll har inga frågor. Prova att gå tillbaka för att skriva om poll-namnet eller redigera pollen för att lägga till frågor.",
+	"backToStart": "Tillbaka till start",
+	"q":"Fråga",
+	"of": "av",
+	"sub": "Inkomna Svar:",
+	"prevQ":"FÖREGÅENDE FRÅGA",
+	"nextQ":"NÄSTA FRÅGA",
+	"finishPoll":"AVSLUTA POLL",
+	"revAns":"VISA SVAR",
+	"pollDone":"Poll Färdig!"
 
 
 }

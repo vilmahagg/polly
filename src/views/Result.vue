@@ -1,22 +1,20 @@
 
 <template>
   <header>
-    <h4 id="rubrikRext">Result</h4>
-    <br />
+    <h4 id="rubrikRext">{{uiLabels.result}}</h4>
     <div>
       <h2 id="rubrikFråga" v-if="!end">
         <Question v-bind:question="question" v-on:answer="submitAnswer" />
         {{ question }}
       </h2>
-      <br>
-       <p> Poll-name: {{pollId}}</p>
-      <div v-if="end"><br /><br /><br /><br /></div>
+       <p> {{uiLabels.pollId}}: {{pollId}}</p>
+      <div v-if="end"></div>
     </div>
     </header>
     <div v-if="emptyPoll">
-      <p>Error: This poll doesn't have any questions. Try going back and rewrite the poll name or edit the poll to add questions.</p>
+      <p>{{uiLabels.noQuestions}}</p>
       <router-link v-bind:to="'//'" tag="button">
-        <button class="tillbakaTillStart">Tillbaka till main</button>
+        <button class="tillbakaTillStart">{{uiLabels.backToStart}}</button>
       </router-link>
     </div>
     <main class="page" v-if="!emptyPoll">
@@ -36,9 +34,9 @@
           </div>
 
           <div class="youAnswered">
-             <p>Fråga {{ questionNumber + 1 }} av {{ questions.length }}</p>
+             <p>{{uiLabels.q}} {{ questionNumber + 1 }} {{uiLabels.of}} {{ questions.length }}</p>
             <br>
-            <h2>Answers submitted</h2>
+            <h2>{{uiLabels.sub}}</h2>
             <h1 class="answers">{{ numberOfAnswers }}</h1>
           </div>
 
@@ -47,16 +45,16 @@
         <div class="knapppanel" v-if="!end">
           <div class="knappIResult">
             <button class="prevButton" v-on:click="prevQuestion">
-              Previous Question
+              {{uiLabels.prevQ}}
             </button>
             <button class="nextButton" v-if="!lastQuestion" v-on:click="runQuestion">
-              Next Question
+              {{uiLabels.nextQ}}
             </button>
             <button id="endButton" v-if="lastQuestion" v-on:click="resetAnswers">
-              Finish Poll
+              {{uiLabels.finishPoll}}
               </button>
             <button class="revanswer" v-on:click="clicked">
-              Reveal Answer
+              {{uiLabels.revAns}}
             </button>
           </div>
         </div>
@@ -64,10 +62,10 @@
 
       <div class="endDivBack">
         <div class="endDiv" v-if="end">
-          <div><h3>Poll done!</h3></div>
+          <div><h3>{{uiLabels.pollDone}}</h3></div>
           <div>
             <router-link v-bind:to="'//'" tag="button">
-              <button class="tillbakaTillStart">Tillbaka till main</button>
+              <button class="tillbakaTillStart">{{uiLabels.backToStart}}</button>
             </router-link>
           </div>
         </div>
@@ -89,9 +87,11 @@ export default {
   },
   data: function () {
     return {
+      lang:"",
       question: "",
       questionNumber: 0,
       questions: 0,
+      uiLabels: {},
       isClicked: false,
       lastQuestion: false,
       end:false,
@@ -110,8 +110,16 @@ export default {
     },
   },
   created: function () {
-    this.pollId = this.$route.params.id;
+    this.pollId = this.$route.params.id
+    this.lang = this.$route.params.lang;
+
+    socket.emit("pageLoaded", this.lang);
+    socket.on("init", (labels) => {
+      console.log(labels);
+      this.uiLabels = labels
+    })
     socket.emit("joinPoll", this.pollId);
+
     socket.on("dataUpdate", (update) => {
       this.data = update.a;
       this.question = update.q;
@@ -132,18 +140,6 @@ export default {
     });
   },
   methods: {
-    switchLanguage: function () {
-      if (this.lang === "en") {
-        this.lang = "sv";
-        this.flag =
-          "https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png";
-      } else {
-        this.lang = "en";
-        this.flag =
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Svensk_flagg_1815.svg/2560px-Svensk_flagg_1815.svg.png";
-      }
-      socket.emit("switchLanguage", this.lang);
-    },
     runQuestion: function () {
       if (this.questionNumber >= this.questions.length - 2) {
         this.lastQuestion = true;
@@ -189,6 +185,7 @@ export default {
 <style>
 
 header {
+  height:auto;
   margin: 0;
   font-family: "Lucida Console", "Monaco", monospace;
   text-align: center;
