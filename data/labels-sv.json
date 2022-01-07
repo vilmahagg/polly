@@ -70,7 +70,9 @@
 	"nextQ":"NÄSTA FRÅGA",
 	"finishPoll":"AVSLUTA POLL",
 	"revAns":"VISA SVAR",
-	"pollDone":"Poll Färdig!"
+	"pollDone":"Poll Färdig!",
+	"pollCompleted":"Du är färdig med pollen!",
+	"youAns": "Du svarade"
 
 
 }

@@ -3,21 +3,21 @@
 
     <h1>EasyPoll</h1>
     <div class="pollName" v-if="startStudent">
-    <p>PollId:{{pollId}}</p>
+    <p>{{uiLabels.pollId}}:{{pollId}}</p>
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
   </div>
   </header>
 
   <div class ="finishDiv" v-if="isFinished && startStudent">
-    <h2>You completed the poll!</h2>
-    <p style ="font-weight:bold">You answered:</p>
+    <h2>{{uiLabels.pollCompleted}}</h2>
+    <p style ="font-weight:bold">{{uiLabels.youAns}}:</p>
     <p v-for="(answer,key) in answers" v-bind:key="answer">
-      Question {{key+1}}:{{answer}}
+     {{uiLabels.q}} {{key+1}}: {{answer}}
       </p>
       <div>
        <router-link v-bind:to="'//'" tag="button">
-              <button class="startRouter">Tillbaka till startsidan</button>
+              <button class="startRouter">{{uiLabels.backToStart}}</button>
             </router-link>
             </div>
   </div>
@@ -46,6 +46,8 @@ export default {
         q: "",
         a: [],
       },
+      lang:"",
+      uiLabels:{},
       result:"",
       answers:[],
       isFinished:false,
@@ -56,6 +58,13 @@ export default {
   },
   created: function () {
     this.pollId = this.$route.params.id
+    this.lang = this.$route.params.lang;
+
+    socket.emit("pageLoaded", this.lang);
+    socket.on("init", (labels) => {
+      console.log(labels);
+      this.uiLabels = labels
+    })
     socket.emit('joinPoll', this.pollId)
     socket.on("newQuestion", q =>
       this.question = q

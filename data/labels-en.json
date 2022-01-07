@@ -70,6 +70,8 @@
 	"nextQ":"NEXT QUESTION",
 	"finishPoll":"FINISH POLL",
 	"revAns":"REVEAL ANSWER",
-	"pollDone": "Poll Done!"
+	"pollDone": "Poll Done!",
+	"pollCompleted": "You completed the poll!",
+	"youAns": "You Answered"
 
 }
