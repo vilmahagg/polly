@@ -70,7 +70,7 @@ Data.prototype.editQuestion = function(pollId, newQuestion, index) {
     poll.questions[index] = newQuestion;
   }
   console.log("question ", index, " in poll: ", pollId, " updated to:", newQuestion)
-} 
+}
 
 Data.prototype.moveUp = function(pollId, index){
   const poll = this.polls[pollId];
@@ -92,7 +92,7 @@ Data.prototype.moveDown = function(pollId, index){
       poll.questions[index+1] = temp;
     }
   }
-}  
+}
 
 Data.prototype.getQuestion = function(pollId, qId=null) {
   const poll = this.polls[pollId];
@@ -108,7 +108,7 @@ Data.prototype.getQuestion = function(pollId, qId=null) {
 
 Data.prototype.getAllQuestions = function(pollId) {
   const poll = this.polls[pollId];
-  console.log("get all questions",poll.questions);
+  console.log("get all questions");
   if (typeof poll !== 'undefined') {
     return poll.questions
   }

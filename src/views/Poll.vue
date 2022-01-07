@@ -2,13 +2,13 @@
 <header>
 
     <h1>EasyPoll</h1>
-    <div class="pollName" v-if="startStudent">
+    <div class="pollName">
     <p>{{uiLabels.pollId}}:{{pollId}}</p>
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
   </div>
   </header>
-  <div class ="finishDiv" v-if="isFinished && startStudent">
+  <div class ="finishDiv" v-if="isFinished">
     <h2>{{uiLabels.pollCompleted}}</h2>
     <p style ="font-weight:bold">{{uiLabels.youAns}}:</p>
     <p v-for="(answer,key) in answers" v-bind:key="answer">
@@ -19,11 +19,6 @@
               <button class="startRouter">{{uiLabels.backToStart}}</button>
             </router-link>
             </div>
-  </div>
-
-  <div class = "ifNotStart" v-if="!startStudent">
-    wait till host starts the poll
-    {{startStudent}}
   </div>
 
 </template>
@@ -51,8 +46,6 @@ export default {
       answers:[],
       isFinished:false,
       pollId: "inactive poll",
-      startStudent: true,
-      //ändra denna till false
     }
   },
   created: function () {
@@ -70,10 +63,6 @@ export default {
     socket.on("allQuestions", (questions) => {
       this.questions = questions;
     });
-    socket.on("startForStudents", (startStudent) => {
-      this.startStudent = startStudent;
-    })
-
   },
 
 

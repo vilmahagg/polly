@@ -213,14 +213,14 @@ h4 {
   width:100%;
   height:50%;
   padding-bottom: 2em;
-  background-color: rgb(241, 221, 181);
+  background-color: rgb(243, 220, 243);
   margin: 0 auto;
   border-radius: 25px;
   overflow-y:auto;
   overflow-x:hidden;
 }
 .showResult {
-  background-color: wheat;
+  background-color:rgb(243, 220, 243);
   padding: 2em;
   height:100vh;
 }

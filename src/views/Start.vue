@@ -115,7 +115,7 @@
         <p>
           {{uiLabels.bestApp}} <br />
           {{uiLabels.bestInClassroom}}
-         
+
         </p>
         <h3>{{uiLabels.creators}}</h3>
         <div class="creatorInfo">
@@ -202,7 +202,6 @@ export default {
       isClicked: false,
       pollId: "",
       questionNumber: 0,
-      startStudent: true,
     };
   },
   created: function () {
@@ -251,8 +250,7 @@ export default {
      pollId: this.pollId,
      questionNumber: this.questionNumber,
    });
-   this.startStudent=true;
-   socket.emit("startForStudents", this.startStudent)
+
   },
   },
 };
