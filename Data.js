@@ -108,7 +108,7 @@ Data.prototype.getQuestion = function(pollId, qId=null) {
 
 Data.prototype.getAllQuestions = function(pollId) {
   const poll = this.polls[pollId];
-  console.log("get all questions");
+  console.log("get all questions",poll.questions);
   if (typeof poll !== 'undefined') {
     return poll.questions
   }

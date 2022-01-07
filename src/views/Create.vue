@@ -79,8 +79,8 @@
           <p>{{uiLabels.yourSlides}}</p>
           <div
             class="slides"
-            v-for="(question, index, slide) in data.questions"
-            v-bind:key="'question' + index + slide"
+            v-for="(question, index) in data.questions"
+            v-bind:key="'question' + index"
           >
             <div class="changePlaceButtons">
               <button v-on:click="moveUp(question, index)">
@@ -202,11 +202,6 @@
         </div>
       </div>
 
-      <br>
-
-
-      <br />
-
       <div class="finishedSide" v-if="isFinished">
         <h2>{{ uiLabels.successfullyCreated }}</h2>
         <div class="msg-icn">
@@ -219,7 +214,7 @@
             {{ uiLabels.pollCode }}
           </div>
           <div>
-            <span class="pollCode"> {{ pollId }}</span>
+            <span class="pollCode">{{ pollId }}</span>
           </div>
         </div>
 
@@ -228,17 +223,6 @@
             <button class="next-button" type="button">{{uiLabels.startPollNow}}</button>
             <div class="next-point"></div>
           </router-link>
-
-          <br />
-
-
-          <!--<div class="stButton">
-                      <router-link v-bind:to="'/result/' + pollId">
-                        <button class="startButton">Start poll now!</button>
-                      </router-link>
-                    </div>
-                    -->
-
 
           <router-link to="/">
             <button v-on:click="waitUntilLater" class="waitButton">
@@ -868,7 +852,6 @@ header {
   margin-left: 25%;
 }
 .pollCode {
-  text-transform: uppercase;
   font-weight: bold;
   font-size: 25px;
   color: #10080e;

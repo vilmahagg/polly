@@ -8,7 +8,6 @@
               v-on:answer="submitAnswer"/>
   </div>
   </header>
-
   <div class ="finishDiv" v-if="isFinished && startStudent">
     <h2>{{uiLabels.pollCompleted}}</h2>
     <p style ="font-weight:bold">{{uiLabels.youAns}}:</p>
@@ -62,7 +61,6 @@ export default {
 
     socket.emit("pageLoaded", this.lang);
     socket.on("init", (labels) => {
-      console.log(labels);
       this.uiLabels = labels
     })
     socket.emit('joinPoll', this.pollId)
@@ -81,9 +79,8 @@ export default {
 
   methods: {
     submitAnswer: function (answer) {
-
       socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
-         if (this.question.slide == this.questions.length){
+      if (JSON.stringify(this.question)=== JSON.stringify(this.questions[this.questions.length-1])){
         this.isFinished = true;
       }
       this.answers.push(answer);
