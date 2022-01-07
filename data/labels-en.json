@@ -58,6 +58,7 @@
 	"successfullyCreated": "YOU SUCCESSFULLY CREATED YOUR POLL!!",
 	"note": "Note: This code is also used to edit the poll later on!",
 	"pollCode": "THIS IS YOUR POLL-CODE, SAVE AND SHARE IT WITH YOUR PARTICIPANTS :",
+	"startPollNow":"START POLL NOW!",
 	"waitUntilLater": "Wait until later ",
 	"result": "Result",
 	"pollId": "Poll name",

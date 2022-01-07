@@ -225,7 +225,7 @@
 
         <div class="waitandstartButton">
           <router-link v-bind:to="'/result/' + pollId + '/' + lang">
-            <button class="next-button" type="button">Start poll now!</button>
+            <button class="next-button" type="button">{{uiLabels.startPollNow}}</button>
             <div class="next-point"></div>
           </router-link>
 
