@@ -201,12 +201,18 @@
           </button>
         </div>
       </div>
+
+      <br>
+
+
       <br />
+
       <div class="finishedSide" v-if="isFinished">
         <h2>{{ uiLabels.successfullyCreated }}</h2>
         <div class="msg-icn">
           {{ uiLabels.note }}
         </div>
+
 
         <div class="wrapper">
           <div class="pollCode2">
@@ -223,6 +229,17 @@
             <div class="next-point"></div>
           </router-link>
 
+          <br />
+
+
+          <!--<div class="stButton">
+                      <router-link v-bind:to="'/result/' + pollId">
+                        <button class="startButton">Start poll now!</button>
+                      </router-link>
+                    </div>
+                    -->
+
+
           <router-link to="/">
             <button v-on:click="waitUntilLater" class="waitButton">
             {{ uiLabels.waitUntilLater }}
@@ -230,6 +247,7 @@
           </router-link>
 
         </div>
+
       </div>
     </div>
   </div>
@@ -886,7 +904,8 @@ header {
   margin: 10em auto auto auto;
   width: 70%;
 }
-.wrapper {
+
+  .wrapper {
   display: grid;
   grid-template-columns: 50% 5% 30%;
 }
@@ -942,7 +961,7 @@ header {
   border: none;
   background-color: #60c265;
   display: inline-block;
-  line-height: 80px;
+
   height: 80px;
   padding: 0 1rem;
   font-weight: bold;
@@ -964,10 +983,16 @@ header {
   border-left: 40px solid #60c265;
   border-right: 40px solid transparent;
 }
+
+.finishedSide{
+  height: 30em;
+}
+
 .finishedSide {
   background-color: #f0e7f3;
   height: 100vh;
 }
+
 .all {
   font-size: 16px;
 }
@@ -1063,5 +1088,60 @@ header {
   .waitandstartButton a {
     width: 30%;
   }
+
+  }
+@media only screen and (max-width: 500px){
+
+  .finishedSide{
+    height:400px;
+  }
+  .msg-icn{
+    margin-left: 235px;
+    margin-right: 20px;
+    margin-bottom: 40px;
+  }
+
+  .msg-icn:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 20px solid transparent;
+    border-top-color: #e16c76;
+    border-bottom: 0;
+    border-left: 0;
+    margin-left: -16.5px;
+    margin-bottom: -19px;
+  }
+
+  .pollCode2{
+    margin-left:20px;
+  }
+  .pollCode{
+    font-size: 18px;
+
+  }
+  .waitButton{
+    width: 8em;
+    height: 4em;
+  }
+
+  .next-button{
+    width: 8em;
+    height: 4em;
+    text-align: center;
+    position: relative;
+
+  }
+  .next-point{
+    border-top: 27px solid transparent;
+    border-bottom: 27px solid transparent;
+    border-left: 28px solid #60c265;
+    border-right: 28px solid transparent;
+
+  }
+
 }
 </style>
