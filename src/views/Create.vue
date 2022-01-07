@@ -874,7 +874,7 @@ header {
   color: #10080e;
   font-family: "Roboto", sans-serif;
   border: 5px solid;
-  border-color: #e16c76;
+  border-color: #d9b1f3;
   padding: 0.5em;
 }
 .pollCode2 {
@@ -901,17 +901,22 @@ header {
   border: none;
 }
 .waitandstartButton {
-  margin: 10em auto auto auto;
-  width: 70%;
+  margin-top: 150px;
+  display: grid;
+  grid-template-columns: 57% 3% 30%;
+  grid-template-rows: 50px;
+  grid-column-gap: 5px;
+
 }
 
-  .wrapper {
+.wrapper {
   display: grid;
   grid-template-columns: 50% 5% 30%;
+
 }
 .msg-icn {
   position: relative;
-  background: #e16c76;
+  background: #d9b1f3;
   border-radius: 0.4em;
   margin-left: 900px;
   margin-right: 80px;
@@ -928,7 +933,7 @@ header {
   width: 0;
   height: 0;
   border: 33px solid transparent;
-  border-top-color: #e16c76;
+  border-top-color: #d9b1f3;
   border-bottom: 0;
   border-left: 0;
   margin-left: -16.5px;
@@ -938,8 +943,6 @@ header {
   width: 12em;
   height: 6em;
   display: inline-block;
-  padding: 0.7em 1.4em;
-  margin: 0 0.3em 0.3em 0;
   border-radius: 0.15em;
   box-sizing: border-box;
   text-decoration: none;
@@ -961,13 +964,12 @@ header {
   border: none;
   background-color: #60c265;
   display: inline-block;
-
   height: 80px;
   padding: 0 1rem;
   font-weight: bold;
-  color: #113952;
+  color: #f8faf7;
   background-color: #60c265;
-  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
+  box-shadow: inset 0 -0.6em 0 -0.35em rgba(3, 3, 3, 0.17);
   text-align: center;
   position: relative;
   border: none;
@@ -1082,12 +1084,6 @@ header {
     text-align: left;
     font-size: 16px;
   }
-  .waitandstartButton {
-    width: 100%;
-  }
-  .waitandstartButton a {
-    width: 30%;
-  }
 
   }
 @media only screen and (max-width: 500px){
@@ -1109,7 +1105,7 @@ header {
     width: 0;
     height: 0;
     border: 20px solid transparent;
-    border-top-color: #e16c76;
+    border-top-color: #d9b1f3;
     border-bottom: 0;
     border-left: 0;
     margin-left: -16.5px;
