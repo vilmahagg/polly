@@ -201,22 +201,19 @@
           </button>
         </div>
       </div>
-<<<<<<< HEAD
+
       <br>
 
-=======
+
       <br />
->>>>>>> 9ec97c56cd4ac034ab599248329e1627557f7fc0
+
       <div class="finishedSide" v-if="isFinished">
         <h2>{{ uiLabels.successfullyCreated }}</h2>
         <div class="msg-icn">
           {{ uiLabels.note }}
         </div>
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 9ec97c56cd4ac034ab599248329e1627557f7fc0
         <div class="wrapper">
           <div class="pollCode2">
             {{ uiLabels.pollCode }}
@@ -232,17 +229,8 @@
             <div class="next-point"></div>
           </router-link>
 
-<<<<<<< HEAD
           <br />
-          <div class="wtButton">
-            <router-link to="/">
-              <button v-on:click="waitUntilLater" class="waitButton">
-                Wait until later
-              </button>
-            </router-link>
 
-          </div>
-        </section>
 
           <!--<div class="stButton">
                       <router-link v-bind:to="'/result/' + pollId">
@@ -251,7 +239,7 @@
                     </div>
                     -->
 
-=======
+
           <router-link to="/">
             <button v-on:click="waitUntilLater" class="waitButton">
             {{ uiLabels.waitUntilLater }}
@@ -259,7 +247,7 @@
           </router-link>
 
         </div>
->>>>>>> 9ec97c56cd4ac034ab599248329e1627557f7fc0
+
       </div>
     </div>
   </div>
@@ -973,7 +961,7 @@ header {
   border: none;
   background-color: #60c265;
   display: inline-block;
-  line-height: 80px;
+
   height: 80px;
   padding: 0 1rem;
   font-weight: bold;
@@ -995,12 +983,12 @@ header {
   border-left: 40px solid #60c265;
   border-right: 40px solid transparent;
 }
-<<<<<<< HEAD
+
 .finishedSide{
   height: 30em;
-=======
+}
+
 .finishedSide {
->>>>>>> 9ec97c56cd4ac034ab599248329e1627557f7fc0
   background-color: #f0e7f3;
   height: 100vh;
 }
@@ -1103,6 +1091,7 @@ header {
 
   }
 @media only screen and (max-width: 500px){
+
   .finishedSide{
     height:400px;
   }
@@ -1137,21 +1126,13 @@ header {
   .waitButton{
     width: 8em;
     height: 4em;
-
   }
-  .waitButton{
-    text-align: center;
-    position: relative;
 
-
-
-  }
   .next-button{
     width: 8em;
     height: 4em;
     text-align: center;
     position: relative;
-    font-siez: 1px;
 
   }
   .next-point{
