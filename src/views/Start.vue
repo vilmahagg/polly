@@ -65,7 +65,7 @@
         </div>
 
         <div>
-          <router-link v-bind:to="'/result/' + pollId" tag="button">
+          <router-link v-bind:to="'/result/' + pollId + '/' + lang" tag="button">
             <button class="participateButton" v-on:click="runQuestions">
               <h3>START</h3>
             </button>
@@ -86,7 +86,7 @@
         </div>
 
         <div>
-          <router-link v-bind:to="'/poll/' + id" tag="button">
+          <router-link v-bind:to="'/poll/' + id + '/' + lang" tag="button">
             <button class="participateButton" v-on:click="isClicked = true">
               <h3>Start</h3>
             </button>

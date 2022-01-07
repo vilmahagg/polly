@@ -33,7 +33,7 @@
 	"saveQuestionButton":"Save Question",
 	"fillAll":"Please fill all empty fields before saving question",
 	"nameOfPoll":"The name of this poll is",
-	"yourSlides":"Your slides",
+	"yourSlides":"YOUR SLIDES",
 	"howCreate":"How to create poll:",
 	"showHide":"Show/Hide instructions",
 	"instructionAdd1":"Add a new slide with the",
@@ -58,6 +58,18 @@
 	"successfullyCreated": "YOU SUCCESSFULLY CREATED YOUR POLL!!",
 	"note": "Note: This code is also used to edit the poll later on!",
 	"pollCode": "THIS IS YOUR POLL-CODE, SAVE AND SHARE IT WITH YOUR PARTICIPANTS :",
-	"waitUntilLater": "Wait until later "
+	"waitUntilLater": "Wait until later ",
+	"result": "Result",
+	"pollId": "Poll name",
+	"noQuestions": "Error: This poll doesn't have any questions. Try going back and rewrite the poll name or edit the poll to add questions.",
+	"backToStart": "Back to start",
+	"q":"Question",
+	"of": "of",
+	"sub": "Answers Submitted:",
+	"prevQ":"PREVIOUS QUESTION",
+	"nextQ":"NEXT QUESTION",
+	"finishPoll":"FINISH POLL",
+	"revAns":"REVEAL ANSWER",
+	"pollDone": "Poll Done!"
 
 }
