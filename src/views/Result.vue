@@ -300,6 +300,9 @@ h4 {
   border: none;
 }
 
+.pollIdtext{
+  color: #E064BB;
+}
 
 @media only screen and (max-width: 500px) {
   .showResult{
