@@ -1,4 +1,5 @@
   <template>
+    <div id="nav">
   <header>
 
         <h1>EasyPoll</h1>
@@ -8,7 +9,7 @@
                 v-on:answer="submitAnswer"/>
     </div>
     </header>
-    <div v-if="emptyPoll">
+    <div class="page" v-if="emptyPoll">
       <p id= "noQuestion"> {{uiLabels.noQuestions}}</p>
       <router-link v-bind:to="'//'" tag="button">
         <button class="tillbakaTillStart">{{uiLabels.backToStart}}</button>
@@ -29,7 +30,7 @@
               </div>
     </div>
   </main>
-
+</div>
   </template>
 
   <script>
@@ -152,5 +153,20 @@
   }
   .noQuestion{
     position: static;
+  }
+  #page{
+    background-color: rgb(226, 201, 238);
+    height: 60em;
+    overflow-y: auto;
+  }
+  .colour{
+    background-color: black;
+    height: 100000em;
+
+    height: 60em;
+  }
+  #nav {
+    background: rgb(243, 220, 243);
+    height: 100vh;
   }
   </style>

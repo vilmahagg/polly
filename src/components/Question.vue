@@ -4,9 +4,7 @@
 
  <div v-if="!dark">
   <div class="question" v-if="selectedAnswer == null || answered == false">
-
     <p class="theQuestion">{{ question.q }}</p>
-
     <div class="answers">
       <button
         class="answerOption"
@@ -101,7 +99,7 @@ export default {
       answered: false,
       dark:false,
       lang:"",
-      uiLabels:{}
+      uiLabels:{},
     };
   },
   created: function () {
@@ -147,14 +145,14 @@ export default {
 }
 
 .question {
-  background-color: rgb(226, 201, 238);
-  height: 60em;
+  background-color:rgb(243, 220, 243);
+
   overflow-y: auto;
 }
 
 .questionDark{
   background-color: rgb(46, 48, 46);
-  height: 60em;
+  height:60em;
   overflow-y: auto;
 }
 
