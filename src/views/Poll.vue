@@ -9,20 +9,20 @@
     </div>
     </header>
     <div v-if="emptyPoll">
-      <p> {{uiLabels.noQuestions}}</p>
+      <p id= "noQuestion"> {{uiLabels.noQuestions}}</p>
       <router-link v-bind:to="'//'" tag="button">
         <button class="tillbakaTillStart">{{uiLabels.backToStart}}</button>
       </router-link>
     </div>
 
   <main class="page" v-if="!emptyPoll">
-    <div class ="finishDiv" v-if="isFinished">
-      <h2>{{uiLabels.pollCompleted}}</h2>
+    <div class ="finishDiv" v-if="isFinished && !emptyPoll">
+      <h2 v-if="!emptyPoll">{{uiLabels.pollCompleted}}</h2>
       <p style ="font-weight:bold">{{uiLabels.youAns}}:</p>
       <p v-for="(answer,key) in answers" v-bind:key="answer">
        {{uiLabels.q}} {{key+1}}: {{answer}}
         </p>
-        <div>
+        <div v-if="!emptyPoll">
          <router-link v-bind:to="'//'" tag="button">
                 <button class="startRouter">{{uiLabels.backToStart}}</button>
               </router-link>
@@ -149,5 +149,8 @@
     color: rgb(224, 100, 187);
     overflow: hidden;
     position: relative;
+  }
+  .noQuestion{
+    position: static;
   }
   </style>

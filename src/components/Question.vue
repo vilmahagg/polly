@@ -4,9 +4,9 @@
 
  <div v-if="!dark">
   <div class="question" v-if="selectedAnswer == null || answered == false">
-   
+
     <p class="theQuestion">{{ question.q }}</p>
-    
+
     <div class="answers">
       <button
         class="answerOption"
@@ -21,11 +21,11 @@
     </div>
   </div>
 
-  
+
 
  <div v-if="dark">
 <div class="questionDark" v-if="selectedAnswer == null || answered == false">
- 
+
     <p class="theQuestionDark" >{{ question.q }}</p>
     <div class="answers">
       <button
@@ -40,7 +40,7 @@
     </div>
     </div>
   </div>
-  
+
   <div class="waitingBackground" v-if="answered && !dark">
     <div
       class="waitingDiv" v-if="!dark"
@@ -76,10 +76,10 @@
         <h1 class="waitingAnswer">{{ question.a[selectedAnswer] }}</h1>
       </h1>
       <h2 class="getreadyDark" >{{uiLabels.getReady}}</h2>
-     
+
     </div>
   </div>
- 
+
 </template>
 
 <script>
@@ -121,7 +121,7 @@ export default {
       this.answered = true;
     },
     theme: function(){
-      
+
 
       if(this.dark==true){
         this.dark=false;
@@ -139,7 +139,7 @@ export default {
 <style scoped>
 
 .themeButton{
-  
+
   margin-top: 1em;
   border-radius: 0.5em;
   background-color: #e89aeb;
@@ -195,7 +195,7 @@ export default {
 
 .answerOption:hover {
   background-position: 100% 0;
- 
+
 }
 
 .lds-ring {
@@ -205,7 +205,7 @@ export default {
   top: 10%;
   position: relative;
   margin: 0 auto;
- 
+
 }
 .lds-ring div {
   box-sizing: border-box;
