@@ -1019,6 +1019,9 @@ header {
   .startDisplay {
     font-size: 2em;
   }
+  .resultDisplay img {
+  margin:0;
+}
   #answersInput {
     height: 4em;
     width: 8em;

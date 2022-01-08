@@ -5,7 +5,7 @@
         <h1>EasyPoll</h1>
       <div class="pollName">
       <p>{{uiLabels.pollId}}:{{pollId}}</p>
-      <Question v-bind:question="question"
+      <Question v-if="!isFinished" v-bind:question="question"
                 v-on:answer="submitAnswer"/>
     </div>
     </header>
@@ -16,7 +16,6 @@
       </router-link>
     </div>
 
-  <main class="page" v-if="!emptyPoll">
     <div class ="finishDiv" v-if="isFinished && !emptyPoll">
       <h2 v-if="!emptyPoll">{{uiLabels.pollCompleted}}</h2>
       <p style ="font-weight:bold">{{uiLabels.youAns}}:</p>
@@ -29,7 +28,6 @@
               </router-link>
               </div>
     </div>
-  </main>
 </div>
   </template>
 
@@ -151,20 +149,7 @@
     overflow: hidden;
     position: relative;
   }
-  .noQuestion{
-    position: static;
-  }
-  #page{
-    background-color: rgb(226, 201, 238);
-    height: 60em;
-    overflow-y: auto;
-  }
-  .colour{
-    background-color: black;
-    height: 100000em;
-
-    height: 60em;
-  }
+ 
   #nav {
     background: rgb(243, 220, 243);
     height: 100vh;

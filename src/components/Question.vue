@@ -249,11 +249,11 @@ export default {
 
 .waitingBackground{
   background-color: rgb(226, 201, 238);
-  height: 60em;
+  height: 80vh;
 }
 .waitingBackgroundDark{
   background-color:  rgb(44, 42, 44);
-  height: 60em;
+  height: 80vh;
 }
 .waitingDivDark {
   display: inline-block;
