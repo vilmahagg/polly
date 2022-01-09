@@ -458,6 +458,7 @@ export default {
   min-height: 80vh;
   overflow-y: auto;
   border-radius: 0.3em;
+  margin-top:0.5em;
 }
 
 .storedQuestions p,
@@ -540,6 +541,7 @@ export default {
   background-color: #df9ee48e;
   grid-area: d;
   border-radius: 0.3em;
+  margin-top:0.5em;
 }
 .helpButton {
   float: right;
@@ -553,6 +555,7 @@ export default {
   vertical-align: middle;
 }
 .tooltipExplain {
+  display: inline-block;
   visibility: hidden;
   font-family: arial;
   padding: 1em;
@@ -562,7 +565,7 @@ export default {
   text-align: center;
   border-radius: 0.5em;
   position: absolute;
-  margin: 1em 0 0 -5em;
+  margin: 2em 0 0 -8em;
 }
 
 .helpButton:hover .tooltipExplain {
@@ -741,6 +744,7 @@ export default {
 }
 header {
   height: 6em;
+  overflow: initial;
 }
 .pollName {
   font-weight: bold;
