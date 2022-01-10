@@ -493,9 +493,12 @@ h3 {
   position: absolute;
   text-align: center;
   border-radius: 0.5em;
+   position:absolute; top:74%; left:2%;
 }
 .languageButton:hover .hoverLang {
   visibility: visible;
+  opacity: 0.5;
+  line-height:1em;
 }
 
 button:hover {
